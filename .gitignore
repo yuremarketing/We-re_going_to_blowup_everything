@@ -1,0 +1,24 @@
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# Build and dependencies
+node_modules/
+dist/
+build/
+bin/
+obj/
+target/
+*.o
+*.a
+*.so
+*.dll
+*.dylib
+*.exe
+
+# Logs and cache
+*.log
+.cache/
+.DS_Store
+*.tmp
