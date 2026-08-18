@@ -17,7 +17,7 @@
 - [x] Criar projeto Godot com estrutura de diretórios base (scenes/, scripts/, assets/, docs/)
 - [x] Configurar versionamento de assets (.gitignore para binários pesados/exports do Godot)
 - [x] Prototipar o loop principal: personagem em viela linear com movimento/ataque básico
-- [ ] Spike técnico: validar se existe MCP para Godot (ver premissa 9 da épica); se não existir, definir plano B de automação do pipeline sprite→engine
+- [x] Spike técnico: validar se existe MCP para Godot (ver premissa 9 da épica) — **confirmado, existe**: múltiplos projetos open-source (`Dokujaa/Godot-MCP`, `ee0pdt/Godot-MCP`, `DaRealDaHoodie/Claude-GoDot-MCP`), cobrindo cena/nós/GDScript/config via MCP. Avaliar e adotar um deles quando formos automatizar o pipeline sprite→engine.
 
 ### Milestone 2: Core Gameplay
 - [x] Sistema de spawn de ondas de inimigos (progressão de dificuldade) — 5 ondas fixas
@@ -43,4 +43,4 @@
 4. Plataforma-alvo e requisitos de performance
 5. Escopo numérico definitivo do MVP
 6. Modelo de monetização
-7. Viabilidade de um MCP para Godot
+7. ~~Viabilidade de um MCP para Godot~~ — resolvido, ver Milestone 1

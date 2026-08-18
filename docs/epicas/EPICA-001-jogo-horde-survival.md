@@ -25,7 +25,7 @@ Entregar um jogo rápido de produzir e rápido de jogar, com um pipeline de prod
 | 6 | Estilo artístico (conflito Low Poly vs Pixel Art) | **Low Poly 3D** como direção oficial (Blender → Meshy → Godot), Pixel Art descartado para não gerar inconsistência | Felipe usa stack 3D (Blender/Meshy) e citou Low Poly como preferência real; "Pixel Art" apareceu apenas como exemplo hipotético de coerência | Alto — decisão central de arte, precisa validação explícita |
 | 7 | Monetização/distribuição | Free-to-play com anúncios opcionais + IAP cosmético | Padrão de mercado para o perfil de jogo descrito | Médio — não validado com C-level |
 | 8 | Escopo de conteúdo do MVP | 1 personagem jogável, 3 tipos de inimigo comum, 1 chefão, 5 ondas por run | Necessário para estimar esforço; nenhum número foi dado | Alto — pode divergir muito da expectativa real |
-| 9 | Existência de MCP do Godot | Assumir **não confirmado** — tratar como spike técnico antes de comprometer o pipeline de automação | O próprio Felipe disse "não sei se tem... mas deve ter" | Alto — se não existir, todo o fluxo de automação sprite→engine precisa de alternativa |
+| 9 | Existência de MCP do Godot | ✅ **Resolvido** — confirmado que existe (spike concluído em `ROADMAP.md`, Milestone 1). Múltiplos MCPs open-source disponíveis. | O próprio Felipe disse "não sei se tem... mas deve ter" | Baixo — risco eliminado |
 | 10 | Áudio/trilha sonora | Fora do escopo desta épica (não coberto na entrevista) | Não perguntado | Baixo — vira épica separada |
 | 11 | Papel da "persona agêntica" | Agente interno de **produção** (orquestra pipeline de arte/documentação via MCPs), não um NPC/assistente dentro do jogo | Alinhado com Rodadas 4 e 5 | Médio |
 
