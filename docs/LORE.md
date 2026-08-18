@@ -1,6 +1,6 @@
 # Lore Mínima v1
 
-> Lore mínima pra dar contexto ao MVP (tema zumbi 🟡, premissa assumida na épica — ver [`docs/epicas/EPICA-001-jogo-horde-survival.md`](./epicas/EPICA-001-jogo-horde-survival.md)). Não é lore final — é o suficiente pra justificar o loop de jogo e dar um gancho pra arte/UI.
+> Lore mínima pra dar contexto ao MVP (tema zumbi ✅ confirmado pelo C-level em 2026-08-18 — ver [`docs/epicas/EPICA-001-jogo-horde-survival.md`](./epicas/EPICA-001-jogo-horde-survival.md)). Não é lore final — é o suficiente pra justificar o loop de jogo e dar um gancho pra arte/UI.
 
 ## Premissa
 Um surto começou numa viela de bairro qualquer. Não deu tempo de evacuar — só de correr, revidar, e sobreviver a mais uma onda. Não existe "vencer" a horda de vez: existe aguentar até o próximo grupo maior de infectados, e o que vem atrás deles.

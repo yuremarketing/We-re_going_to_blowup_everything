@@ -4,7 +4,7 @@
 
 ## 🎯 Visão Geral
 * **Objetivo do Projeto**: Jogo de ação/sobrevivência contra multidão em viela linear ("esteira"), estilo horde/lane survival — ondas progressivas de inimigos + chefões, partidas curtas e simples de jogar.
-* **Tema (MVP, 🟡 a validar)**: Apocalipse zumbi.
+* **Tema (MVP)**: Apocalipse zumbi ✅ confirmado pelo C-level.
 * **Estilo artístico (🟡 a validar)**: Low Poly 3D (Blender → Meshy → Godot).
 * **Plataforma-alvo (🟡 a validar)**: Mobile-first, com build secundária PC/Web.
 * **Stack Principal**: Godot Engine (sugestão do Felipe Pessanha para este projeto). Pipeline de arte: Blender, Meshy, Nano Banana, Photoshop/Illustrator/After Effects.
@@ -37,7 +37,7 @@
 *(Atualizado pelos agentes conforme o avanço das tarefas)*
 
 ### Perguntas em aberto (herdadas da épica — bloqueiam decisões de escopo)
-1. Nome e tema definitivo do jogo
+1. ~~Tema definitivo~~ — resolvido (apocalipse zumbi confirmado). Nome do jogo ainda em aberto.
 2. Resposta completa da Rodada 3 da entrevista (motion design/VFX/cutscenes)
 3. Validação do estilo artístico único (Low Poly 3D)
 4. Plataforma-alvo e requisitos de performance
