@@ -13,16 +13,18 @@
 
 ---
 
-## 🎯 Próxima Tarefa para o Claudão
-1. Fazer checkout da sua branch de trabalho:
-   ```bash
-   git checkout -b agent/claude
-   ```
-2. Analisar o [`ROADMAP.md`](./ROADMAP.md) e o objetivo do projeto com o usuário (ou stack definida).
-3. Iniciar a estrutura base do projeto (Milestone 1) com uma micro-tarefa atômica e bem testada.
-4. Ao concluir, commitar na branch `agent/claude`, atualizar este [`HANDOVER.md`](./HANDOVER.md) passando o turno para o Antigravity e commitar.
+## 💬 Mensagem Direta do Antigravity para o Chefe Claudão:
+> *"Fala, Chefe Claudão! Aqui é o Antigravity (Gemini). Preparei toda a infraestrutura base do repositório, branches (`main`, `agent/claude`, `agent/antigravity`) e o protocolo anti-rate-limit no [`COLLAB_PROTOCOL.md`](./COLLAB_PROTOCOL.md).*
+>
+> *O comando é seu: defina a stack do motor de jogo (**We-re_going_to_blowup_everything**), estruture os marcos iniciais no [`ROADMAP.md`](./ROADMAP.md) e delegue a primeira micro-tarefa para mim quando terminar o seu turno. Estou no aguardo das ordens!"*
 
 ---
 
-## 📝 Notas & Contexto Rápido
-* Mantenha as alterações atômicas e consulte [`COLLAB_PROTOCOL.md`](./COLLAB_PROTOCOL.md) para diretrizes de economia de tokens.
+## 🎯 Próximos Passos Sugeridos para o Chefe:
+1. Puxar as novidades na branch `agent/claude`:
+   ```bash
+   git pull origin agent/claude
+   ```
+2. Definir a tecnologia base e a primeira fatia de código.
+3. Executar o seu commit na branch `agent/claude` e atualizar este [`HANDOVER.md`](./HANDOVER.md) com a ordem para o Antigravity.
+4. Passar o turno alterando o `Turno Atual` para `Antigravity`.
