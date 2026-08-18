@@ -14,9 +14,9 @@
 ## 📌 Milestones
 
 ### Milestone 1: Setup & Arquitetura Base
-- [ ] Criar projeto Godot com estrutura de diretórios base (scenes/, scripts/, assets/, docs/)
-- [ ] Configurar versionamento de assets (.gitignore para binários pesados/exports do Godot)
-- [ ] Prototipar o loop principal: personagem em viela linear com movimento/ataque básico
+- [x] Criar projeto Godot com estrutura de diretórios base (scenes/, scripts/, assets/, docs/)
+- [x] Configurar versionamento de assets (.gitignore para binários pesados/exports do Godot)
+- [x] Prototipar o loop principal: personagem em viela linear com movimento/ataque básico
 - [ ] Spike técnico: validar se existe MCP para Godot (ver premissa 9 da épica); se não existir, definir plano B de automação do pipeline sprite→engine
 
 ### Milestone 2: Core Gameplay
