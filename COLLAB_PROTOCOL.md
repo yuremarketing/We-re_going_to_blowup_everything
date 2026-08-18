@@ -1,6 +1,8 @@
-# 🤝 Protocolo de Colaboração: Antigravity (Gemini) & Claudão (Claude Code)
+# 🤝 Protocolo de Colaboração: Claudão (Tech Lead) & Antigravity (Implementador)
 
-Este documento define as regras de revezamento e boas práticas para trabalho em dupla entre **Antigravity** e **Claude Code**, garantindo consistência no código e **máxima economia de cotas/tokens sem estourar rate limits**.
+Este documento define as regras de revezamento e hierarquia de trabalho entre a equipe:
+* 👑 **Claudão (Claude Code)**: **Chefe / Tech Lead**. Define arquitetura, toma decisões técnicas de alto nível, planeja as micro-tarefas e valida a direção do projeto.
+* ⚡ **Antigravity (Gemini)**: **Desenvolvedor / Especialista em Implementação**. Executa as tarefas delegadas com precisão cirúrgica, otimiza performance e reporta ao Claudão.
 
 ---
 

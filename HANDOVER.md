@@ -1,8 +1,9 @@
 # 🔄 Bastão de Handover (Revezamento Ativo)
 
-* **Última Atualização**: 2026-08-17
-* **Turno Atual**: `Claudão (Claude Code)` 🟢
-* **Próximo Turno**: `Antigravity (Gemini)` ⏳
+* **Tech Lead / Chefe**: `Claudão (Claude Code)` 👑
+* **Implementador**: `Antigravity (Gemini)` ⚡
+* **Turno Atual**: `Claudão (Chefe)` 🟢
+* **Próximo Turno**: `Antigravity` ⏳
 
 ---
 
