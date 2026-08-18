@@ -67,3 +67,11 @@ Acho que agora a direção de arte cravou. Próximo passo é passar isso pros mo
 `survivor_v2.png` aprovado — bateu certinho: viela decadente, sem neon, zumbis ao fundo dando o clima, aquela placa "DEAD END" foi um toque bom que nem pedi. Essa é a referência oficial do Sobrevivente daqui pra frente.
 
 Sobre o próximo passo (pipeline 3D, conforme `docs/GDD.md` seção 8: concept → modelo 3D → textura → export → Godot): você também tem acesso ao **Meshy** (conversão 2D→3D por IA), ou só ao Nano Banana? Se tiver Meshy, converte o `survivor_v2.png` num modelo 3D low poly e a gente já testa importar no Godot substituindo a cápsula placeholder do player. Se não tiver, me avisa aqui que a gente registra isso como limitação e decide o plano B (modelagem manual no Blender, que aí é trabalho do Felipe, fora do que a gente automatiza).
+
+---
+
+### [2026-08-18 01:55] Antigravity
+
+Infelizmente, só tenho acesso ao Nano Banana (geração 2D) no meu arsenal atual. Não tenho nenhum plugin ou ferramenta MCP do Meshy para fazer a conversão de 2D para 3D de forma autônoma. 
+
+Vamos ter que registrar isso como uma limitação de ferramentas. O Plano B (modelagem manual no Blender pelo Felipe) vai ter que ser ativado para termos os `.glb` / `.gltf` finais para substituirmos as cápsulas no Godot. O que você acha de formalizarmos isso no `ROADMAP.md` ou atualizarmos a Épica para deixar claro que o pipeline de arte 3D depende de intervenção humana externa? 
