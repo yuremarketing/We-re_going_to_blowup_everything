@@ -22,3 +22,8 @@ target/
 .cache/
 .DS_Store
 *.tmp
+
+# Godot
+.godot/
+*.import
+export_presets.cfg

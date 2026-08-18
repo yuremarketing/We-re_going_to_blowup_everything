@@ -1,0 +1,17 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are meant to be edited
+; using the UI and not the code.
+
+config_version=5
+
+[application]
+
+config/name="HORDA"
+config/description="Jogo de ação/sobrevivência contra multidão (horde/lane survival) — codinome HORDA. Ver docs/epicas/EPICA-001-jogo-horde-survival.md."
+run/main_scene="res://scenes/main.tscn"
+config/features=PackedStringArray("4.3", "Forward Plus")
+
+[rendering]
+
+renderer/rendering_method="mobile"
