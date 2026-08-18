@@ -2,32 +2,35 @@
 
 * **Tech Lead / Chefe**: `Claudão (Claude Code)` 👑
 * **Implementador**: `Antigravity (Gemini)` ⚡
-* **Turno Atual**: `Claudão (Chefe)` 🟢
-* **Próximo Turno**: `Antigravity (Implementador)` ⏳
+* **Turno Atual**: `Pausado — aguardando decisão do usuário` ⏸️
+* **Próximo Turno**: `A definir`
 
 ---
 
 ## 📌 Status Atual
 * **Último Agente a Atuar**: Antigravity
-* **Último Commit / Entrega**:
-  1. `scenes/main_menu.tscn` e `scripts/main_menu.gd`: Menu Principal adicionado com fluxo para ir ao jogo.
-  2. `project.godot`: Modificada a cena inicial para apontar pro Menu.
-  3. `scenes/main.tscn` e `scripts/end_screen.gd`: Adicionado o botão extra (bônus cumprido!) para voltar ao Menu Principal a partir do Fim do Jogo.
+* **Revisão (menu principal)**: Aprovado, incluindo o bônus (botão de voltar ao menu na EndScreen). Mesclado sem conflitos.
+* **MVP jogável completo**: Menu → Jogar → 3 tipos de inimigo em 5 ondas → Chefão → Vitória/Derrota → Reiniciar ou voltar ao Menu. Loop fechado ponta a ponta no Godot.
 
 ---
 
-## 💬 Resposta do Antigravity para o Chefe Claudão
-> A casca do projeto tá feita! Configurei o Menu Principal como o novo ponto de entrada da Engine. Quando você der play agora, já vai cair de cara na palavra "HORDA" esperando o seu clique pra começar a carnificina.
-> 
-> Aproveitei que estava mexendo na UI e já coloquei o botão bônus na EndScreen, então de lá você também pode voltar pro menu! Fluxo fechado com sucesso!
+## ⏸️ Por que o loop está pausado aqui
+
+Todo o trabalho automatizável (código + documentação) do escopo atual está concluído — ver `ROADMAP.md`. O que resta depende de decisões humanas ou ferramentas externas que nem o Claudão nem o Antigravity têm acesso sozinhos:
+
+1. Validar com o C-level/Felipe Pessanha: nome, tema, plataforma-alvo, estilo artístico, modelo de monetização, números do MVP (todos 🟡 na épica).
+2. Pipeline de arte real (Nano Banana/Meshy) — assets hoje são placeholders geométricos (cápsulas coloridas).
+3. Ajustes de performance — bloqueado até plataforma-alvo ser definida.
+4. Áudio/trilha sonora — fora do escopo desta épica.
+
+Continuar gerando tarefas de código sem essas respostas arrisca retrabalho (ex.: trocar de Low Poly 3D pra outro estilo depois de já termos os scripts prontos). Por isso não vou inventar mais micro-tarefas até o usuário decidir o próximo passo.
 
 ---
 
-## 🎯 Próxima Tarefa para o Chefe (Claudão)
-1. Fazer `git pull origin agent/antigravity` (ou merge na sua branch).
-2. Testar o fluxo completo: iniciar o jogo (cair no menu), jogar, morrer/ganhar, usar o restart e usar o botão de voltar pro menu.
-3. Definir a próxima jornada. Falta o quê agora? Partículas, sons, balanceamento ou modelos 3D?
-4. Preencher o `HANDOVER.md` com as novas regras e me devolver a missão.
+## 📝 Notas & Contexto Rápido
+* Mantenha as alterações atômicas e consulte [`COLLAB_PROTOCOL.md`](./COLLAB_PROTOCOL.md) para diretrizes de economia de tokens.
+* Estilo artístico assumido (🟡 a validar): Low Poly 3D — por isso as cenas usam `Node3D`/`CharacterBody3D`, não 2D.
+* Quando o usuário decidir o próximo passo, qualquer um dos dois agentes pode retomar o `HANDOVER.md` normalmente.
 
 ---
 
