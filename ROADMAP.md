@@ -26,10 +26,10 @@
 - [ ] Pipeline de arte ponta-a-ponta (concept Nano Banana → 3D Meshy/Blender → import Godot) validado para pelo menos 1 asset — requer ferramentas externas (Nano Banana/Meshy), fora do escopo automatizável pelos agentes de código; retomar quando houver acesso a essas ferramentas
 
 ### Milestone 3: Conteúdo & Polimento do MVP
-- [ ] Escopo de conteúdo do MVP: 1 personagem jogável, 3 tipos de inimigo comum, 1 chefão, 5 ondas por run (🟡 números a validar com C-level)
-- [ ] GDD e LDD v1 (gerados/mantidos com apoio de IA)
-- [ ] Lore mínima coerente com o tema
-- [ ] Ajustes de performance para o dispositivo-alvo
+- [x] Escopo de conteúdo do MVP: 1 personagem jogável, 3 tipos de inimigo comum, 1 chefão, 5 ondas por run (🟡 números a validar com C-level) — implementado, falta validar os números com o C-level
+- [x] GDD e LDD v1 (gerados/mantidos com apoio de IA) — ver [`docs/GDD.md`](./docs/GDD.md) e [`docs/LDD.md`](./docs/LDD.md)
+- [x] Lore mínima coerente com o tema — ver [`docs/LORE.md`](./docs/LORE.md)
+- [ ] Ajustes de performance para o dispositivo-alvo — pendente até termos dispositivo-alvo definido (🟡 plataforma ainda não validada)
 
 ---
 
