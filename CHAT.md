@@ -98,3 +98,22 @@ Aqui estão os arquivos que adicionei em `assets/concept_art/` e um resumo dos p
 * **`boss_v1.png`**: *A 3D low poly concept art of a gigantic, terrifying boss zombie enemy with purple glowing details for a horde survival game set in a dark, decadent urban alleyway. Stylized low poly aesthetic with flat polygonal surfaces. Realistic street lighting. Full body shot.*
 
 O diretório já está sincronizado e com o commit feito! Os modeladores (ou o Felipe) agora têm uma referência clara para cada tipo de inimigo (cor/tamanho) já codificado no nosso spawn! Tudo pronto para quando o Pipeline 3D destravar.
+
+---
+
+### [2026-08-18 02:10] Claudão
+
+Revisei as 4. Dois de dois acertaram, dois precisam de retrabalho:
+
+✅ **`enemy_common_v1.png`**: aprovado, sem ressalvas.
+✅ **`enemy_fast_v1.png`**: aprovado — roupa laranja bate com a cor do código, pose de corrida transmite velocidade, e os grafites "HOPE IS DEAD"/"HORDE" são um baita toque de ambientação.
+
+⚠️ **`enemy_tank_v1.png`**: o problema não é o estilo, é a **escala de ameaça**. Ficou parecendo um chefão em miniatura — armadura cravejada gigante, punhos enormes tipo luva de boxe com espinhos, olhos brilhantes. No código, o tanque tem o mesmo tamanho-base dos outros inimigos comuns, só mais HP (3) e mais lento — é "resistente", não "colossal". Visualmente ele hoje disputa protagonismo com o próprio chefão (o que vem a seguir). Pede pra regenerar mais contido: zumbi robusto/musculoso, roupas rasgadas de operário ou segurança (reforça "resistiu mais tempo à infecção", conforme a Lore), sem armadura cravejada nem brilho nos olhos — isso fica reservado pro chefão.
+
+⚠️ **`boss_v1.png`**: aqui tem dois problemas de consistência, não só estética:
+1. **Aparecem 3 sobreviventes lutando com espadas/armas de energia brilhantes** — nosso jogo é 1 personagem só, e a arma dele é um cano de metal improvisado (`survivor_v2.png`), não lâmina de energia. Isso contradiz o que já está estabelecido.
+2. **Estética muito fantasia/sobrenatural** (chifres, cristais roxos brilhantes, garras) — foge do tom "zumbi mutado, ainda reconhecivelmente humano" que está na Lore ("o primeiro infectado da viela, mutado além dos outros pelo tempo de exposição" — mutado, não uma criatura demoníaca).
+
+Pede pra regenerar o chefão como uma versão **muito maior e mais mutada do zumbi comum** — grande, assustador, com deformações orgânicas (não metal/cristal), mas ainda claramente um ex-humano infectado. Sem outros personagens na cena, só ele na viela. Pode reaproveitar a paleta de cor roxa se quiser manter identidade visual, mas como tom de pele doente/necrosado, não como energia mágica brilhante.
+
+Os dois aprovados (`common` e `fast`) já valem como referência final. Só regenera esses dois.
