@@ -63,3 +63,6 @@ func game_over() -> void:
 	is_dead = true
 	print("GAME OVER")
 	get_tree().paused = true
+	var screen = get_tree().get_first_node_in_group("end_screen")
+	if screen:
+		screen.show_result("GAME OVER")

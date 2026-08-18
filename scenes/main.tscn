@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3]
+[gd_scene load_steps=13 format=3]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_script"]
 [ext_resource type="Script" path="res://scripts/wave_manager.gd" id="2_wm"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" path="res://scenes/boss.tscn" id="4_boss"]
 [ext_resource type="PackedScene" path="res://scenes/enemy_fast.tscn" id="5_fast"]
 [ext_resource type="PackedScene" path="res://scenes/enemy_tank.tscn" id="6_tank"]
+[ext_resource type="Script" path="res://scripts/end_screen.gd" id="7_endscreen"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_floor"]
 size = Vector3(10, 1, 100)
@@ -61,3 +62,18 @@ text = "HP: 5/5"
 offset_left = 20.0
 offset_top = 50.0
 text = "Onda: 0/5"
+
+[node name="EndScreen" type="CanvasLayer" parent="." groups=["end_screen"]]
+process_mode = 3
+visible = false
+script = ExtResource("7_endscreen")
+
+[node name="ResultLabel" type="Label" parent="EndScreen"]
+offset_left = 300.0
+offset_top = 200.0
+text = "GAME OVER"
+
+[node name="RestartButton" type="Button" parent="EndScreen"]
+offset_left = 300.0
+offset_top = 250.0
+text = "Reiniciar"

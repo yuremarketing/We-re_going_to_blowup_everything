@@ -24,3 +24,7 @@ func take_damage(amount: int) -> void:
 	if hp <= 0:
 		print("Chefão derrotado! Run concluída.")
 		queue_free()
+		get_tree().paused = true
+		var screen = get_tree().get_first_node_in_group("end_screen")
+		if screen:
+			screen.show_result("VITÓRIA!")
