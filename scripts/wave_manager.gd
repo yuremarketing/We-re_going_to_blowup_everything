@@ -22,6 +22,7 @@ func _ready() -> void:
 	_timer.timeout.connect(_on_spawn_tick)
 	add_child(_timer)
 	_timer.start()
+	_update_wave_label()
 
 func _on_spawn_tick() -> void:
 	if _waiting_for_next_wave:
@@ -32,6 +33,7 @@ func _on_spawn_tick() -> void:
 
 	if _spawned_this_wave >= enemies_per_wave:
 		_current_wave += 1
+		_update_wave_label()
 		if _current_wave >= total_waves:
 			if not _boss_spawned:
 				var boss = boss_scene.instantiate()
@@ -54,3 +56,8 @@ func _on_spawn_tick() -> void:
 	enemy.position = Vector3(x, 1.0, spawn_z_offset)
 	get_tree().current_scene.add_child(enemy)
 	_spawned_this_wave += 1
+
+func _update_wave_label() -> void:
+	var label = get_tree().get_first_node_in_group("hud_wave")
+	if label:
+		label.text = "Onda: %d/%d" % [_current_wave, total_waves]

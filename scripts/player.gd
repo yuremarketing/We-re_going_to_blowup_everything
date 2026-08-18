@@ -9,6 +9,7 @@ const SPEED = 8.0
 func _ready() -> void:
 	add_to_group("player")
 	hp = max_hp
+	_update_hp_label()
 
 func _physics_process(delta: float) -> void:
 	if is_dead:
@@ -49,8 +50,14 @@ func take_damage(amount: int) -> void:
 		return
 	hp -= amount
 	print("Player tomou dano! HP: ", hp, "/", max_hp)
+	_update_hp_label()
 	if hp <= 0:
 		game_over()
+
+func _update_hp_label() -> void:
+	var label = get_tree().get_first_node_in_group("hud_hp")
+	if label:
+		label.text = "HP: %d/%d" % [hp, max_hp]
 
 func game_over() -> void:
 	is_dead = true
