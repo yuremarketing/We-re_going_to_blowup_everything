@@ -77,3 +77,8 @@ text = "GAME OVER"
 offset_left = 300.0
 offset_top = 250.0
 text = "Reiniciar"
+
+[node name="MenuButton" type="Button" parent="EndScreen"]
+offset_left = 300.0
+offset_top = 300.0
+text = "Menu Principal"

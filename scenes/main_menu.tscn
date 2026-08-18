@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_script"]
+
+[node name="MainMenu" type="CanvasLayer"]
+script = ExtResource("1_script")
+
+[node name="TitleLabel" type="Label" parent="."]
+offset_left = 300.0
+offset_top = 150.0
+text = "HORDA"
+
+[node name="PlayButton" type="Button" parent="."]
+offset_left = 300.0
+offset_top = 220.0
+text = "Jogar"

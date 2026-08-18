@@ -9,7 +9,7 @@ config_version=5
 
 config/name="HORDA"
 config/description="Jogo de ação/sobrevivência contra multidão (horde/lane survival) — codinome HORDA. Ver docs/epicas/EPICA-001-jogo-horde-survival.md."
-run/main_scene="res://scenes/main.tscn"
+run/main_scene="res://scenes/main_menu.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 
 [rendering]
