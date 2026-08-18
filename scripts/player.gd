@@ -28,3 +28,7 @@ func attack() -> void:
 	var tween = create_tween()
 	tween.tween_property(self, "scale", Vector3(1.2, 1.2, 1.2), 0.1)
 	tween.tween_property(self, "scale", Vector3(1.0, 1.0, 1.0), 0.1)
+
+	for enemy in get_tree().get_nodes_in_group("enemies"):
+		if abs(enemy.position.z - position.z) < 2.0:
+			enemy.take_damage(1)
