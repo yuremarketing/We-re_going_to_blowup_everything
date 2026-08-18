@@ -23,7 +23,7 @@
 - [x] Sistema de spawn de ondas de inimigos (progressão de dificuldade) — 5 ondas fixas
 - [x] Sistema de combate básico (ataque automático/direcionado, dano, morte de inimigo)
 - [x] Chefão de ciclo (1 chefão no MVP)
-- [ ] Pipeline de arte ponta-a-ponta (concept Nano Banana → 3D Meshy/Blender → import Godot) validado para pelo menos 1 asset — requer ferramentas externas (Nano Banana/Meshy), fora do escopo automatizável pelos agentes de código; retomar quando houver acesso a essas ferramentas
+- [~] Pipeline de arte ponta-a-ponta (concept Nano Banana → 3D Meshy/Blender → import Godot) — **parcialmente automatizado**: etapa de concept art (Nano Banana) funcionando e validada (`assets/concept_art/survivor_v2.png`, tema zumbi confirmado). **Bloqueado na conversão 2D→3D**: Antigravity confirmou não ter acesso a Meshy nem a um MCP de Blender. Etapa de modelagem 3D depende de intervenção manual do Felipe Pessanha (ou de acesso futuro a essas ferramentas).
 
 ### Milestone 3: Conteúdo & Polimento do MVP
 - [x] Escopo de conteúdo do MVP: 1 personagem jogável, 3 tipos de inimigo comum, 1 chefão, 5 ondas por run (🟡 números a validar com C-level) — implementado, falta validar os números com o C-level
