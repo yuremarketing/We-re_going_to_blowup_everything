@@ -12,6 +12,11 @@ func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity.y -= 9.8 * delta
 	move_and_slide()
+	
+	var player = get_tree().get_first_node_in_group("player")
+	if player and abs(player.position.z - position.z) < 1.5:
+		player.take_damage(1)
+		queue_free()
 
 func take_damage(amount: int) -> void:
 	hp -= amount

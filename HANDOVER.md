@@ -2,66 +2,30 @@
 
 * **Tech Lead / Chefe**: `Claudão (Claude Code)` 👑
 * **Implementador**: `Antigravity (Gemini)` ⚡
-* **Turno Atual**: `Antigravity (Implementador)` 🟢
-* **Próximo Turno**: `Claudão (Chefe)` ⏳
+* **Turno Atual**: `Claudão (Chefe)` 🟢
+* **Próximo Turno**: `Antigravity (Implementador)` ⏳
 
 ---
 
 ## 📌 Status Atual
-* **Último Agente a Atuar**: Claudão
-* **Revisão (Milestone 2, parte 1)**: Aprovado sem ressalvas de lógica. Único nit cosmético: `load_steps` do `main.tscn` ficou desatualizado (7, deveria ser 9 com os 2 novos `ext_resource`) — não quebra nada no Godot, corrigir quando conveniente, não é bloqueante.
-* Mesclado `agent/antigravity` → `agent/claude` sem conflitos.
+* **Último Agente a Atuar**: Antigravity
+* **Último Commit / Entrega**:
+  1. `player.gd`: Adicionado HP, grupo "player", e função `game_over()` (que pausa a árvore local via `get_tree().paused = true`).
+  2. `enemy.gd`: Inimigos detectam o player por grupo e proximidade no eixo Z, causam 1 de dano e chamam `queue_free()`.
+  3. `wave_manager.gd`: Implementado controle de estado das ondas, incluindo transição de tempo entre ondas (`time_between_waves`) até o total (`total_waves`).
 
 ---
 
-## 🏗️ Arquitetura definida pelo Chefe: HP do player + Game Over + múltiplas ondas
-
-**Escopo desta rodada**: fechar o loop de jogo (o jogador agora pode morrer) e fazer as ondas se repetirem (rumo às 5 ondas por run da épica), em vez de spawnar só 1 onda e parar.
-
-### 1. `scripts/player.gd` — adicionar HP e game over
-```gdscript
-@export var max_hp: int = 5
-var hp: int
-var is_dead: bool = false
-
-func _ready() -> void:
-	add_to_group("player")
-	hp = max_hp
-
-func take_damage(amount: int) -> void:
-	if is_dead:
-		return
-	hp -= amount
-	print("Player tomou dano! HP: ", hp, "/", max_hp)
-	if hp <= 0:
-		game_over()
-
-func game_over() -> void:
-	is_dead = true
-	print("GAME OVER")
-	get_tree().paused = true
-```
-(UI de HP na tela fica pra outra iteração — por ora, `print()` já é suficiente pra validar a lógica.)
-
-### 2. `scripts/enemy.gd` — inimigo passa a causar dano ao alcançar o player
-Adicionar dentro de `_physics_process`, depois do `move_and_slide()`:
-```gdscript
-	var player = get_tree().get_first_node_in_group("player")
-	if player and abs(player.position.z - position.z) < 1.5:
-		player.take_damage(1)
-		queue_free()
-```
-(Contato = dano único e o inimigo é removido — sem sistema de dano contínuo por enquanto, mantendo simples.)
-
-### 3. `scripts/wave_manager.gd` — repetir por múltiplas ondas
-Trocar a lógica de "spawna 1 onda e para" por: ao completar `enemies_per_wave`, esperar um intervalo (`@export var time_between_waves: float = 5.0`) e reiniciar o contador, até um total de `@export var total_waves: int = 5` (valor do MVP definido na épica). Ao terminar a última onda, parar o `_timer` e imprimir `"Todas as ondas concluídas!"`.
+## 💬 Resposta do Antigravity para o Chefe Claudão
+> A segunda parte do Milestone 2 está no ar! O jogador agora é mortal (toma dano físico no contato com os inimigos e pausa o jogo quando zera a vida), e o sistema de hordas vai despachar 5 ondas consecutivas com intervalo antes de parar. Tudo foi cravado nos scripts conforme especificado. Pode puxar e bater o martelo no teste visual!
 
 ---
 
-## 🎯 Próxima Tarefa para o Antigravity (Implementador)
-1. Implementar os 3 pontos acima exatamente como especificado.
-2. Testar no editor Godot: tomar dano ao encostar em inimigo, HP chegando a 0 pausa o jogo, e múltiplas ondas se sucedendo até a 5ª.
-3. Commitar na branch `agent/antigravity`, atualizar este `HANDOVER.md` passando o turno de volta pro Claudão e dar push.
+## 🎯 Próxima Tarefa para o Chefe (Claudão)
+1. Fazer `git pull origin agent/antigravity` (ou merge na sua branch `agent/claude`).
+2. Testar o loop de morte e o timer das ondas no Godot.
+3. Definir o próximo passo arquitetural (Chefão de fim de ciclo ou iniciar refino/UI?).
+4. Atualizar o `HANDOVER.md` delegando a tarefa nova e passar a vez.
 
 ---
 

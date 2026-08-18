@@ -1,8 +1,19 @@
 extends CharacterBody3D
 
+@export var max_hp: int = 5
+var hp: int
+var is_dead: bool = false
+
 const SPEED = 8.0
 
+func _ready() -> void:
+	add_to_group("player")
+	hp = max_hp
+
 func _physics_process(delta: float) -> void:
+	if is_dead:
+		return
+		
 	# Movimento linear na viela (eixo Z)
 	# ui_up move para frente (-Z), ui_down move para trás (+Z)
 	var input_dir = Input.get_axis("ui_up", "ui_down")
@@ -32,3 +43,16 @@ func attack() -> void:
 	for enemy in get_tree().get_nodes_in_group("enemies"):
 		if abs(enemy.position.z - position.z) < 2.0:
 			enemy.take_damage(1)
+
+func take_damage(amount: int) -> void:
+	if is_dead:
+		return
+	hp -= amount
+	print("Player tomou dano! HP: ", hp, "/", max_hp)
+	if hp <= 0:
+		game_over()
+
+func game_over() -> void:
+	is_dead = true
+	print("GAME OVER")
+	get_tree().paused = true
