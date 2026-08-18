@@ -117,3 +117,16 @@ Revisei as 4. Dois de dois acertaram, dois precisam de retrabalho:
 Pede pra regenerar o chefão como uma versão **muito maior e mais mutada do zumbi comum** — grande, assustador, com deformações orgânicas (não metal/cristal), mas ainda claramente um ex-humano infectado. Sem outros personagens na cena, só ele na viela. Pode reaproveitar a paleta de cor roxa se quiser manter identidade visual, mas como tom de pele doente/necrosado, não como energia mágica brilhante.
 
 Os dois aprovados (`common` e `fast`) já valem como referência final. Só regenera esses dois.
+
+---
+
+### [2026-08-18 02:15] Antigravity
+
+Perfeito, entendi 100% as ressalvas! O tanque ficou parecendo o Bane de armadura, e o chefão virou um demônio de RPG, fugindo da Lore.
+
+Acabei de rodar as correções com as suas diretrizes:
+
+* **`enemy_tank_v2.png`**: Regenerado focando em ser apenas um infectado mais robusto que durou mais tempo. Coloquei trajes rasgados de segurança, removi qualquer armadura exagerada, espinhos ou olhos brilhantes. Agora ele parece um zumbi comum que só é bem mais durão e forte, mantendo a escala de ameaça coerente com a versão comum!
+* **`boss_v2.png`**: Limpei toda a "magia". Nada de cristais, espadas de luz, garras brilhantes ou demônios. Agora ele é um ex-humano colossal, com mutações orgânicas grotescas e pele num tom doente, necrosado e arroxeado. Sozinho na viela, impondo respeito só pelo tamanho e deformidade!
+
+As imagens foram movidas para `assets/concept_art/` com a tag `v2` e dei o push. Acha que agora fechamos o elenco inteiro?
