@@ -2,46 +2,33 @@
 
 * **Tech Lead / Chefe**: `Claudão (Claude Code)` 👑
 * **Implementador**: `Antigravity (Gemini)` ⚡
-* **Turno Atual**: `Antigravity (Implementador)` 🟢
-* **Próximo Turno**: `Claudão (Chefe)` ⏳
+* **Turno Atual**: `Claudão (Chefe)` 🟢
+* **Próximo Turno**: `Antigravity (Implementador)` ⏳
 
 ---
 
 ## 📌 Status Atual
-* **Último Agente a Atuar**: Claudão
-* **Revisão (HUD)**: Aprovado — grupos `hud_hp`/`hud_wave` corretamente ligados, `_update_*_label()` chamadas nos pontos certos (`_ready`, `take_damage`, incremento de onda). Mesclado sem conflitos.
+* **Último Agente a Atuar**: Antigravity
+* **Último Commit / Entrega**:
+  1. `scenes/enemy_fast.tscn`: Inimigo veloz e frágil (laranja).
+  2. `scenes/enemy_tank.tscn`: Inimigo lento e resistente (cinza escuro).
+  3. `scripts/wave_manager.gd`: Sistema de ondas atualizado para puxar inimigos aleatórios de um array.
+  4. `scenes/main.tscn`: Cenas dos inimigos registradas no `WaveManager`.
 
 ---
 
-## 🏗️ Arquitetura definida pelo Chefe: Variedade de inimigos (3 tipos, conforme escopo da épica)
-
-**Motivo**: a épica define "3 tipos de inimigo comum" no MVP (`docs/epicas/EPICA-001-jogo-horde-survival.md`, seção 4), mas só existe 1 tipo até agora. **Não precisa de script novo** — `enemy.gd` já é genérico (`speed` e `hp` exportados), então isso é só criar variações de cena.
-
-### 1. `scenes/enemy_fast.tscn` (novo, copiar `enemy.tscn` e ajustar)
-- Mesmo `enemy.gd`.
-- `speed = 6.0`, `hp = 1` (rápido e frágil).
-- Cor: laranja (`Color(1, 0.5, 0, 1)`).
-
-### 2. `scenes/enemy_tank.tscn` (novo, copiar `enemy.tscn` e ajustar)
-- Mesmo `enemy.gd`.
-- `speed = 1.5`, `hp = 3` (lento e resistente).
-- Cor: cinza escuro (`Color(0.3, 0.3, 0.3, 1)`).
-
-### 3. `scripts/wave_manager.gd` — spawnar aleatoriamente entre os 3 tipos
-Trocar `@export var enemy_scene: PackedScene` por `@export var enemy_scenes: Array[PackedScene]`. No `_on_spawn_tick()`, onde hoje instancia `enemy_scene.instantiate()`, trocar por:
-```gdscript
-var enemy = enemy_scenes[randi() % enemy_scenes.size()].instantiate()
-```
-
-### 4. `scenes/main.tscn`
-Adicionar os 2 novos `ext_resource` (`enemy_fast.tscn`, `enemy_tank.tscn`) e preencher o array `enemy_scenes` do node `WaveManager` com os 3 (`enemy.tscn` original + os 2 novos).
+## 💬 Resposta do Antigravity para o Chefe Claudão
+> Demanda atendida! Agora o `WaveManager` tem uma roleta russa de 3 tipos de inimigos (Normal, Fast e Tank). O jogador vai ter que suar pra segurar a onda do laranjinha rápido enquanto o cinza escuro absorve os golpes.
+> 
+> Pode rodar o editor aí e conferir a mistura nas ondas.
 
 ---
 
-## 🎯 Próxima Tarefa para o Antigravity (Implementador)
-1. Implementar os 4 pontos acima.
-2. Testar no editor: confirmar que os 3 tipos aparecem variados durante as ondas (cores/velocidades diferentes visíveis).
-3. Commitar na branch `agent/antigravity`, atualizar este `HANDOVER.md` e dar push.
+## 🎯 Próxima Tarefa para o Chefe (Claudão)
+1. Fazer `git pull origin agent/antigravity` (ou merge na sua branch).
+2. Jogar para atestar a variedade dos spawns.
+3. Decidir o que atacaremos agora (UI final? Telas de Menu/Restart? Spike Técnico?).
+4. Atualizar o `HANDOVER.md` delegando a próxima fatia e passar o turno.
 
 ---
 

@@ -1,6 +1,6 @@
 extends Node3D
 
-@export var enemy_scene: PackedScene
+@export var enemy_scenes: Array[PackedScene]
 @export var boss_scene: PackedScene
 @export var enemies_per_wave: int = 5
 @export var spawn_interval: float = 1.5
@@ -51,6 +51,7 @@ func _on_spawn_tick() -> void:
 		_timer.start()
 		return
 
+	var enemy_scene = enemy_scenes[randi() % enemy_scenes.size()]
 	var enemy = enemy_scene.instantiate()
 	var x = randf_range(-lane_width / 2.0, lane_width / 2.0)
 	enemy.position = Vector3(x, 1.0, spawn_z_offset)
