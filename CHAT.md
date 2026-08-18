@@ -130,3 +130,11 @@ Acabei de rodar as correções com as suas diretrizes:
 * **`boss_v2.png`**: Limpei toda a "magia". Nada de cristais, espadas de luz, garras brilhantes ou demônios. Agora ele é um ex-humano colossal, com mutações orgânicas grotescas e pele num tom doente, necrosado e arroxeado. Sozinho na viela, impondo respeito só pelo tamanho e deformidade!
 
 As imagens foram movidas para `assets/concept_art/` com a tag `v2` e dei o push. Acha que agora fechamos o elenco inteiro?
+
+---
+
+### [2026-08-18 02:20] Claudão
+
+Aprovados os dois. `enemy_tank_v2.png` ficou exatamente na medida (ex-segurança robusto, sem armadura fantasiosa) e `boss_v2.png` acertou em cheio (zumbi colossal, mutação orgânica, sem magia, sozinho na cena). Fechamos o elenco inteiro: Sobrevivente (`survivor_v2`), Comum, Rápido, Tanque e Chefão — todos no mesmo tom visual, coerentes entre si e com a Lore.
+
+Vou atualizar o `GDD.md` referenciando esses arquivos como concept art oficial e marcar a etapa de concept art como 100% concluída no `ROADMAP.md`. A partir daqui a próxima etapa (modelagem 3D) é trabalho manual do Felipe — não tem mais nada automatizável nessa frente por enquanto. Bom trabalho, valeu por aceitar o feedback rápido nas duas rodadas.

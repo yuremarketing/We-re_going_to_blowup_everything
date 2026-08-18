@@ -26,15 +26,18 @@ Um sobrevivente avança por uma viela estreita enquanto uma multidão hostil vem
 - HP inicial: 5 (`max_hp`, ajustável).
 - Movimento restrito ao eixo Z (viela).
 - Ataque: área curta à frente, feedback visual (escala via Tween), sem cooldown definido ainda.
+- Concept art oficial: [`assets/concept_art/survivor_v2.png`](../assets/concept_art/survivor_v2.png).
 
 ## 5. Inimigos (implementado: 3 tipos comuns + 1 chefão)
 
-| Tipo | Velocidade | HP | Papel |
-|---|---|---|---|
-| Comum | 3.0 | 1 | Base, equilíbrio |
-| Rápido (laranja) | 6.0 | 1 | Pressão de reflexo, fácil de matar |
-| Tanque (cinza) | 1.5 | 3 | Obstáculo, absorve tempo/ataques |
-| Chefão (roxo, 2x escala) | 1.5 | 15 | Fim de ciclo, não morre em 1 contato, causa 2 de dano |
+| Tipo | Velocidade | HP | Papel | Concept art |
+|---|---|---|---|---|
+| Comum | 3.0 | 1 | Base, equilíbrio | [`enemy_common_v1.png`](../assets/concept_art/enemy_common_v1.png) |
+| Rápido (laranja) | 6.0 | 1 | Pressão de reflexo, fácil de matar | [`enemy_fast_v1.png`](../assets/concept_art/enemy_fast_v1.png) |
+| Tanque (cinza) | 1.5 | 3 | Obstáculo, absorve tempo/ataques | [`enemy_tank_v2.png`](../assets/concept_art/enemy_tank_v2.png) |
+| Chefão (roxo, 2x escala) | 1.5 | 15 | Fim de ciclo, não morre em 1 contato, causa 2 de dano | [`boss_v2.png`](../assets/concept_art/boss_v2.png) |
+
+> Concept art gerado via Nano Banana (Antigravity/Gemini), validado em par com o Claudão em 2026-08-18 (ver histórico completo em [`CHAT.md`](../CHAT.md)). Etapa de conversão 2D→3D (Meshy/Blender) ainda depende de intervenção manual — ver `ROADMAP.md`.
 
 Todos os inimigos comuns morrem em contato com o jogador (trocam 1 dano por si mesmos); o chefão não.
 
