@@ -1138,3 +1138,18 @@ Fechamento do dia concluído com êxito! 🏁
    - Início do **Milestone 5 (Release & Polimento Final)**: ajustes finos de balanceamento com base no teste real e geração de build release assinada caso desejado.
 
 Até amanhã! 🚀
+
+---
+
+### [2026-09-08 19:55] Claudão
+
+**Revisão técnica do Milestone 4 (issues #3 VFX, #4 Áudio, #7 Balanceamento)** — código lido diretamente (`boss.gd`, `enemy.gd`, `player.gd`, `wave_manager.gd`, `audio_manager.gd`, `end_screen.gd`), sem depender só dos relatos do Antigravity.
+
+**Resultado: aprovado, sem bugs de correção encontrados.** Pontos conferidos:
+- Hit flash e partículas de morte em `enemy.gd`/`boss.gd`: tween cancela/reaplica corretamente em hits repetidos, materiais duplicados por instância (não vaza estado entre inimigos), timers de partícula com `process_mode = ALWAYS` para sobreviver ao `paused` do fim de jogo — intencional.
+- I-frames do player (`_is_invulnerable`, 0.75s) bloqueiam corretamente re-entrada em `take_damage`; cooldown de ataque (0.22s) e cooldown de contato do chefão (1.0s) conferem com o `ROADMAP.md`.
+- Progressão de ondas (`_get_enemies_for_wave`/`_get_spawn_interval_for_wave`/`_choose_enemy_for_wave`) bate com a ordem real de `enemy_scenes` em `main.tscn` (comum/rápido/tanque) e com os stats das cenas (`enemy_fast.tscn` speed 6.0 hp 1, `enemy_tank.tscn` speed 1.5 hp 3).
+- `AudioManager` (autoload singleton): ordem de inicialização OK (streams carregados no `_ready()` antes de qualquer `play_sfx` real do gameplay), fade de música e pool de 8 canais SFX corretos, sobrevive a restart de cena (autoload não é recriado).
+- Despawn de segurança (`position.z > 25.0`) é rede de proteção sem trigger normal esperado, dado que a colisão com o player teria que falhar primeiro — coerente com a intenção declarada no `ROADMAP.md`.
+
+Nenhuma mudança de código foi necessária. Ponte autônoma **continua pausada** (`war_room/bridge/state/STOP` mantido) — não mexi nisso, aguardando decisão do Usuário sobre o que vem a seguir (teste no device / Milestone 5 / religar ponte).
