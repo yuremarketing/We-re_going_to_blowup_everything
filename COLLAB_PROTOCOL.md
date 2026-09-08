@@ -74,3 +74,9 @@ Decidido em `war_room/CHAT.md` (2026-09-08). Os dois agentes editam `war_room/CH
 6. Toda troca autônoma continua sendo registrada em `war_room/CHAT.md`/`HANDOVER.md` normalmente — a ponte muda quem aciona o próximo turno, não o formato de comunicação nem a rastreabilidade.
 
 Enquanto o watcher não estiver rodando, o fluxo padrão continua sendo o handover manual da seção 1.
+
+**Incidente conhecido (2026-09-08) e correções aplicadas:** uma sessão manual do `agy` deixada aberta no terminal (fora do `watch.sh`, iniciada antes de uma rodada de mudanças) escreveu de volta no `war_room/CHAT.md` com uma cópia desatualizada em memória, sobrescrevendo ~260 linhas — e o auto-commit do `watch.sh` gravou essa sobrescrita sem perceber. Nada foi perdido (git tinha o histórico), mas duas correções entraram no `watch.sh`:
+1. `resolve_next_agent()`: se `Turno Atual` no `HANDOVER.md` estiver em estado de pausa (`Usuário`), cai pro `Próximo Turno` em vez de só notificar e não fazer nada.
+2. `looks_like_destructive_overwrite()`: antes de commitar, compara linhas adicionadas/removidas em `CHAT.md`/`HANDOVER.md` — se parecer sobrescrita (muito mais remoção que adição), **não commita**, cria `war_room/bridge/state/STOP` automaticamente e notifica o usuário.
+
+**Lição prática:** não deixe uma sessão manual/interativa do `agy` ou do `claude` aberta em paralelo enquanto o `watch.sh` estiver rodando — as invocações do próprio watcher são processos novos por turno (sem esse risco), mas uma sessão manual esquecida pode segurar uma cópia velha do arquivo por muito tempo e sobrescrever o que a ponte fez nesse meio-tempo.
