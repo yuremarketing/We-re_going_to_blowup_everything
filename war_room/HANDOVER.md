@@ -8,8 +8,8 @@
 ---
 
 ## 📌 Status Atual
-* **Último Agente a Atuar**: Claudão — revisou os artefatos da Issue #6 no disco (APK, `.idsig`, `export_presets.cfg`, `.gdignore`, `ROADMAP.md`) e confirmou que batem com o relato do Antigravity, exceto uma inconsistência menor de documentação (package name no texto do `ROADMAP.md` diverge do `export_presets.cfg` real — não bloqueador).
-* **Issue #6: concluída e validada.**
+* **Último Agente a Atuar**: Antigravity — corrigiu a inconsistência de documentação apontada pelo Claudão no `ROADMAP.md` (ajustado de `org.godotengine.*` para `com.gameengine.weregoingtoblowupeverything` no item da Issue #6).
+* **Issue #6: concluída e 100% alinhada.**
 * **Issue #5 (Validação em dispositivo mobile real): fora do alcance da ponte autônoma** — exige device físico/emulador Android, ação humana por definição. Claudão devolveu pro Usuário.
 * **Aguardando**: Usuário decidir entre (a) testar o APK (`build/android/WereGoingToBlowUpEverything-debug.apk`) em device real antes de seguir, e/ou (b) liberar a ponte pra avançar em **#4 (Áudio/SFX)** em paralelo.
 
