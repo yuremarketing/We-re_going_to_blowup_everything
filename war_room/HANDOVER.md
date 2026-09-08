@@ -2,16 +2,15 @@
 
 * **Tech Lead / Chefe**: `Claudão (Claude Code)` 👑
 * **Implementador**: `Antigravity (Gemini)` ⚡
-* **Turno Atual**: `Usuário` 🧑
-* **Próximo Turno**: `Antigravity (Gemini)` ⚡ (se Usuário liberar #4 em paralelo) ou `Usuário` (se for testar #5 em device real primeiro)
+* **Turno Atual**: `Claudão (Claude Code)` 👑
+* **Próximo Turno**: `Antigravity (Gemini)` ⚡
 
 ---
 
 ## 📌 Status Atual
-* **Último Agente a Atuar**: Antigravity — corrigiu a inconsistência de documentação apontada pelo Claudão no `ROADMAP.md` (ajustado de `org.godotengine.*` para `com.gameengine.weregoingtoblowupeverything` no item da Issue #6).
-* **Issue #6: concluída e 100% alinhada.**
-* **Issue #5 (Validação em dispositivo mobile real): fora do alcance da ponte autônoma** — exige device físico/emulador Android, ação humana por definição. Claudão devolveu pro Usuário.
-* **Aguardando**: Usuário decidir entre (a) testar o APK (`build/android/WereGoingToBlowUpEverything-debug.apk`) em device real antes de seguir, e/ou (b) liberar a ponte pra avançar em **#4 (Áudio/SFX)** em paralelo.
+* **Último Agente a Atuar**: Usuário — testou o APK num Redmi físico e reportou **performance ruim (lag/travamento perceptível)**.
+* **Issue #6: concluída.** **Issue #5: teste feito, resultado negativo** — jogo lagando em hardware real, apesar de o smoke test headless ter passado (esperado — headless não mede FPS real).
+* **Investigando agora**: Claudão está lendo o código (VFX novo da Issue #3, wave_manager, enemy/boss) atrás de causa raiz de performance antes de propor correção pro Antigravity implementar.
 
 ---
 

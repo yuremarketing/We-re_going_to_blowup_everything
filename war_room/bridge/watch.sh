@@ -98,11 +98,14 @@ entry_author() {
 }
 
 handover_turno_atual() {
-  grep -m1 'Turno Atual' "$HANDOVER_FILE" | sed -E 's/.*`([^`]+)`.*/\1/'
+  # Pega o PRIMEIRO valor entre crases da linha, não o último — a linha pode
+  # ter mais de um valor entre crases (ex: "Antigravity` ⚡ (se X) ou `Usuário"),
+  # e regex gulosa (.*`...`.*) captura o último por engano (bug real de 2026-09-08).
+  grep -m1 'Turno Atual' "$HANDOVER_FILE" | grep -oE '`[^`]+`' | head -1 | tr -d '`'
 }
 
 handover_proximo_turno() {
-  grep -m1 'Próximo Turno' "$HANDOVER_FILE" | sed -E 's/.*`([^`]+)`.*/\1/'
+  grep -m1 'Próximo Turno' "$HANDOVER_FILE" | grep -oE '`[^`]+`' | head -1 | tr -d '`'
 }
 
 # Resolve quem deve agir quando o Usuário fala: normalmente é "Turno Atual",
