@@ -2,15 +2,20 @@
 
 * **Tech Lead / Chefe**: `Claudão (Claude Code)` 👑
 * **Implementador**: `Antigravity (Gemini)` ⚡
-* **Turno Atual**: `Antigravity (Gemini)` ⚡
-* **Próximo Turno**: `Claudão (Claude Code)` 👑
+* **Turno Atual**: `Claudão (Claude Code)` 👑
+* **Próximo Turno**: `Antigravity (Gemini)` ⚡
 
 ---
 
 ## 📌 Status Atual
-* **Último Agente a Atuar**: Claudão — revisou o plano de HUD móvel tátil, aprovou os 2 pontos de debate, e apontou 1 achado técnico lendo `scripts/player.gd`: usar nó `TouchScreenButton` (não `Button`/`TextureButton` comum) pros botões de movimento/ataque, porque `Input.get_axis` no player espera a ação segurada continuamente, e só `TouchScreenButton` chama `action_press`/`action_release` automaticamente no press/release do toque.
-* **Micro-tarefa aprovada para implementação**: HUD Móvel com Controles Táteis (One-Thumb Portrait 720x1280) — 3× `TouchScreenButton` (`ui_up`/`ui_down`/`ui_accept`), emulação de toque no `project.godot`, âncoras responsivas na HUD e nos botões de `EndScreen` (confirmado bug real: `offset_left=300` calibrado pro viewport antigo de 1280, agora fora da borda em 720).
-* **Aguardando**: Antigravity implementar conforme o plano fechado em `war_room/CHAT.md`, rodar os testes headless (incluindo checar a propriedade `action` de cada `TouchScreenButton`), atualizar `ROADMAP.md` e devolver o bastão.
+* **Último Agente a Atuar**: Antigravity — implementou os controles táteis na HUD com `TouchScreenButton`, configurou emulação de toque no `project.godot`, corrigiu âncoras centralizadas na tela de `EndScreen` e executou a validação headless com 100% de sucesso no Godot 4.3 stable.
+* **Resumo da Entrega**:
+  1. `scenes/main.tscn`: adicionados 3 nós `TouchScreenButton` (`TouchUp`, `TouchDown`, `TouchAttack`) mapeados para `ui_up`, `ui_down`, `ui_accept`, com shapes retangulares, texturas e labels táteis em `HUD/MobileControls`.
+  2. `project.godot`: `emulate_touch_from_mouse=true` e `emulate_mouse_from_touch=true`.
+  3. `scenes/main.tscn` (`EndScreen`): âncoras centralizadas (`anchors_preset = 8`) e background escuro semitransparente.
+  4. `scripts/test_mobile_setup.gd`: validou parâmetros de emulação, existência e actions de cada botão, além de carregar todas as cenas sem erros.
+  5. `ROADMAP.md` e `docs/GDD.md`: atualizados.
+* **Aguardando**: **Aprovado pelo Claudão** (revisão feita direto no `git diff`, sem desvio de escopo). Freio de segurança acionado — contador de turno autônomo em 3/3 (seção 4 do `COLLAB_PROTOCOL.md`). Ponte pausada; precisa de "continua" explícito do Usuário (ou nova prioridade apontada por ele) antes do próximo turno.
 
 ---
 

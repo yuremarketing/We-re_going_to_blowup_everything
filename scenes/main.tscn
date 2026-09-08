@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3]
+[gd_scene load_steps=23 format=3]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_script"]
 [ext_resource type="Script" path="res://scripts/wave_manager.gd" id="2_wm"]
@@ -17,6 +17,44 @@ size = Vector3(10, 1, 100)
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_player"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_player"]
+
+[sub_resource type="Gradient" id="Gradient_btn_move"]
+colors = PackedColorArray(0.15, 0.15, 0.15, 0.7, 0.25, 0.25, 0.25, 0.7)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_btn_move"]
+gradient = SubResource("Gradient_btn_move")
+width = 160
+height = 100
+
+[sub_resource type="Gradient" id="Gradient_btn_move_pressed"]
+colors = PackedColorArray(0.35, 0.35, 0.35, 0.85, 0.45, 0.45, 0.45, 0.85)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_btn_move_pressed"]
+gradient = SubResource("Gradient_btn_move_pressed")
+width = 160
+height = 100
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_btn_move"]
+size = Vector2(160, 100)
+
+[sub_resource type="Gradient" id="Gradient_btn_attack"]
+colors = PackedColorArray(0.6, 0.1, 0.1, 0.75, 0.8, 0.2, 0.2, 0.75)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_btn_attack"]
+gradient = SubResource("Gradient_btn_attack")
+width = 180
+height = 180
+
+[sub_resource type="Gradient" id="Gradient_btn_attack_pressed"]
+colors = PackedColorArray(0.9, 0.2, 0.2, 0.9, 1, 0.4, 0.4, 0.9)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_btn_attack_pressed"]
+gradient = SubResource("Gradient_btn_attack_pressed")
+width = 180
+height = 180
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_btn_attack"]
+size = Vector2(180, 180)
 
 [node name="Main" type="Node3D"]
 
@@ -55,31 +93,141 @@ boss_scene = ExtResource("4_boss")
 [node name="HUD" type="CanvasLayer" parent="."]
 
 [node name="HPLabel" type="Label" parent="HUD" groups=["hud_hp"]]
-offset_left = 20.0
-offset_top = 20.0
+offset_left = 30.0
+offset_top = 40.0
+offset_right = 200.0
+offset_bottom = 75.0
+theme_override_font_sizes/font_size = 24
 text = "HP: 5/5"
 
 [node name="WaveLabel" type="Label" parent="HUD" groups=["hud_wave"]]
-offset_left = 20.0
-offset_top = 50.0
+offset_left = 30.0
+offset_top = 80.0
+offset_right = 200.0
+offset_bottom = 115.0
+theme_override_font_sizes/font_size = 24
 text = "Onda: 0/5"
+
+[node name="MobileControls" type="Control" parent="HUD"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="TouchUp" type="TouchScreenButton" parent="HUD/MobileControls"]
+position = Vector2(50, 990)
+texture_normal = SubResource("GradientTexture2D_btn_move")
+texture_pressed = SubResource("GradientTexture2D_btn_move_pressed")
+shape = SubResource("RectangleShape2D_btn_move")
+shape_centered = true
+action = "ui_up"
+visibility_mode = 0
+
+[node name="Label" type="Label" parent="HUD/MobileControls/TouchUp"]
+offset_right = 160.0
+offset_bottom = 100.0
+mouse_filter = 2
+theme_override_font_sizes/font_size = 22
+text = "▲ AVANÇAR"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TouchDown" type="TouchScreenButton" parent="HUD/MobileControls"]
+position = Vector2(50, 1110)
+texture_normal = SubResource("GradientTexture2D_btn_move")
+texture_pressed = SubResource("GradientTexture2D_btn_move_pressed")
+shape = SubResource("RectangleShape2D_btn_move")
+shape_centered = true
+action = "ui_down"
+visibility_mode = 0
+
+[node name="Label" type="Label" parent="HUD/MobileControls/TouchDown"]
+offset_right = 160.0
+offset_bottom = 100.0
+mouse_filter = 2
+theme_override_font_sizes/font_size = 22
+text = "▼ RECUAR"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TouchAttack" type="TouchScreenButton" parent="HUD/MobileControls"]
+position = Vector2(490, 1010)
+texture_normal = SubResource("GradientTexture2D_btn_attack")
+texture_pressed = SubResource("GradientTexture2D_btn_attack_pressed")
+shape = SubResource("RectangleShape2D_btn_attack")
+shape_centered = true
+action = "ui_accept"
+visibility_mode = 0
+
+[node name="Label" type="Label" parent="HUD/MobileControls/TouchAttack"]
+offset_right = 180.0
+offset_bottom = 180.0
+mouse_filter = 2
+theme_override_font_sizes/font_size = 26
+text = "⚔️
+ATACAR"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="EndScreen" type="CanvasLayer" parent="." groups=["end_screen"]]
 process_mode = 3
 visible = false
 script = ExtResource("7_endscreen")
 
+[node name="Background" type="ColorRect" parent="EndScreen"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.6)
+
 [node name="ResultLabel" type="Label" parent="EndScreen"]
-offset_left = 300.0
-offset_top = 200.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -140.0
+offset_right = 200.0
+offset_bottom = -80.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 36
 text = "GAME OVER"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="RestartButton" type="Button" parent="EndScreen"]
-offset_left = 300.0
-offset_top = 250.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -140.0
+offset_top = -40.0
+offset_right = 140.0
+offset_bottom = 25.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 24
 text = "Reiniciar"
 
 [node name="MenuButton" type="Button" parent="EndScreen"]
-offset_left = 300.0
-offset_top = 300.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -140.0
+offset_top = 45.0
+offset_right = 140.0
+offset_bottom = 110.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 24
 text = "Menu Principal"

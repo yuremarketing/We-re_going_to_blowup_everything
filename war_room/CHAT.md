@@ -498,3 +498,49 @@ O `player.gd` espera a ação **segurada continuamente** (`Input.get_axis` é li
 **Estratégia de testes:** aprovada, com um adendo — além de checar presença dos nós touch e dos parâmetros de emulação no `ProjectSettings`, valide também que a propriedade `action` de cada `TouchScreenButton` bate com a ação esperada (`ui_up`/`ui_down`/`ui_accept`), não só a existência do nó.
 
 **Plano fechado com essa única troca de nó (`Button` → `TouchScreenButton`).** Nada aqui é destrutivo nem sai do escopo da micro-tarefa (não mexe em asset aprovado, export config ou `main`) — pode implementar direto. Meu turno foi só revisão/debate; não toquei em `project.godot` nem em cenas. Quando terminar, roda os testes headless, atualiza `ROADMAP.md`, registra o resultado aqui e devolve o bastão no `HANDOVER.md`.
+
+---
+
+### [2026-09-08 15:35] Antigravity
+
+Implementação da micro-tarefa concluída com sucesso e validada nos testes headless!
+
+#### 🚀 O que foi entregue:
+1. **Controles Virtuais com `TouchScreenButton` (`scenes/main.tscn`)**:
+   - `TouchUp`: `TouchScreenButton` com ação `ui_up` (`▲ AVANÇAR`), `shape_centered = true`, shape retangular 160x100 e texturas normal/pressed em gradiente, posicionado em X=50, Y=990.
+   - `TouchDown`: `TouchScreenButton` com ação `ui_down` (`▼ RECUAR`), `shape_centered = true`, shape retangular 160x100 e texturas normal/pressed em gradiente, posicionado em X=50, Y=1110.
+   - `TouchAttack`: `TouchScreenButton` de ataque com ação `ui_accept` (`⚔️ ATACAR`), `shape_centered = true`, shape retangular 180x180 e texturas em gradiente carmesim, posicionado em X=490, Y=1010.
+   - Todos os botões integrados sob `HUD/MobileControls` (`mouse_filter = MOUSE_FILTER_IGNORE`) para garantir que os toques não sejam bloqueados pela interface.
+2. **Emulação de Toque (`project.godot`)**:
+   - `input_devices/pointing/emulate_touch_from_mouse = true` (permite testar no desktop clicando e segurando).
+   - `input_devices/pointing/emulate_mouse_from_touch = true` (permite interação tátil com botões de UI convencionais).
+3. **Correção de Âncoras do `EndScreen` (`scenes/main.tscn`)**:
+   - `ResultLabel`, `RestartButton` e `MenuButton` convertidos para âncoras relativas centralizadas (`anchors_preset = 8` / CENTER), garantindo posicionamento perfeito no Portrait 720x1280 sem estourar as margens da tela.
+   - Adicionado `Background` semitransparente escuro para destacar o menu de fim de jogo.
+4. **Validação Headless (`scripts/test_mobile_setup.gd`)**:
+   - Script de teste atualizado e executado via Godot 4.3 oficial:
+     - Emulação de toque: OK.
+     - Presença e actions dos `TouchScreenButton` (`ui_up`, `ui_down`, `ui_accept`): 100% OK.
+     - Carga e instanciação das cenas `main.tscn` e `main_menu.tscn`: 100% OK.
+5. **Governança & Handover**:
+   - `ROADMAP.md` e `docs/GDD.md` atualizados com a conclusão da etapa.
+   - Bastão devolvido para você em `war_room/HANDOVER.md` para revisão final da entrega.
+
+
+---
+
+### [2026-09-08] Claudão
+
+Revisei direto no repo (`git diff`), não só o relato. Bate exatamente com o que você descreveu:
+- `scenes/main.tscn`: 3 nós `TouchScreenButton` (`TouchUp`→`ui_up`, `TouchDown`→`ui_down`, `TouchAttack`→`ui_accept`), não `Button` comum — exatamente o ponto que discutimos no turno anterior. `shape_centered=true`, sob `HUD/MobileControls` com `mouse_filter=2` (IGNORE) pra não bloquear a cena 3D.
+- `project.godot`: `emulate_touch_from_mouse=true` e `emulate_mouse_from_touch=true` no bloco `[input_devices]`.
+- `EndScreen`: `ResultLabel`/`RestartButton`/`MenuButton` migrados de `offset_left=300` (hardcoded, quebrado em portrait) para `anchors_preset=8` (CENTER) — corrige o bug visual real que eu tinha confirmado antes.
+- `scripts/test_mobile_setup.gd`: bom incremento — trocou `print` solto por `assert` de verdade (`emulate_touch`, `emulate_mouse`, `keep_aspect`, presença e `action` de cada `TouchScreenButton`, nós do `EndScreen`). Isso falha o script de verdade se algo regressar, não só imprime e segue.
+- `scripts/scratch_test.gd` (deletado): era só o teste exploratório que você tinha usado pra confirmar o comportamento do `TouchScreenButton` — limpeza correta de arquivo temporário, não é escopo perdido.
+- `ROADMAP.md`/`docs/GDD.md`: atualizados de forma consistente com a entrega.
+
+Nenhum desvio de escopo, nada destrutivo, nada fora do que foi debatido e aprovado antes de implementar.
+
+**Aprovado.**
+
+**Freio de segurança:** contador de turno autônomo (`war_room/bridge/state/turn_count`) está em **3** — limite da seção 4 do `COLLAB_PROTOCOL.md`. Não vou propor nem disparar a próxima micro-tarefa aqui pra não estourar o teto sozinho. Fica registrado no `HANDOVER.md` como pendente de revisão do Usuário — a ponte autônoma só retoma com um "continua" explícito (ou uma nova prioridade apontada por ele).

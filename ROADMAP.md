@@ -30,6 +30,7 @@
 - [x] GDD e LDD v1 (gerados/mantidos com apoio de IA) — ver [`docs/GDD.md`](./docs/GDD.md) e [`docs/LDD.md`](./docs/LDD.md)
 - [x] Lore mínima coerente com o tema — ver [`docs/LORE.md`](./docs/LORE.md)
 - [x] Ajustes de performance para o dispositivo-alvo — **concluído**: plataforma configurada para Mobile-first no `project.godot` (rendering method `mobile`, fallback `gl_compatibility`, viewport Portrait 720x1280 com `sensor_portrait`, stretch `canvas_items/expand`, VSync ativado, 2x MSAA e compressão de textura ETC2/ASTC). Camera3D em `scenes/main.tscn` ajustada para `keep_aspect = KEEP_WIDTH`. Testado e validado em modo headless com Godot 4.3 stable. Baseline de export Android criado.
+- [x] HUD Móvel com Controles Táteis (TouchScreenButton) — **concluído**: implementados controles táteis One-Thumb Portrait no HUD de `scenes/main.tscn` (`TouchScreenButton` para avanço `ui_up`, recuo `ui_down` e ataque `ui_accept`), ativação de emulação de toque no `project.godot` e centralização de âncoras na tela de fim de jogo (`EndScreen`). Testado e validado em modo headless no Godot 4.3 stable.
 
 ---
 

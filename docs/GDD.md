@@ -51,7 +51,8 @@ Todos os inimigos comuns morrem em contato com o jogador (trocam 1 dano por si m
 ## 7. HUD (implementado)
 - Label de HP (`HP: x/5`).
 - Label de progresso de onda (`Onda: x/5`).
-- Sem estilização ainda — puramente funcional.
+- Controles táteis mobile (One-Thumb Portrait): botões `TouchScreenButton` para avanço (`▲` / `ui_up`), recuo (`▼` / `ui_down`) e ataque (`⚔️` / `ui_accept`), posicionados no terço inferior da tela. Emulação de toque ativada para permitir testes no desktop via clique de mouse.
+- Tela de fim de jogo (`EndScreen`) com âncoras centralizadas para Portrait 720x1280.
 
 ## 8. Fora do escopo do MVP (backlog)
 - Multiplayer/coop.
