@@ -5,6 +5,7 @@ extends CharacterBody3D
 
 var _base_albedo: Color = Color.RED
 var _flash_tween: Tween
+static var _cached_mesh_dict: Dictionary = {}
 
 func _ready() -> void:
 	add_to_group("enemies")
@@ -93,13 +94,18 @@ func spawn_death_particles() -> void:
 	particles.initial_velocity_max = 5.0
 	particles.gravity = Vector3(0, -9.8, 0)
 	
-	var box = BoxMesh.new()
-	box.size = Vector3(0.12, 0.12, 0.12)
-	var p_mat = StandardMaterial3D.new()
-	p_mat.albedo_color = _base_albedo
-	p_mat.emission_enabled = true
-	p_mat.emission = _base_albedo * 0.5
-	box.material = p_mat
+	var box: BoxMesh
+	if _cached_mesh_dict.has(_base_albedo):
+		box = _cached_mesh_dict[_base_albedo]
+	else:
+		box = BoxMesh.new()
+		box.size = Vector3(0.12, 0.12, 0.12)
+		var p_mat = StandardMaterial3D.new()
+		p_mat.albedo_color = _base_albedo
+		p_mat.emission_enabled = true
+		p_mat.emission = _base_albedo * 0.5
+		box.material = p_mat
+		_cached_mesh_dict[_base_albedo] = box
 	particles.mesh = box
 	
 	var tree = get_tree()

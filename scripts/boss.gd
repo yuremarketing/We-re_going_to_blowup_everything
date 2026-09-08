@@ -6,6 +6,7 @@ extends CharacterBody3D
 
 var _base_albedo: Color = Color(0.5, 0, 0.5, 1)
 var _flash_tween: Tween
+static var _cached_mesh: BoxMesh = null
 
 func _ready() -> void:
 	add_to_group("enemies")
@@ -99,14 +100,15 @@ func spawn_death_particles() -> void:
 	particles.initial_velocity_max = 7.0
 	particles.gravity = Vector3(0, -9.8, 0)
 	
-	var box = BoxMesh.new()
-	box.size = Vector3(0.2, 0.2, 0.2)
-	var p_mat = StandardMaterial3D.new()
-	p_mat.albedo_color = _base_albedo
-	p_mat.emission_enabled = true
-	p_mat.emission = _base_albedo
-	box.material = p_mat
-	particles.mesh = box
+	if not _cached_mesh:
+		_cached_mesh = BoxMesh.new()
+		_cached_mesh.size = Vector3(0.2, 0.2, 0.2)
+		var p_mat = StandardMaterial3D.new()
+		p_mat.albedo_color = _base_albedo
+		p_mat.emission_enabled = true
+		p_mat.emission = _base_albedo
+		_cached_mesh.material = p_mat
+	particles.mesh = _cached_mesh
 	
 	var tree = get_tree()
 	var spawn_pos = global_position if is_inside_tree() else position
