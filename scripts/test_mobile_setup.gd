@@ -23,6 +23,12 @@ func _init():
 	assert(emulate_touch == true, "emulate_touch_from_mouse must be true")
 	assert(emulate_mouse == true, "emulate_mouse_from_touch must be true")
 	
+	var audio_script = preload("res://scripts/audio_manager.gd")
+	var audio_mgr = audio_script.new()
+	audio_mgr.name = "AudioManager"
+	root.add_child(audio_mgr)
+	print("AudioManager initialized OK")
+	
 	var main_scene = load("res://scenes/main.tscn")
 	if not main_scene:
 		printerr("ERROR: Could not load scenes/main.tscn")
@@ -87,7 +93,20 @@ func _init():
 	
 	var menu_scene = load("res://scenes/main_menu.tscn")
 	var menu_inst = menu_scene.instantiate()
-	print("All scenes, mobile controls and VFX verified successfully!")
+	
+	# Verify AudioManager SFX and Music
+	audio_mgr.play_sfx("attack")
+	audio_mgr.play_sfx("hit")
+	audio_mgr.play_sfx("player_hurt")
+	audio_mgr.play_sfx("enemy_death")
+	audio_mgr.play_sfx("boss_spawn")
+	audio_mgr.play_sfx("victory")
+	audio_mgr.play_sfx("game_over")
+	audio_mgr.play_music(0.1)
+	audio_mgr.stop_music(0.0)
+	print("AudioManager SFX and Music playback verified OK")
+	
+	print("All scenes, mobile controls, audio and VFX verified successfully!")
 	print("--- Headless Mobile, Touch & VFX Verification End ---")
 	inst.free()
 	menu_inst.free()

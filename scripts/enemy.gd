@@ -42,6 +42,8 @@ func _physics_process(delta: float) -> void:
 	if player and abs(player.position.z - position.z) < 1.5:
 		player.take_damage(1)
 		queue_free()
+	elif position.z > 25.0:
+		queue_free()
 
 func take_damage(amount: int) -> void:
 	hp -= amount
@@ -77,9 +79,15 @@ func play_hit_flash() -> void:
 			mat.albedo_color = _base_albedo
 	)
 
+func _get_audio():
+	return get_node_or_null("/root/AudioManager")
+
 func spawn_death_particles() -> void:
 	if not is_inside_tree():
 		return
+	var audio = _get_audio()
+	if audio:
+		audio.play_sfx("enemy_death", 0.08)
 	var particles = CPUParticles3D.new()
 	particles.top_level = true
 	particles.process_mode = Node.PROCESS_MODE_ALWAYS

@@ -12,6 +12,13 @@ func _ready() -> void:
 func show_result(text: String) -> void:
 	result_label.text = text
 	visible = true
+	var audio = get_node_or_null("/root/AudioManager")
+	if audio:
+		audio.stop_music(0.3)
+		if "VITÓRIA" in text.to_upper() or "PARABÉNS" in text.to_upper() or "VITORIA" in text.to_upper():
+			audio.play_sfx("victory")
+		else:
+			audio.play_sfx("game_over")
 
 func _on_restart_pressed() -> void:
 	get_tree().paused = false

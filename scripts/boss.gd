@@ -31,6 +31,9 @@ func _setup_material() -> void:
 		mesh_inst.set_surface_override_material(0, dup)
 		_base_albedo = dup.albedo_color
 
+var _attack_cooldown_timer: float = 0.0
+const ATTACK_INTERVAL: float = 1.0
+
 func _physics_process(delta: float) -> void:
 	if not is_inside_tree():
 		return
@@ -39,9 +42,13 @@ func _physics_process(delta: float) -> void:
 		velocity.y -= 9.8 * delta
 	move_and_slide()
 
+	if _attack_cooldown_timer > 0.0:
+		_attack_cooldown_timer -= delta
+
 	var player = get_tree().get_first_node_in_group("player")
-	if player and abs(player.position.z - position.z) < 2.0:
+	if player and abs(player.position.z - position.z) < 2.0 and _attack_cooldown_timer <= 0.0:
 		player.take_damage(contact_damage)
+		_attack_cooldown_timer = ATTACK_INTERVAL
 		# Chefão NÃO morre no contato (diferente do inimigo comum) — precisa de vários ataques.
 
 func take_damage(amount: int) -> void:
@@ -83,9 +90,15 @@ func play_hit_flash() -> void:
 			mat.albedo_color = _base_albedo
 	)
 
+func _get_audio():
+	return get_node_or_null("/root/AudioManager")
+
 func spawn_death_particles() -> void:
 	if not is_inside_tree():
 		return
+	var audio = _get_audio()
+	if audio:
+		audio.play_sfx("enemy_death", 0.05)
 	var particles = CPUParticles3D.new()
 	particles.top_level = true
 	particles.process_mode = Node.PROCESS_MODE_ALWAYS
