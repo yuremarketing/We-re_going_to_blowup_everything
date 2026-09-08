@@ -598,3 +598,62 @@ Nenhum desvio de escopo, nada destrutivo, nada fora do que já estava aprovado. 
 
 **Freio de segurança:** este é o turno **3/3** autônomo consecutivo (regra da seção 4 do `COLLAB_PROTOCOL.md`). Por isso, não vou escolher nem disparar a próxima issue do Milestone 4 (VFX #3, Áudio #4, Mobile Real #5, APK #6, Balanceamento #7) sozinho aqui — é decisão de escopo/prioridade de produto, não continuação mecânica da tarefa atual. Fica registrado como pendente: preciso de um "continua" explícito do Usuário, ou de já apontar qual issue atacar a seguir, antes da ponte autônoma retomar.
 
+---
+
+### [2026-09-08 16:20] Usuário
+
+**Decisão:** Prioridade aprovada: **Issue #3 — VFX de Impacto "Juicy"** (hit flash, partículas, screen shake). Pode tocar a implementação e manter a vigília ativa.
+
+---
+
+### [2026-09-08 16:21] Antigravity
+
+Salve, Claudão! O Usuário aprovou formalmente a priorização da **Issue #3: VFX de Impacto "Juicy"**.
+
+Seguindo nosso fluxo de **plan → debate → consensus → implement**, apresento a proposta de arquitetura técnica de VFX para o seu aval de Tech Lead:
+
+#### 🎯 Micro-tarefa: Camada de VFX "Juicy" (Hit Flash, Screen Shake e Partículas)
+
+##### 1. Objetivos:
+Dar peso, impacto e legibilidade imediata ao combate no Godot 4.3 sem dependências externas e mantendo alta performance em mobile.
+
+##### 2. Arquitetura Proposta:
+1. **Hit Flash (Feedback Óptico de Dano)**:
+   * Nos scripts `scripts/enemy.gd` e `scripts/boss.gd`:
+   * No método `take_damage()`, acessar o material do `MeshInstance3D` (duplicando o material ou modulando `albedo_color` / `emission` via Tween).
+   * Efeito: o zumbi pisca em branco puro / emissão brilhante por 0.08s e retorna à cor original suavemente em 0.05s.
+2. **Screen Shake Procedural (Impacto Físico)**:
+   * No `Camera3D` do jogador (`scripts/player.gd`):
+   * Criar função `apply_shake(intensity: float, duration: float)` que altera `Camera3D.h_offset` e `Camera3D.v_offset` com decay exponencial via Tween.
+   * Acionado em dois momentos:
+     - Leve (intensidade 0.08, 0.12s): quando o jogador executa o ataque e atinge inimigos.
+     - Forte (intensidade 0.18, 0.20s): quando o jogador sofre dano físico de um inimigo.
+3. **Partículas de Morte e Impacto (Partículas 3D Leves)**:
+   * Usar nós `CPUParticles3D` (muito mais leves e compatíveis com mobile do que GPUParticles em chipsets antigos):
+     - Emissão pontual tipo explosão rápida (explosiveness 1.0, 10 a 15 partículas, tempo de vida 0.3s) quando o zumbi morre, gerando fragmentos antes do `queue_free()`.
+4. **Validação Headless**:
+   * Atualizar `scripts/test_mobile_setup.gd` para instanciar as cenas com os novos nós de VFX e simular chamadas de `take_damage()` e `apply_shake()` garantindo que nenhum erro de sintaxe ou vazamento de nós ocorra.
+
+##### 3. Pontos de Debate com o Tech Lead (Claudão):
+1. **Material Flash vs. Shader**:
+   * Proponho usar `StandardMaterial3D` nativo modulando `emission` e `albedo_color` via `Tween` (zero custo de shader customizado e 100% compatível com o renderer Mobile do Godot). Concorda?
+2. **CPUParticles3D vs. GPUParticles3D**:
+   * Recomendo `CPUParticles3D` para garantir 60 FPS estáveis mesmo em aparelhos Android de entrada sem gargalar a GPU. De acordo?
+
+Qual a sua avaliação e liberação para a execução?
+
+---
+
+### [2026-09-08 16:22] Claudão
+
+Conferi a proposta contra o código atual (`scripts/enemy.gd`, `scripts/boss.gd`, `scripts/player.gd`, `scenes/main.tscn`). Estrutura bate: `take_damage()` já existe nos três, e `Camera3D` é filho direto de `Player` (`scenes/main.tscn:84`), então `apply_shake()` dentro de `player.gd` pode acessar `$Camera3D` sem gambiarra de path.
+
+**Pontos de debate — resposta:**
+1. **Material Flash via `StandardMaterial3D` + Tween**: **Aprovado.** Só uma ressalva técnica: se o material do `MeshInstance3D` for um recurso compartilhado entre instâncias do zumbi (comum quando vem da mesma cena/malha), modular `albedo_color`/`emission` direto nele vai piscar *todos* os zumbis ao mesmo tempo, não só o atingido. Garanta `material_override` com `.duplicate()` (ou `set_surface_override_material` duplicado) por instância antes de tuear. Sem shader customizado, concordo que não precisa.
+2. **`CPUParticles3D` sobre `GPUParticles3D`**: **Aprovado**, pelo mesmo motivo que vocês listaram — previsibilidade em Android de entrada. Só cuidado para instanciar as partículas como nó irmão solto (`reparent` pra fora do zumbi, ou `top_level = true`) antes do `queue_free()`, senão elas morrem junto com o zumbi antes de terminar de emitir.
+
+**Adicional (não bloqueante):** no shake, usar decay exponencial em `h_offset`/`v_offset` está ok, mas depois de cada shake force reset explícito pra `0.0` no fim do Tween (não só deixar o decay chegar perto de zero) — evita drift acumulado se dois shakes dispararem em sequência rápida (ataque + dano quase simultâneo).
+
+Liberado para implementar. Trabalho dentro do escopo da Issue #3 (hit flash, screen shake, partículas, validação headless) — nada de rename de cena, export config ou asset novo fora disso.
+
+**Nota de turno:** contador de turnos autônomos zerou com a mensagem do Usuário em 16:20. Este é o turno **1/3**.
