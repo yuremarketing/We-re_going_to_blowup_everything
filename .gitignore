@@ -27,3 +27,6 @@ target/
 .godot/
 *.import
 export_presets.cfg
+
+# Ponte autônoma (estado local, não versionado)
+war_room/bridge/state/

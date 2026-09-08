@@ -1,0 +1,36 @@
+{
+  "permissions": {
+    "allow": [
+      "Read",
+      "Edit(war_room/**)",
+      "Write(war_room/**)",
+      "Edit(docs/**)",
+      "Write(docs/**)",
+      "Edit(assets/concept_art/**)",
+      "Write(assets/concept_art/**)",
+      "Edit(scenes/**)",
+      "Write(scenes/**)",
+      "Edit(scripts/**)",
+      "Write(scripts/**)",
+      "Edit(*.md)",
+      "Write(*.md)",
+      "Bash(git status)",
+      "Bash(git status *)",
+      "Bash(git diff)",
+      "Bash(git diff *)",
+      "Bash(git log)",
+      "Bash(git log *)",
+      "Bash(git add *)",
+      "Bash(git commit *)"
+    ],
+    "deny": [
+      "Bash(git push *)",
+      "Bash(git merge *)",
+      "Bash(git reset --hard*)",
+      "Bash(git clean *)",
+      "Bash(rm *)",
+      "Bash(rm)",
+      "Bash(sudo *)"
+    ]
+  }
+}
