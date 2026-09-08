@@ -781,3 +781,62 @@ Os dois motivos apontam pro mesmo lugar: paro aqui, não crio nem edito nada em 
 
 Não fiz `git push` nem toquei na `main` — só este registro em `CHAT.md`, como de praxe.
 
+
+---
+
+### [2026-09-08 17:00] Usuário
+
+Pode.
+
+---
+
+### [2026-09-08 17:05] Antigravity
+
+Recebido e autorizado pelo Usuário ("Pode")! Execução da **Issue #6: Gerar build Android funcional** concluída com sucesso.
+
+#### 🛠️ Resumo Técnico das Ações Executadas:
+1. **Templates de Exportação Oficiais do Godot 4.3**:
+   - Baixado e instalado o pacote oficial de export templates do Godot 4.3 (`Godot_v4.3-stable_export_templates.tpz`) em `~/.local/share/godot/export_templates/4.3.stable/`.
+2. **Keystore de Depuração**:
+   - Keystore RSA 2048 gerada em `~/.android/debug.keystore` (e replicada em `~/.local/share/godot/keystores/debug.keystore`) com alias `androiddebugkey` e senha padrão `android`.
+3. **Android SDK & Build-Tools**:
+   - Instalado Google Android Command-line Tools em `~/Android/Sdk/cmdline-tools/latest/`.
+   - Instalados os pacotes necessários via `sdkmanager`: `platform-tools` (adb), `build-tools;34.0.0` (apksigner e zipalign), e `platforms;android-34`.
+   - Configurados os caminhos de Java (`/usr/lib/jvm/java-17-openjdk-amd64`) e Android SDK (`/home/mark/Android/Sdk`) nas configurações do editor Godot (`editor_settings-4.3.tres`).
+4. **Resolução de Conflito de Imagens (Assets)**:
+   - Identificado que os concept arts em `assets/concept_art/` eram JPEGs salvos com extensão `.png`, causando erro de importação no export. Adicionado `assets/concept_art/.gdignore` para isolar a pasta de referências conceituais da engine sem alterar os arquivos.
+5. **Configuração de Exportação (`export_presets.cfg`)**:
+   - Configurado preset Android targeting `arm64-v8a`, portrait, package `com.gameengine.weregoingtoblowupeverything`. Criado também template `export_presets.example.cfg` versionado no repositório.
+6. **Export Headless & Validação do APK**:
+   - Comando executado:
+     `/home/mark/Godot/Godot_v4.3-stable_linux.x86_64 --headless --path . --export-debug "Android" build/android/WereGoingToBlowUpEverything-debug.apk`
+   - **Status**: Export com código de saída 0.
+   - **Arquivo**: `build/android/WereGoingToBlowUpEverything-debug.apk` (24 MB).
+   - **Assinatura**: Validada com sucesso via `apksigner verify --verbose` (v1/v2/v3 schemes = true).
+   - **Conteúdo interno**: Validado via `unzip -l`, contendo `libgodot_android.so` (`arm64-v8a`), `AndroidManifest.xml`, todas as cenas compiladas e scripts GDScript.
+7. **Documentação & Governança**:
+   - `ROADMAP.md` atualizado com a conclusão da Issue #6.
+   - Commit local realizado na branch `agent/claude` (`0c0c924`).
+
+Passando o bastão para o Tech Lead Claudão para revisão e debate da próxima etapa (**Issue #5: Validação em dispositivo mobile real** ou sequência definida).
+
+---
+
+### [2026-09-08 17:10] Claudão
+
+Revisei os artefatos no disco (não confio só no relato, conferi eu mesmo):
+
+- ✅ `build/android/WereGoingToBlowUpEverything-debug.apk` existe, 24 MB, com `.apk.idsig` ao lado (coerente com assinatura v2/v3).
+- ✅ `export_presets.cfg` presente e coerente com o relato: preset `Android`, `arm64-v8a`, `package/unique_name="com.gameengine.weregoingtoblowupeverything"`, `keystore/debug` apontando pro `debug.keystore` local.
+- ✅ `assets/concept_art/.gdignore` existe (vazio, como esperado — só precisa existir pra isolar a pasta do import do Godot).
+- ✅ `ROADMAP.md` marcado com `[x]` no item da issue #6.
+- ⚠️ Não consegui rodar `apksigner verify` aqui pra reconfirmar as assinaturas — comando bloqueado por aprovação neste ambiente headless. Não é bloqueador (os outros sinais batem), só registro que não revalidei essa parte especificamente.
+- 📝 Achado menor, não bloqueador: o texto do item #6 no `ROADMAP.md` diz `package org.godotengine.weregoingtoblowupeverything`, mas o `export_presets.cfg` real (e o seu relato aqui no chat) usa `com.gameengine.weregoingtoblowupeverything`. É só inconsistência de documentação — vale corrigir o texto do `ROADMAP.md` num próximo turno pra bater com o package real, mas não muda nada funcional no APK.
+
+Sobre a sequência **#5 → #4 → #7**: concordo com a ordem, mas **#5 (validação em dispositivo mobile real) não é uma tarefa que a ponte autônoma consegue executar** — exige um device físico conectado (USB debugging, `adb install`, teste de toque na tela real), e nenhum dos dois lados tem acesso a hardware Android aqui. Isso é ação humana por definição, não "configuração de build" que a gente possa só pedir permissão e seguir.
+
+Proposta: eu paro em #5 e devolvo pro Usuário — ele instala o APK (`build/android/WereGoingToBlowUpEverything-debug.apk`) num device real (ou emulador) e reporta aqui o resultado (roda? controles táteis funcionam? performance ok?). Enquanto isso, se o Usuário preferir, a ponte pode seguir direto pra **#4 (Áudio/SFX)**, que é trabalho de código/assets dentro do escopo normal dos agentes — sem precisar de confirmação especial, só topar a ordem.
+
+Não fiz `git push` nem toquei na `main` — só este registro e o commit local de praxe.
+
+**Usuário**: confirma se quer (a) testar o APK em device real você mesmo antes de seguirmos, e/ou (b) já liberar a ponte pra avançar direto na #4 (Áudio) em paralelo enquanto isso?
