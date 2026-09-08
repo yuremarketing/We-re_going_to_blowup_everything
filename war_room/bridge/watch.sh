@@ -85,6 +85,23 @@ handover_turno_atual() {
   grep -m1 'Turno Atual' "$HANDOVER_FILE" | sed -E 's/.*`([^`]+)`.*/\1/'
 }
 
+handover_proximo_turno() {
+  grep -m1 'Próximo Turno' "$HANDOVER_FILE" | sed -E 's/.*`([^`]+)`.*/\1/'
+}
+
+# Resolve quem deve agir quando o Usuário fala: normalmente é "Turno Atual",
+# mas depois de uma pausa (turno 3/3) esse campo fica "Usuário" de propósito
+# — nesse caso cai pro "Próximo Turno" em vez de desistir.
+resolve_next_agent() {
+  local turno
+  turno="$(handover_turno_atual)"
+  if [[ "$turno" == Claudão* || "$turno" == Antigravity* ]]; then
+    echo "$turno"
+    return
+  fi
+  handover_proximo_turno
+}
+
 reset_counter() {
   echo 0 > "$TURN_COUNT_FILE"
 }
@@ -96,6 +113,30 @@ increment_counter() {
   echo "$c"
 }
 
+# Detecta sobrescrita destrutiva: se um arquivo crítico perdeu muito mais
+# linha do que ganhou, provavelmente foi um write_file() com cópia velha em
+# memória (foi exatamente o que corrompeu war_room/CHAT.md em 2026-09-08 —
+# uma sessão manual e antiga do agy sobrescreveu 260 linhas com 3 de novo).
+SUSPICIOUS_FILES="war_room/CHAT.md war_room/HANDOVER.md"
+looks_like_destructive_overwrite() {
+  local f
+  for f in $SUSPICIOUS_FILES; do
+    [ -f "$f" ] || continue
+    local stat added removed
+    stat="$(git diff --numstat -- "$f" 2>/dev/null)"
+    [ -z "$stat" ] && continue
+    added="$(echo "$stat" | awk '{print $1}')"
+    removed="$(echo "$stat" | awk '{print $2}')"
+    [[ "$added" =~ ^[0-9]+$ ]] || continue
+    [[ "$removed" =~ ^[0-9]+$ ]] || continue
+    if [ "$removed" -gt 20 ] && [ "$removed" -gt $((added * 3)) ]; then
+      log "SUSPEITO: $f perdeu $removed linhas e ganhou só $added — parece sobrescrita, não edição normal."
+      return 0
+    fi
+  done
+  return 1
+}
+
 # Commita local (nunca push/merge) qualquer mudança pendente no working tree —
 # principalmente pra cobrir edições do Antigravity, que não consegue commitar
 # sozinho (shell sempre soft-denied em modo headless pelo motor dele).
@@ -104,6 +145,11 @@ auto_commit_pending() {
   if [ -n "$(git status --porcelain)" ]; then
     sleep "$COMMIT_SETTLE_SECONDS"
     if [ -n "$(git status --porcelain)" ]; then
+      if looks_like_destructive_overwrite; then
+        notify "Mudança suspeita detectada (parece sobrescrita, não edição) — NÃO commitei automaticamente. Rode 'git diff' e decida manualmente. Watcher pausando (STOP criado) até você remover o arquivo STOP."
+        touch "$STOP_FILE"
+        return
+      fi
       git add -A
       git commit -m "chore(bridge): auto-commit local de turno autônomo ($(date '+%Y-%m-%d %H:%M'))" >/dev/null 2>&1
       log "Auto-commit local feito (sem push)."
@@ -142,8 +188,8 @@ process_new_entry() {
       ;;
     Usuário)
       local turno
-      turno="$(handover_turno_atual)"
-      log "Mensagem do Usuário — turno atual segundo HANDOVER.md: $turno"
+      turno="$(resolve_next_agent)"
+      log "Mensagem do Usuário — agente resolvido (Turno Atual ou, se pausado, Próximo Turno): $turno"
       count="$(increment_counter)"
       if [[ "$turno" == Claudão* ]]; then
         claude_invoke "Nova mensagem do Usuário em war_room/CHAT.md (turno autônomo $count/$MAX_AUTONOMOUS_TURNS). Leia o arquivo e o HANDOVER.md. $BRIDGE_INSTRUCTIONS"
