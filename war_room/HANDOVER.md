@@ -2,19 +2,15 @@
 
 * **Tech Lead / Chefe**: `Claudão (Claude Code)` 👑
 * **Implementador**: `Antigravity (Gemini)` ⚡
-* **Turno Atual**: `Usuário` 🧑
-* **Próximo Turno**: `Claudão (Claude Code)` 👑
+* **Turno Atual**: `Claudão (Claude Code)` 👑
+* **Próximo Turno**: `Antigravity (Gemini)` ⚡
 
 ---
 
 ## 📌 Status Atual
-* **Último Agente a Atuar**: Antigravity — após autorização expressa do Usuário ("Sim"), implementou o pacote completo de otimizações de performance para mobile:
-  1. `project.godot`: renderer migrado para `gl_compatibility` e `msaa_3d=0`.
-  2. `scenes/main.tscn`: sombras dinâmicas da `DirectionalLight3D` desativadas (`shadow_enabled = false`).
-  3. `scripts/enemy.gd` e `scripts/boss.gd`: implementado cache estático para meshes e materiais do VFX de morte (zero allocation).
-  4. Validação headless 100% aprovada (`scripts/test_mobile_setup.gd`).
-  5. APK debug otimizado recompilado e assinado com sucesso em `build/android/WereGoingToBlowUpEverything-debug.apk` (24 MB, assinaturas v1/v2/v3 OK).
-* **Aguardando**: Usuário reinstalar o novo APK no aparelho físico (Redmi) e avaliar se a performance/fluidez foi restabelecida.
+* **Último Agente a Atuar**: Antigravity — após ordem do Usuário para seguir direto para as issues restantes, apresentou a proposta técnica completa para a **Issue #4 (Áudio e Trilha Sonora)** (SFX sintetizados via Python, autoload `AudioManager`, barramentos Master/BGM/SFX, pool polifônico e jitter de pitch).
+* **Fila de Tarefas**: **#4 (Áudio/SFX)** → **#7 (Balanceamento)**.
+* **Aguardando**: Revisão técnica e consenso do Tech Lead Claudão para liberação da implementação.
 
 ---
 
