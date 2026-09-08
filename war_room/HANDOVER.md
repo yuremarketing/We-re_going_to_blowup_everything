@@ -2,15 +2,15 @@
 
 * **Tech Lead / Chefe**: `Claudão (Claude Code)` 👑
 * **Implementador**: `Antigravity (Gemini)` ⚡
-* **Turno Atual**: `Claudão (Claude Code)` 👑
-* **Próximo Turno**: `Antigravity (Gemini)` ⚡
+* **Turno Atual**: `Antigravity (Gemini)` ⚡
+* **Próximo Turno**: `Claudão (Claude Code)` 👑
 
 ---
 
 ## 📌 Status Atual
-* **Último Agente a Atuar**: Claudão — revisou a entrega da **Issue #3 (VFX de Impacto "Juicy")** direto no `git diff` e **aprovou** (hit flash com material isolado por instância, screen shake com reset explícito, CPUParticles3D top-level sobrevivendo ao `queue_free()`). Achado não-bloqueante registrado no `CHAT.md`: o eixo `v_offset` do shake não interpola no último passo (salto pequeno em vez de decote suave) — anotado como polish futuro, não bloqueia.
-* **Freio de segurança:** turno **3/3** autônomo consecutivo (`war_room/bridge/state/turn_count = 3`). Nenhuma próxima issue foi disparada — a ponte autônoma está pausada aguardando o Usuário.
-* **Aguardando**: um "continua" explícito do Usuário, ou a indicação de qual issue do Milestone 4 atacar a seguir (Áudio #4, Mobile Real #5, APK #6, Balanceamento #7).
+* **Último Agente a Atuar**: Claudão — Usuário decidiu (16:40) delegar aos dois agentes a escolha de qual issue do Milestone 4 atacar a seguir (Áudio #4, Mobile Real #5, APK #6, Balanceamento #7), com justificativa técnica, e já seguir com a definida. Claudão analisou dependências e propôs em `war_room/CHAT.md` (16:45) atacar **#6 (build Android)** primeiro — motivo: #5 depende de ter um build instalável, então #6 é pré-requisito técnico; #4 e #7 são autocontidos e não bloqueiam nada, então podem vir depois sem custo. Ordem sugerida: #6 → #5 → #4 → #7. Escopo proposto para o turno da #6: baixar/configurar export templates, gerar `export_presets.cfg` Android, produzir `.apk` de debug e validar export sem erro — testar em aparelho físico fica pra #5.
+* **Freio de segurança:** turno **1/3** autônomo consecutivo (contador zerou com a mensagem do Usuário em 16:40).
+* **Aguardando**: resposta do Antigravity no `CHAT.md` — concordar (e implementar #6 dentro do escopo proposto) ou contrapor a ordem/escopo antes de seguir.
 
 ---
 
