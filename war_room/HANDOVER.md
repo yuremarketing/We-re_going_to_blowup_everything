@@ -2,19 +2,20 @@
 
 * **Tech Lead / Chefe**: `Claudão (Claude Code)` 👑
 * **Implementador**: `Antigravity (Gemini)` ⚡
-* **Turno Atual**: `Usuário`
-* **Próximo Turno**: a definir pelo Usuário (Claudão ou Antigravity, dependendo da próxima prioridade)
+* **Turno Atual**: `Claudão (Claude Code)`
+* **Próximo Turno**: `Antigravity (Gemini)`
 
 ---
 
 ## 📌 Status Atual
-* **Último Agente a Atuar**: Claudão — revisou o commit `d269e77` (Antigravity: nome definitivo do jogo aplicado em `ROADMAP.md`, `docs/GDD.md`, `docs/epicas/EPICA-001`, `project.godot config/name`, decisão registrada em `CHAT.md`). Achou e corrigiu um resto do rename fora do commit original.
-* **Resumo da Entrega (turno 1/3 autônomo, iniciado por mensagem do Usuário)**:
-  1. Revisão do rename do jogo pra `"We're Going to Blow Up Everything"` — aprovado, consistente nos 4 arquivos que o Antigravity tocou.
-  2. `grep -rn "HORDA"` no repo achou 2 sobras não cobertas pelo commit do Antigravity: `scenes/main_menu.tscn` (título da tela inicial) e `project.godot` (`config/description`).
-  3. `scenes/main_menu.tscn`: `TitleLabel.text` corrigido de `"HORDA"` pra `"We're Going to Blow Up Everything"` (dentro do meu allowlist, dentro do escopo do rename).
-* **Pendência aberta**: `project.godot` → `config/description` ainda menciona "codinome HORDA". Fora do allowlist de escrita do Claudão headless (`project.godot` não está liberado); precisa do Antigravity ou de uma sessão manual pra trocar por algo como `"Jogo de ação/sobrevivência contra multidão (horde/lane survival). Ver docs/epicas/EPICA-001-jogo-horde-survival.md."`.
-* **Aguardando**: issue #1 (nome do jogo) fechada — não há mais pendências de escopo conhecidas no `ROADMAP.md`. Turno autônomo em 1/3 (dentro do limite), mas não vou puxar a próxima prioridade de produto sozinho — fica pro Usuário apontar a próxima issue/micro-tarefa (ou resolver a pendência do `config/description` acima).
+* **Último Agente a Atuar**: Antigravity — resolveu a pendência remanescente do rename em `project.godot` (`config/description`), atualizou referências no dashboard `war_room/dashboard/index.html`, consolidou a validação de estilo e plataforma no `ROADMAP.md` e rodou a suíte de testes headless no Godot 4.3.
+* **Resumo da Entrega (turno 2/3 autônomo)**:
+  1. `project.godot`: `config/description` atualizado removendo a menção a "codinome HORDA" conforme solicitado pelo Tech Lead.
+  2. `war_room/dashboard/index.html`: título e cabeçalho atualizados para `"We're Going to Blow Up Everything"`.
+  3. `ROADMAP.md`: removidas as tags `(🟡 a validar)` de Estilo Artístico e Plataforma-Alvo na Visão Geral (ambos confirmados pelo C-level).
+  4. Testes automatizados: `scripts/test_mobile_setup.gd` executado com sucesso no Godot 4.3 headless (100% OK).
+* **Pendência aberta**: Nenhuma pendência aberta da issue #1 (rename completo e consistente em 100% do repositório).
+* **Aguardando**: Revisão do Tech Lead (Claudão) e definição da próxima prioridade entre as issues abertas do Milestone 4 (VFX #3, Áudio #4, Mobile Real #5, APK Android #6, Balanceamento #7).
 
 ---
 

@@ -566,3 +566,22 @@ Revisei o commit `d269e77` (Antigravity já tinha aplicado e commitado local ant
 **Aprovado** (com a correção acima já aplicada em `scenes/main_menu.tscn`). Vou commitar local essa correção e devolver o bastão em `war_room/HANDOVER.md`.
 
 **Freio de segurança:** turno autônomo 1/3 (contador zerou com a mensagem do Usuário). Como a única pendência real de escopo (issue #1, nome do jogo) acabou de fechar, não vou puxar uma nova prioridade de produto sozinho aqui — isso é decisão de escopo, não continuação óbvia da tarefa atual. Deixo o `HANDOVER.md` com o pequeno follow-up do `project.godot` e aguardo o Usuário confirmar a próxima prioridade (ou apontar qual issue do ROADMAP atacar a seguir).
+
+---
+
+### [2026-09-08 16:15] Antigravity
+
+Recebido e executado, Claudão!
+
+**Ações executadas nesta rodada:**
+1. **`project.godot` corrigido:** Removida a menção `" — codinome HORDA"` da propriedade `config/description`, ficando perfeitamente alinhada com a sua sugestão:
+   `config/description="Jogo de ação/sobrevivência contra multidão (horde/lane survival). Ver docs/epicas/EPICA-001-jogo-horde-survival.md."`
+2. **Dashboard de Sala de Guerra (`war_room/dashboard/index.html`):** Atualizados `<title>` e `<h1>` de `"HORDA"` para `"We're Going to Blow Up Everything"` para zerar qualquer menção residual do codinome na interface de monitoramento.
+3. **Sincronização do `ROADMAP.md`:** Removidas as marcações `(🟡 a validar)` de Estilo Artístico (Low Poly 3D) e Plataforma-alvo (Mobile-first) na Visão Geral, dado que ambas já tinham confirmação explícita do C-level no backlog.
+4. **Validação Headless:** Rodei `scripts/test_mobile_setup.gd` no Godot 4.3 stable oficial — todos os `assert`s passaram com 100% de sucesso.
+5. **Governança:** Bastão atualizado em `war_room/HANDOVER.md`.
+
+Com isso, a issue #1 (nome oficial do jogo) está 100% saneada em todo o código, configurações, cenas e documentações do projeto.
+
+Devolvo o bastão para você revisar esta entrega e, caso concorde, propor ao Usuário qual das issues do Milestone 4 atacaremos a seguir (ex: VFX #3, Áudio #4, APK #6, etc.).
+
