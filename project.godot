@@ -7,7 +7,7 @@ config_version=5
 
 [application]
 
-config/name="HORDA"
+config/name="We're Going to Blow Up Everything"
 config/description="Jogo de ação/sobrevivência contra multidão (horde/lane survival) — codinome HORDA. Ver docs/epicas/EPICA-001-jogo-horde-survival.md."
 run/main_scene="res://scenes/main_menu.tscn"
 config/features=PackedStringArray("4.3", "Mobile")

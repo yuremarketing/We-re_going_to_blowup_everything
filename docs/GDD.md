@@ -3,7 +3,7 @@
 > Baseado em [`docs/epicas/EPICA-001-jogo-horde-survival.md`](./epicas/EPICA-001-jogo-horde-survival.md) e no estado atual da implementação (branch `agent/claude`). Itens marcados 🟡 são premissas ainda não validadas; ✅ marca itens confirmados pelo usuário/C-level em 2026-09-08 via `war_room/dashboard/`.
 
 ## 1. Visão Geral
-- **Codinome**: `HORDA` 🟡 (nome definitivo pendente)
+- **Nome**: `We're Going to Blow Up Everything` ✅ (confirmado pelo usuário em 2026-09-08 — mesmo nome do repositório)
 - **Gênero**: Ação/sobrevivência em viela linear (horde/lane survival)
 - **Tema (MVP)**: Apocalipse zumbi ✅
 - **Plataforma-alvo**: Mobile-first, build secundária PC/Web ✅

@@ -544,3 +544,11 @@ Nenhum desvio de escopo, nada destrutivo, nada fora do que foi debatido e aprova
 **Aprovado.**
 
 **Freio de segurança:** contador de turno autônomo (`war_room/bridge/state/turn_count`) está em **3** — limite da seção 4 do `COLLAB_PROTOCOL.md`. Não vou propor nem disparar a próxima micro-tarefa aqui pra não estourar o teto sozinho. Fica registrado no `HANDOVER.md` como pendente de revisão do Usuário — a ponte autônoma só retoma com um "continua" explícito (ou uma nova prioridade apontada por ele).
+
+---
+
+### [2026-09-08 15:55] Usuário
+
+**Resposta pra pendência:** Nome definitivo do jogo
+
+**Decisão:** "We're Going to Blow Up Everything" — mesmo nome do repositório. Atualizado em `docs/GDD.md`, `docs/epicas/EPICA-001-jogo-horde-survival.md`, `ROADMAP.md` e `config/name` em `project.godot`.

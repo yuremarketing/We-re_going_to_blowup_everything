@@ -45,7 +45,7 @@
 *(Atualizado pelos agentes conforme o avanço das tarefas)*
 
 ### Perguntas em aberto (herdadas da épica — bloqueiam decisões de escopo)
-1. ~~Tema definitivo~~ — resolvido (apocalipse zumbi confirmado). Nome do jogo ainda em aberto — [issue #1](https://github.com/yuremarketing/We-re_going_to_blowup_everything/issues/1).
+1. ~~Tema definitivo~~ — resolvido (apocalipse zumbi confirmado). ~~Nome do jogo~~ — resolvido pelo usuário (2026-09-08): **"We're Going to Blow Up Everything"** (mesmo nome do repositório) — [issue #1](https://github.com/yuremarketing/We-re_going_to_blowup_everything/issues/1) fechada.
 2. ~~Resposta completa da Rodada 3 da entrevista (motion design/VFX/cutscenes)~~ — respondido pelo usuário (2026-09-08): "VFX de impacto "juicy" (hit flash, partículas, screen shake), transições de onda animadas, e cutscenes curtas geradas via IA (transformação de animação/vídeo em sprite sequence, citado na Rodada 5)"
 3. ~~Validação do estilo artístico único (Low Poly 3D)~~ — respondido pelo usuário (2026-09-08): "**Low Poly 3D** como direção oficial (Blender → Meshy → Godot), Pixel Art descartado para não gerar inconsistência"
 4. ~~Plataforma-alvo e requisitos de performance~~ — respondido pelo usuário (2026-09-08): "**Mobile-first** (Android/iOS), com build secundária para PC/Web via Godot"

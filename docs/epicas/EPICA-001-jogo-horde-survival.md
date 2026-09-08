@@ -1,7 +1,7 @@
 # Épica 001 — Jogo de Ação/Sobrevivência contra Multidão (Horde/Lane Survival)
 
 > Status: rascunho v1 — baseado na entrevista de pré-elicitação com Felipe Pessanha (fonte: `Transcrição da Entrevista de Pré-Elicitação de Requisitos — Felipe Pessanha`).
-> Lacunas da entrevista foram preenchidas com premissas explícitas. Em 2026-09-08 o usuário confirmou, via `war_room/dashboard/`, as premissas #3, #5, #6, #7 e #8 (marcadas ✅ abaixo) — essas respostas vieram do usuário/C-level, não diretamente de uma nova rodada com o Felipe Pessanha; ainda vale checar com ele se o escopo técnico bate. Nome do jogo (#1) e modo de jogo (#2) seguem em aberto.
+> Lacunas da entrevista foram preenchidas com premissas explícitas. Em 2026-09-08 o usuário confirmou, via `war_room/dashboard/`, as premissas #3, #5, #6, #7 e #8 (marcadas ✅ abaixo) — essas respostas vieram do usuário/C-level, não diretamente de uma nova rodada com o Felipe Pessanha; ainda vale checar com ele se o escopo técnico bate. Nome do jogo (#1) confirmado em 2026-09-08 diretamente pelo usuário; modo de jogo (#2) segue em aberto.
 
 ## 1. Contexto
 
@@ -17,7 +17,7 @@ Entregar um jogo rápido de produzir e rápido de jogar, com um pipeline de prod
 
 | # | Lacuna | Premissa assumida | Justificativa | Risco se errado |
 |---|---|---|---|---|
-| 1 | Nome do jogo | **A definir** — usar codinome `HORDA` até definição de branding | Não mencionado na entrevista | Baixo (só nomenclatura) |
+| 1 | Nome do jogo | ✅ **Confirmado pelo usuário (2026-09-08)**: `We're Going to Blow Up Everything` (mesmo nome do repositório) | Decisão direta do usuário/C-level | Baixo — risco eliminado |
 | 2 | Modo de jogo | Single-player, corrida por ondas (**endless/arcade** com meta-progressão leve entre runs) | Consistente com "jogo simples e rápido" citado pelo C-level | Médio — muda estrutura de níveis e economia |
 | 3 | Motion design/VFX/Cutscenes (Rodada 3 truncada) | ✅ **Confirmado pelo usuário (2026-09-08)**: VFX de impacto "juicy" (hit flash, partículas, screen shake), transições de onda animadas, e cutscenes curtas geradas via IA (transformação de animação/vídeo em sprite sequence, citado na Rodada 5) | Único fio deixado pelo próprio Felipe na Rodada 5 | Baixo — risco eliminado |
 | 4 | Tema da multidão | ✅ **Confirmado pelo C-level**: apocalipse zumbi | Validado em 2026-08-18 (descartada alternativa cyberpunk que surgiu num teste de concept art) | Baixo — risco eliminado |
