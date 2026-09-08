@@ -57,7 +57,7 @@ Todos os inimigos comuns morrem em contato com o jogador (trocam 1 dano por si m
 ## 8. Fora do escopo do MVP (backlog)
 - Multiplayer/coop.
 - Monetização implementada (modelo confirmado ✅: free-to-play com anúncios opcionais + IAP cosmético; implementação segue fora do escopo do MVP).
-- VFX de impacto e cutscenes (direção confirmada ✅: hit flash/partículas/screen shake, transições de onda animadas, cutscenes curtas via IA — ver épica, premissa 3; nada disso implementado ainda).
+- VFX de impacto (hit flash, partículas, screen shake) — **implementado** (ver `scripts/enemy.gd`, `scripts/boss.gd`, `scripts/player.gd`). Transições de onda animadas e cutscenes via IA seguem no backlog.
 - Áudio/trilha sonora.
 - Menu principal / tela de restart — **implementado** (ver `scripts/main_menu.gd`, `scenes/main_menu.tscn`).
 - Progressão entre runs (meta-progressão).

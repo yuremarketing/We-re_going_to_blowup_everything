@@ -1,7 +1,7 @@
 extends SceneTree
 
 func _init():
-	print("--- Headless Mobile & Touch Verification Start ---")
+	print("--- Headless Mobile, Touch & VFX Verification Start ---")
 	var project_name = ProjectSettings.get_setting("application/config/name")
 	var render_method = ProjectSettings.get_setting("rendering/renderer/rendering_method")
 	var width = ProjectSettings.get_setting("display/window/size/viewport_width")
@@ -29,8 +29,15 @@ func _init():
 		quit(1)
 		return
 	var inst = main_scene.instantiate()
+	root.add_child(inst)
 	
-	# Verify Camera3D keep_aspect
+	# Verify Camera3D and Screen Shake method
+	var player = inst.get_node_or_null("Player")
+	assert(player != null, "Player node must exist")
+	assert(player.has_method("apply_shake"), "Player must implement apply_shake")
+	player.apply_shake(0.1, 0.1)
+	print("Player apply_shake verified OK")
+	
 	var cam = inst.get_node_or_null("Player/Camera3D")
 	if cam:
 		print("Camera3D keep_aspect: ", cam.keep_aspect, " (0=KEEP_WIDTH)")
@@ -45,13 +52,30 @@ func _init():
 	assert(touch_down != null, "TouchDown node must exist")
 	assert(touch_attack != null, "TouchAttack node must exist")
 	
-	print("TouchUp action: ", touch_up.action)
-	print("TouchDown action: ", touch_down.action)
-	print("TouchAttack action: ", touch_attack.action)
-	
 	assert(touch_up.action == "ui_up", "TouchUp action must be ui_up")
 	assert(touch_down.action == "ui_down", "TouchDown action must be ui_down")
 	assert(touch_attack.action == "ui_accept", "TouchAttack action must be ui_accept")
+	print("TouchScreenButton actions verified OK")
+	
+	# Verify Enemy VFX (Hit Flash & Death Particles)
+	var enemy_scene = load("res://scenes/enemy.tscn")
+	var enemy_inst = enemy_scene.instantiate()
+	inst.add_child(enemy_inst)
+	assert(enemy_inst.has_method("play_hit_flash"), "Enemy must implement play_hit_flash")
+	assert(enemy_inst.has_method("spawn_death_particles"), "Enemy must implement spawn_death_particles")
+	enemy_inst.play_hit_flash()
+	enemy_inst.take_damage(1)
+	print("Enemy Hit Flash & Death Particles verified OK")
+	
+	# Verify Boss VFX (Hit Flash & Death Particles)
+	var boss_scene = load("res://scenes/boss.tscn")
+	var boss_inst = boss_scene.instantiate()
+	inst.add_child(boss_inst)
+	assert(boss_inst.has_method("play_hit_flash"), "Boss must implement play_hit_flash")
+	assert(boss_inst.has_method("spawn_death_particles"), "Boss must implement spawn_death_particles")
+	boss_inst.play_hit_flash()
+	boss_inst.take_damage(2)
+	print("Boss Hit Flash verified OK (HP remaining: ", boss_inst.hp, ")")
 	
 	# Verify EndScreen nodes
 	var end_screen = inst.get_node_or_null("EndScreen")
@@ -62,11 +86,7 @@ func _init():
 	print("EndScreen buttons & labels verified OK")
 	
 	var menu_scene = load("res://scenes/main_menu.tscn")
-	if not menu_scene:
-		printerr("ERROR: Could not load scenes/main_menu.tscn")
-		quit(1)
-		return
 	var menu_inst = menu_scene.instantiate()
-	print("Main and Menu scenes loaded and instantiated successfully!")
-	print("--- Headless Mobile & Touch Verification End ---")
+	print("All scenes, mobile controls and VFX verified successfully!")
+	print("--- Headless Mobile, Touch & VFX Verification End ---")
 	quit(0)

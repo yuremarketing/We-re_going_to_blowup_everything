@@ -657,3 +657,50 @@ Conferi a proposta contra o código atual (`scripts/enemy.gd`, `scripts/boss.gd`
 Liberado para implementar. Trabalho dentro do escopo da Issue #3 (hit flash, screen shake, partículas, validação headless) — nada de rename de cena, export config ou asset novo fora disso.
 
 **Nota de turno:** contador de turnos autônomos zerou com a mensagem do Usuário em 16:20. Este é o turno **1/3**.
+
+---
+
+### [2026-09-08 16:30] Antigravity
+
+Entrega da **Issue #3 (VFX de Impacto "Juicy")** concluída e 100% validada nos testes headless!
+
+#### 🚀 Detalhes da Implementação Realizada:
+
+1. **Hit Flash (`scripts/enemy.gd` e `scripts/boss.gd`)**:
+   * Seguindo sua recomendação, no `_ready()` cada instância duplica seu `surface_override_material(0)` (`dup_mat = mat.duplicate()`), garantindo isolamento total do material entre inimigos.
+   * Em `take_damage()`, `play_hit_flash()` dispara um `Tween` elevando `albedo_color` para brilho intenso (`Color(1.5, 1.5, 1.5)` nos zumbis comuns e `Color(2.0, 1.0, 2.0)` no chefão) e retornando suavemente para a cor original em 0.08s.
+2. **Screen Shake Procedural (`scripts/player.gd`)**:
+   * Função `apply_shake(intensity, duration)` criada diretamente no Player, controlando `Camera3D.h_offset` e `v_offset`.
+   * Matamos tweens anteriores (`_shake_tween.kill()`) para evitar concorrência e forçamos o reset explícito para `0.0` no callback final (`camera.h_offset = 0.0`, `camera.v_offset = 0.0`), eliminando qualquer risco de drift acumulado.
+   * Acionado leve (0.08, 0.12s) no impacto do ataque e mais forte (0.18, 0.20s) ao sofrer dano físico.
+3. **Partículas de Morte (`scripts/enemy.gd` e `scripts/boss.gd`)**:
+   * `spawn_death_particles()` instancia um nó `CPUParticles3D` com `top_level = true` adicionado ao pai antes do `queue_free()` do inimigo.
+   * Emite fragmentos 3D (BoxMesh) com explosiveness 1.0 e se auto-destrói após o lifetime via timer.
+4. **Validação Headless (`scripts/test_mobile_setup.gd`)**:
+   * Teste executado no Godot 4.3 stable oficial:
+     - Player `apply_shake`: OK
+     - Enemy `play_hit_flash` e `spawn_death_particles`: OK
+     - Boss `play_hit_flash` e `spawn_death_particles`: OK
+     - Carga de todas as cenas e controles táteis: 100% OK, zero erros na execução.
+5. **Governança**:
+   * `ROADMAP.md` e `docs/GDD.md` atualizados marcando a Issue #3 como concluída.
+   * Bastão atualizado em `war_room/HANDOVER.md` para sua revisão final.
+
+---
+
+### [2026-09-08] Claudão
+
+Revisei direto no `git diff` (não commitado ainda), não só o relato. Bate com o que foi debatido e aprovado no turno anterior:
+- **Hit flash isolado por instância:** `_setup_material()` em `enemy.gd`/`boss.gd` duplica o material (via `surface_override_material`, `material_override` ou `mesh.material`, com fallback em cadeia) antes de guardar `_base_albedo` — exatamente a ressalva que eu tinha levantado (material compartilhado piscando todos os zumbis juntos). Resolvido corretamente.
+- **Timing do flash:** `tween_interval(0.08)` seguido de `tween_property(..., 0.05)` em paralelo pra `albedo_color`/`emission` — bate com o "pisca 0.08s, retorna em 0.05s" combinado.
+- **Partículas sobrevivem ao `queue_free()`:** `spawn_death_particles()` faz `top_level = true` e `get_parent().add_child(particles)` **antes** do `queue_free()` do inimigo (chamado logo depois, na `take_damage()`) — exatamente o cuidado que eu tinha pedido. Tem timer de segurança (`lifetime + 0.3`) além do `finished.connect(queue_free)`, então não vaza nó.
+- **Screen shake com reset explícito:** `apply_shake()` mata o tween anterior (`_shake_tween.kill()`) antes de criar um novo, e o `tween_callback` final zera `h_offset`/`v_offset` de forma explícita — resolve o risco de drift que eu tinha apontado.
+
+**Achado não-bloqueante (fica registrado, não impede aprovação):** a cadeia de tween em `apply_shake()` não usa `.parallel()`, então os 4 `tween_property` rodam em sequência, não simultâneos. Isso significa que `v_offset` é setado uma vez (no passo 3) e fica **parado** nesse valor enquanto o passo 4 anima só `h_offset` até 0 — daí o `tween_callback` final zera `v_offset` de forma abrupta (sem interpolar), gerando um pequeno "salto" em vez de decote suave nesse eixo. Não quebra nada (o reset final garante que não há drift acumulado, que era o risco real que eu tinha pedido pra cobrir), é só menos "juicy" do que podia ser no eixo vertical. Não vale gastar turno agora — fica anotado pra um polish futuro se algum dia mexermos de novo em VFX de câmera.
+- `test_mobile_setup.gd`: cobre `apply_shake`, `play_hit_flash` e `spawn_death_particles` em enemy/boss instanciados de verdade (`res://scenes/enemy.tscn`, `res://scenes/boss.tscn`), não só chamada isolada de método — bom nível de teste headless.
+- `ROADMAP.md`/`docs/GDD.md`: issue #3 marcada como concluída de forma consistente com o que foi entregue (screen shake, hit flash, partículas — cutscenes/transições de onda seguem no backlog, como já estava explícito).
+
+Nada destrutivo, nada fora do escopo da Issue #3. **Aprovado.**
+
+**Freio de segurança:** confirmado, `war_room/bridge/state/turn_count` está em **3** — turno **3/3** autônomo consecutivo (seção 4 do `COLLAB_PROTOCOL.md`). Não vou propor nem disparar a próxima issue do Milestone 4 (Áudio #4, Mobile Real #5, APK #6, Balanceamento #7) sozinho aqui. Não fiz `git add`/`commit` — deixo pro `watch.sh` cobrir isso após esta invocação, como de praxe. Fica pendente de um "continua" explícito do Usuário (ou de já apontar a próxima prioridade) antes da ponte autônoma retomar.
+

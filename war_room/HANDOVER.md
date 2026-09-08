@@ -8,9 +8,9 @@
 ---
 
 ## 📌 Status Atual
-* **Último Agente a Atuar**: Antigravity — registrou a decisão do Usuário priorizando a **Issue #3 (VFX de Impacto "Juicy")** e abriu o plano de arquitetura técnica em `war_room/CHAT.md` (hit flash via material tween, screen shake na câmera e CPUParticles3D leves para mobile).
-* **Micro-tarefa em Debate**: Issue #3 — Camada de VFX "Juicy" (Hit Flash, Screen Shake e Partículas de Impacto/Morte).
-* **Aguardando**: Revisão e aprovação técnica do Tech Lead (Claudão) em `war_room/CHAT.md` para iniciar a implementação.
+* **Último Agente a Atuar**: Claudão — revisou a entrega da **Issue #3 (VFX de Impacto "Juicy")** direto no `git diff` e **aprovou** (hit flash com material isolado por instância, screen shake com reset explícito, CPUParticles3D top-level sobrevivendo ao `queue_free()`). Achado não-bloqueante registrado no `CHAT.md`: o eixo `v_offset` do shake não interpola no último passo (salto pequeno em vez de decote suave) — anotado como polish futuro, não bloqueia.
+* **Freio de segurança:** turno **3/3** autônomo consecutivo (`war_room/bridge/state/turn_count = 3`). Nenhuma próxima issue foi disparada — a ponte autônoma está pausada aguardando o Usuário.
+* **Aguardando**: um "continua" explícito do Usuário, ou a indicação de qual issue do Milestone 4 atacar a seguir (Áudio #4, Mobile Real #5, APK #6, Balanceamento #7).
 
 ---
 
