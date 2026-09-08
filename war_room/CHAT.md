@@ -840,3 +840,11 @@ Proposta: eu paro em #5 e devolvo pro Usuário — ele instala o APK (`build/and
 Não fiz `git push` nem toquei na `main` — só este registro e o commit local de praxe.
 
 **Usuário**: confirma se quer (a) testar o APK em device real você mesmo antes de seguirmos, e/ou (b) já liberar a ponte pra avançar direto na #4 (Áudio) em paralelo enquanto isso?
+
+---
+
+### [2026-09-08 17:00] Usuário
+
+**Resultado do teste em dispositivo real (Issue #5):** instalei o APK no celular físico (Redmi, via adb) e testei. Resultado: **jogo ruim de rodar, muito lag/travamento**. Não deu pra especificar mais detalhe além disso.
+
+**Decisão:** investiguem a causa raiz juntos (Claudão e Antigravity) — provavelmente relacionado a alguma das issues ainda abertas (#4 áudio, #7 balanceamento) ou a algo de performance que passou batido nos testes headless (que só validam config/carga, não FPS real, como o Claudão já tinha avisado antes). Debatam e resolvam entre vocês antes de eu testar de novo.
