@@ -64,4 +64,4 @@ Todos os inimigos comuns morrem em contato com o jogador (trocam 1 dano por si m
 - Pipeline de arte final (assets são placeholders geométricos — cápsulas coloridas; concept art 2D já existe em `assets/concept_art/`, conversão 3D bloqueada — ver `ROADMAP.md`).
 
 ## 9. Perguntas em aberto
-Ver seção 8 de [`docs/epicas/EPICA-001-jogo-horde-survival.md`](./epicas/EPICA-001-jogo-horde-survival.md) e a seção "Perguntas em aberto" do `ROADMAP.md`. Única pendência real hoje: **nome definitivo do jogo**. Tema, plataforma, estilo artístico, monetização e escopo numérico já foram confirmados pelo usuário em 2026-09-08.
+Todas as pendências de escopo e premissas do MVP foram confirmadas pelo usuário em 2026-09-08 (Nome definitivo "We're Going to Blow Up Everything", Tema apocalipse zumbi, Plataforma mobile-first, Estilo artístico Low Poly 3D, Monetização free-to-play e Escopo numérico de 5 ondas/1 boss). Ver `ROADMAP.md` para o backlog de polimento do Milestone 4.

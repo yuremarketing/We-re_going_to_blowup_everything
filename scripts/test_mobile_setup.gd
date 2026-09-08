@@ -89,4 +89,6 @@ func _init():
 	var menu_inst = menu_scene.instantiate()
 	print("All scenes, mobile controls and VFX verified successfully!")
 	print("--- Headless Mobile, Touch & VFX Verification End ---")
+	inst.free()
+	menu_inst.free()
 	quit(0)

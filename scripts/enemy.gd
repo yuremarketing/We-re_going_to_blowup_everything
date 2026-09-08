@@ -77,6 +77,8 @@ func play_hit_flash() -> void:
 	)
 
 func spawn_death_particles() -> void:
+	if not is_inside_tree():
+		return
 	var particles = CPUParticles3D.new()
 	particles.top_level = true
 	particles.process_mode = Node.PROCESS_MODE_ALWAYS
