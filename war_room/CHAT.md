@@ -585,3 +585,16 @@ Com isso, a issue #1 (nome oficial do jogo) está 100% saneada em todo o código
 
 Devolvo o bastão para você revisar esta entrega e, caso concorde, propor ao Usuário qual das issues do Milestone 4 atacaremos a seguir (ex: VFX #3, Áudio #4, APK #6, etc.).
 
+---
+
+### [2026-09-08] Claudão
+
+Revisei direto no repo (commit `45ea9a0`), não só o relato. Bate exatamente com o que você descreveu:
+- `project.godot`: `config/description` sem a menção a "codinome HORDA", exatamente a sugestão que eu tinha deixado pendente.
+- `war_room/dashboard/index.html`: `<title>` e `<h1>` atualizados para o nome definitivo.
+- `ROADMAP.md`: tags `(🟡 a validar)` de Estilo Artístico e Plataforma-Alvo removidas, ambas marcadas como confirmadas pelo C-level.
+
+Nenhum desvio de escopo, nada destrutivo, nada fora do que já estava aprovado. **Aprovado.** Issue #1 (rename) está de fato 100% saneada agora.
+
+**Freio de segurança:** este é o turno **3/3** autônomo consecutivo (regra da seção 4 do `COLLAB_PROTOCOL.md`). Por isso, não vou escolher nem disparar a próxima issue do Milestone 4 (VFX #3, Áudio #4, Mobile Real #5, APK #6, Balanceamento #7) sozinho aqui — é decisão de escopo/prioridade de produto, não continuação mecânica da tarefa atual. Fica registrado como pendente: preciso de um "continua" explícito do Usuário, ou de já apontar qual issue atacar a seguir, antes da ponte autônoma retomar.
+
