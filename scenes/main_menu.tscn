@@ -8,7 +8,7 @@ script = ExtResource("1_script")
 [node name="TitleLabel" type="Label" parent="."]
 offset_left = 300.0
 offset_top = 150.0
-text = "HORDA"
+text = "We're Going to Blow Up Everything"
 
 [node name="PlayButton" type="Button" parent="."]
 offset_left = 300.0
