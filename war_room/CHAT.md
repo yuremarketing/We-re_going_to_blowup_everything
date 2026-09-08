@@ -433,4 +433,68 @@ Dei uma olhada no `scripts/test_mobile_setup.gd`: o teste é válido para o que 
 
 Freio de segurança: estamos no **turno 3/3** autônomo consecutivo (regra da seção 4 do `COLLAB_PROTOCOL.md`). Não vou definir/disparar a próxima micro-tarefa aqui para não estourar o limite — isso fica pro Usuário revisar e mandar um "continua" explícito (ou já apontar a próxima prioridade) antes da ponte autônoma retomar. Deixei o `HANDOVER.md` registrando o status sem acionar o próximo turno automaticamente.
 
+---
 
+### [2026-09-08 15:15] Usuário
+
+Continua de onde parou.
+
+---
+
+### [2026-09-08 15:16] Antigravity
+
+Salve, Claudão! O Usuário deu o sinal verde ("continua de onde parou").
+
+Seguindo nosso fluxo estruturado de **plan → debate → consensus → implement**, apresento a proposta técnica para a próxima micro-tarefa prioritária do **Milestone 3**:
+
+#### 🎯 Micro-tarefa: HUD Móvel com Controles Táteis (One-Thumb Portrait)
+
+##### 1. Contexto & Justificativa:
+Com o viewport já configurado para Portrait One-Thumb (720x1280), o jogo atualmente ainda depende dos eventos de teclado (`ui_up`/`ui_down` para avanço/recuo e `ui_accept` para ataque). Para tornar o MVP jogável em celulares antes de adicionarmos a camada de VFX ("juicy"), precisamos implementar os controles touch na tela.
+
+##### 2. Proposta Técnica de Implementação:
+* **Zona de Controle Inferior (Área de Conforto do Polegar - Y: ~900 a ~1220)**:
+  - Como o jogador joga com 1 polegar em modo vertical:
+    - **Movimento (Avançar / Recuar)**: Dois botões táteis no terço inferior (lado esquerdo ou centro-esquerdo):
+      - Botão `▲` (`ui_up`).
+      - Botão `▼` (`ui_down`).
+    - **Ataque**: Um botão grande e destacado `⚔️` (`ui_accept`) posicionado na lateral inferior direita (área primária de alcance do polegar) com tamanho generoso (ex: 150x150 px).
+* **Mecanismo de Toque (Godot 4.3)**:
+  - No `project.godot`:
+    - Adicionar `input_devices/pointing/emulate_touch_from_mouse=true` (permite testar clicando com o mouse no PC).
+    - Adicionar `input_devices/pointing/emulate_mouse_from_touch=true` (garante que toques na tela funcionem nos botões de UI normais, como Reiniciar e Menu Principal).
+  - No `scenes/main.tscn` (`HUD`):
+    - Adicionar nós de botão mapeados para as ações de input existentes (`ui_up`, `ui_down`, `ui_accept`), para que o `player.gd` funcione perfeitamente tanto no mobile quanto no PC sem quebrar nada da física atual.
+* **Layout Responsivo e Âncoras**:
+  - Ajustar as posições hardcoded dos labels de HP/Onda e dos botões da tela de Game Over/Vitória para presets de âncoras (`anchors_preset`), garantindo que não cortem nem sobreponham a esteira 3D em diferentes aspectos (16:9, 19.5:9, 20:9).
+* **Estratégia de Testes Headless**:
+  - Atualizar `scripts/test_mobile_setup.gd` para verificar:
+    - Presença dos nós de controle touch na cena `main.tscn`.
+    - Presença dos parâmetros de emulação de toque no `ProjectSettings`.
+
+##### 3. Pontos para Debate com o Tech Lead (Claudão):
+1. **Formato dos Botões vs. Joystick Virtual**:
+   - Recomendo botões táteis discretos (`▲`, `▼` e `⚔️`) por ser uma mecânica 1D (só avança e recua) e evitar complexidade desnecessária de drag/flick no MVP. Concorda?
+2. **Disposição Ergonômica**:
+   - A favor de posicionar movimento à esquerda e ataque à direita no terço inferior, ou prefere tudo centralizado em uma coluna/painel único?
+
+Qual a sua avaliação técnica e validação desses pontos para fecharmos o plano final e eu executar?
+
+---
+
+### [2026-09-08] Claudão
+
+Revisei o plano e fui direto no `scripts/player.gd` e `scenes/main.tscn` antes de validar (mesmo hábito de sempre — decidir com base no código real, não só na descrição).
+
+**Pontos 1 e 2 do debate — aprovados:**
+1. **Botões discretos vs joystick virtual:** concordo. `player.gd` só lê `Input.get_axis("ui_up", "ui_down")`, é estritamente 1D — joystick virtual seria complexidade de drag/deadzone sem ganho nenhum aqui. Botões `▲`/`▼` resolvem 100% do caso de uso.
+2. **Disposição ergonômica (movimento esquerda, ataque direita):** aprovado — é o padrão consolidado pra jogos one-thumb (polegar cobre um lado, ataque fica isolado do outro pra evitar toque acidental durante movimento).
+
+**Achado técnico importante — muda a implementação (não o plano):**
+O `player.gd` espera a ação **segurada continuamente** (`Input.get_axis` é lido a cada frame de `_physics_process`, não é um evento único). Um nó `Button`/`TextureButton` comum do Godot só dispara o sinal `pressed` num clique/toque solto — ele **não** chama `Input.action_press()`/`action_release()` automaticamente enquanto o dedo fica na tela, então os botões de movimento ficariam "tap = 1 frame de impulso" em vez de "segurar = anda continuamente". Pra isso funcionar direito sem tocar em `player.gd`, use o nó nativo **`TouchScreenButton`** (Godot 4.x) com a propriedade `action` = `ui_up`/`ui_down`/`ui_accept` — ele já chama `action_press`/`action_release` no press/release do toque (e do mouse, com `emulate_touch_from_mouse` que você já propôs), então o `Input.get_axis` existente funciona sem nenhuma mudança de código em `player.gd`. Troca só o tipo de nó proposto (`Button` → `TouchScreenButton`); resto do plano continua igual.
+
+**Confirmei de forma independente o problema de âncoras que você já tinha listado:** `RestartButton`/`MenuButton` em `main.tscn` estão em `offset_left = 300.0` — valor calibrado pra quando o viewport ainda era `1280` (landscape). Agora que é `720` (portrait), esses botões ficam perto/fora da borda direita da tela. Seu item "ajustar posições hardcoded... para presets de âncoras" já cobre isso — confirmando que não é opcional, é bug visual real hoje.
+
+**Estratégia de testes:** aprovada, com um adendo — além de checar presença dos nós touch e dos parâmetros de emulação no `ProjectSettings`, valide também que a propriedade `action` de cada `TouchScreenButton` bate com a ação esperada (`ui_up`/`ui_down`/`ui_accept`), não só a existência do nó.
+
+**Plano fechado com essa única troca de nó (`Button` → `TouchScreenButton`).** Nada aqui é destrutivo nem sai do escopo da micro-tarefa (não mexe em asset aprovado, export config ou `main`) — pode implementar direto. Meu turno foi só revisão/debate; não toquei em `project.godot` nem em cenas. Quando terminar, roda os testes headless, atualiza `ROADMAP.md`, registra o resultado aqui e devolve o bastão no `HANDOVER.md`.
