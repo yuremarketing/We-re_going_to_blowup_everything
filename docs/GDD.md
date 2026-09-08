@@ -1,13 +1,13 @@
 # Game Design Document (GDD) v1
 
-> Baseado em [`docs/epicas/EPICA-001-jogo-horde-survival.md`](./epicas/EPICA-001-jogo-horde-survival.md) e no estado atual da implementação (branch `agent/claude`). Itens marcados 🟡 são premissas assumidas, ainda não validadas com o C-level/Felipe Pessanha.
+> Baseado em [`docs/epicas/EPICA-001-jogo-horde-survival.md`](./epicas/EPICA-001-jogo-horde-survival.md) e no estado atual da implementação (branch `agent/claude`). Itens marcados 🟡 são premissas ainda não validadas; ✅ marca itens confirmados pelo usuário/C-level em 2026-09-08 via `war_room/dashboard/`.
 
 ## 1. Visão Geral
 - **Codinome**: `HORDA` 🟡 (nome definitivo pendente)
 - **Gênero**: Ação/sobrevivência em viela linear (horde/lane survival)
-- **Tema (MVP)**: Apocalipse zumbi 🟡
-- **Plataforma-alvo**: Mobile-first, build secundária PC/Web 🟡
-- **Estilo artístico**: Low Poly 3D 🟡
+- **Tema (MVP)**: Apocalipse zumbi ✅
+- **Plataforma-alvo**: Mobile-first, build secundária PC/Web ✅
+- **Estilo artístico**: Low Poly 3D ✅
 - **Engine**: Godot
 
 ## 2. Pitch
@@ -22,7 +22,7 @@ Um sobrevivente avança por uma viela estreita enquanto uma multidão hostil vem
 6. HP do jogador chega a 0 → Game Over.
 
 ## 4. Personagem Jogável
-- 1 personagem no MVP 🟡 (número de personagens ainda não validado com o C-level).
+- 1 personagem no MVP ✅ (escopo numérico confirmado pelo usuário em 2026-09-08).
 - HP inicial: 5 (`max_hp`, ajustável).
 - Movimento restrito ao eixo Z (viela).
 - Ataque: área curta à frente, feedback visual (escala via Tween), sem cooldown definido ainda.
@@ -42,7 +42,7 @@ Um sobrevivente avança por uma viela estreita enquanto uma multidão hostil vem
 Todos os inimigos comuns morrem em contato com o jogador (trocam 1 dano por si mesmos); o chefão não.
 
 ## 6. Estrutura de Onda (implementado)
-- 5 ondas por run 🟡 (número do MVP, a validar).
+- 5 ondas por run ✅ (escopo numérico confirmado pelo usuário em 2026-09-08).
 - `enemies_per_wave = 5` por onda, `spawn_interval = 1.5s` entre spawns.
 - `time_between_waves = 5s` de intervalo entre ondas.
 - Tipo de inimigo sorteado aleatoriamente entre os 3 tipos comuns a cada spawn.
@@ -55,11 +55,12 @@ Todos os inimigos comuns morrem em contato com o jogador (trocam 1 dano por si m
 
 ## 8. Fora do escopo do MVP (backlog)
 - Multiplayer/coop.
-- Monetização implementada (hipótese: free-to-play + IAP cosmético 🟡).
+- Monetização implementada (modelo confirmado ✅: free-to-play com anúncios opcionais + IAP cosmético; implementação segue fora do escopo do MVP).
+- VFX de impacto e cutscenes (direção confirmada ✅: hit flash/partículas/screen shake, transições de onda animadas, cutscenes curtas via IA — ver épica, premissa 3; nada disso implementado ainda).
 - Áudio/trilha sonora.
-- Menu principal / tela de restart (ainda não implementado).
+- Menu principal / tela de restart — **implementado** (ver `scripts/main_menu.gd`, `scenes/main_menu.tscn`).
 - Progressão entre runs (meta-progressão).
-- Pipeline de arte final (assets são placeholders geométricos — cápsulas coloridas).
+- Pipeline de arte final (assets são placeholders geométricos — cápsulas coloridas; concept art 2D já existe em `assets/concept_art/`, conversão 3D bloqueada — ver `ROADMAP.md`).
 
 ## 9. Perguntas em aberto
-Ver seção 8 de [`docs/epicas/EPICA-001-jogo-horde-survival.md`](./epicas/EPICA-001-jogo-horde-survival.md) — nome, tema, plataforma, estilo artístico, monetização, e escopo numérico ainda pendem de validação com o C-level e com Felipe Pessanha.
+Ver seção 8 de [`docs/epicas/EPICA-001-jogo-horde-survival.md`](./epicas/EPICA-001-jogo-horde-survival.md) e a seção "Perguntas em aberto" do `ROADMAP.md`. Única pendência real hoje: **nome definitivo do jogo**. Tema, plataforma, estilo artístico, monetização e escopo numérico já foram confirmados pelo usuário em 2026-09-08.
