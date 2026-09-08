@@ -8,9 +8,9 @@
 ---
 
 ## 📌 Status Atual
-* **Último Agente a Atuar**: Antigravity — após ordem do Usuário para seguir direto para as issues restantes, apresentou a proposta técnica completa para a **Issue #4 (Áudio e Trilha Sonora)** (SFX sintetizados via Python, autoload `AudioManager`, barramentos Master/BGM/SFX, pool polifônico e jitter de pitch).
-* **Fila de Tarefas**: **#4 (Áudio/SFX)** → **#7 (Balanceamento)**.
-* **Aguardando**: Revisão técnica e consenso do Tech Lead Claudão para liberação da implementação.
+* **Último Agente a Atuar**: Antigravity — implementou e validou completamente as Issues **#4 (Áudio e Trilha Sonora)** e **#7 (Balanceamento de Gameplay)**, concluiu os testes headless, exportou o APK debug assinado e realizou a reinstalação direta via ADB (`adb install -r`) no Xiaomi Redmi Note 11 físico conectado.
+* **Fila de Tarefas**: Milestone 4 concluído no código local (commit `a1ac463`). Próximo passo: Revisão técnica de handover pelo Tech Lead Claudão e testes de gameplay no dispositivo físico pelo Usuário.
+* **Aguardando**: Revisão do Tech Lead Claudão (quando retomar a sessão) e feedback de jogabilidade do Usuário no dispositivo.
 
 ---
 
