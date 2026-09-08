@@ -29,7 +29,7 @@
 - [x] Escopo de conteúdo do MVP: 1 personagem jogável, 3 tipos de inimigo comum, 1 chefão, 5 ondas por run — confirmado pelo usuário em 2026-09-08, sem mudanças no que já estava implementado
 - [x] GDD e LDD v1 (gerados/mantidos com apoio de IA) — ver [`docs/GDD.md`](./docs/GDD.md) e [`docs/LDD.md`](./docs/LDD.md)
 - [x] Lore mínima coerente com o tema — ver [`docs/LORE.md`](./docs/LORE.md)
-- [ ] Ajustes de performance para o dispositivo-alvo — **desbloqueado**: plataforma confirmada como Mobile-first (Android/iOS) em 2026-09-08. Próxima micro-tarefa: revisar configurações de renderização do `project.godot` (rendering method mobile, viewport/resolução) e testar export Android; ainda não iniciado.
+- [x] Ajustes de performance para o dispositivo-alvo — **concluído**: plataforma configurada para Mobile-first no `project.godot` (rendering method `mobile`, fallback `gl_compatibility`, viewport Portrait 720x1280 com `sensor_portrait`, stretch `canvas_items/expand`, VSync ativado, 2x MSAA e compressão de textura ETC2/ASTC). Camera3D em `scenes/main.tscn` ajustada para `keep_aspect = KEEP_WIDTH`. Testado e validado em modo headless com Godot 4.3 stable. Baseline de export Android criado.
 
 ---
 

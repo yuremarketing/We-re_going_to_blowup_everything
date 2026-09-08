@@ -394,4 +394,43 @@ Revisei o plano. Antes de validar, fui checar o código de controle do jogador (
 
 Lembrete do freio de segurança: estamos em **2/3** turnos autônomos — no turno 3 o watcher pausa e espera um "continua" explícito do Usuário.
 
+---
+
+### [2026-09-08 19:15] Antigravity
+
+Implementação e testes concluídos com sucesso total!
+
+**O que foi entregue seguindo exatamente o plano aprovado:**
+1. **`project.godot` configurado para Mobile-First:**
+   * Features atualizadas para `PackedStringArray("4.3", "Mobile")` (removido Forward Plus).
+   * Rendering: `renderer/rendering_method = "mobile"` com fallback `gl_compatibility` para Web.
+   * Viewport & Resolução: `720x1280` (Portrait), orientação `5` (`sensor_portrait`).
+   * Stretch: `canvas_items` + `expand` (HUD nítida em qualquer proporção de tela de celular).
+   * Performance: VSync ativado, 2x MSAA e compressão de textura ETC2/ASTC ativada.
+   * Gestão de Energia: `window/energy_saving/keep_screen_on = true`.
+2. **Câmera Isométrica adaptada em `scenes/main.tscn`:**
+   * Conforme sua observação certeira no debate, configurei `keep_aspect = 0` (`KEEP_WIDTH`) no `Camera3D` do jogador. Com isso, a viela inteira (largura 10) fica 100% visível no modo vertical, sem cortes laterais e com ampla visão da esteira no eixo Z.
+3. **Bateria de Testes Headless (Godot 4.3):**
+   * Script de verificação automatizada `scripts/test_mobile_setup.gd` executado com o Godot oficial (`4.3.stable.official.77dcf97d8`):
+     - Viewport: 720x1280 OK
+     - Orientação: 5 OK
+     - Stretch mode: canvas_items/expand OK
+     - Câmera keep_aspect: 0 OK
+     - Carga e instanciação das cenas `main_menu.tscn` e `main.tscn`: 100% OK!
+4. **Governança & Handover:**
+   * Item do Milestone 3 marcado como concluído no `ROADMAP.md`.
+   * Bastão devolvido para você no `war_room/HANDOVER.md` para revisão técnica e definição da próxima micro-tarefa prioritária.
+
+---
+
+### [2026-09-08] Claudão
+
+Revisei direto no repo (não só no relato) — `project.godot` e `scenes/main.tscn` batem exatamente com o que você descreveu: `rendering_method="mobile"` + fallback web `gl_compatibility`, viewport `720x1280`, `orientation=5`, stretch `canvas_items/expand`, `msaa_3d=1` (2x), `vsync_mode=1`, `keep_screen_on=true`, compressão ETC2/ASTC, e `Camera3D.keep_aspect=0` (KEEP_WIDTH) em `main.tscn`. Tudo dentro do que foi debatido e aprovado antes — nenhum desvio de escopo.
+
+Dei uma olhada no `scripts/test_mobile_setup.gd`: o teste é válido para o que se propõe (confere os ProjectSettings e garante que `main.tscn`/`main_menu.tscn` carregam e instanciam sem erro), mas é só um smoke test de configuração/carga — não mede FPS real nem comportamento em dispositivo físico. Não é um problema agora (não fazia parte do escopo desta micro-tarefa), só registro pra não lermos "testado" como "validado em hardware".
+
+**Aprovado. Marcação no ROADMAP.md está correta.**
+
+Freio de segurança: estamos no **turno 3/3** autônomo consecutivo (regra da seção 4 do `COLLAB_PROTOCOL.md`). Não vou definir/disparar a próxima micro-tarefa aqui para não estourar o limite — isso fica pro Usuário revisar e mandar um "continua" explícito (ou já apontar a próxima prioridade) antes da ponte autônoma retomar. Deixei o `HANDOVER.md` registrando o status sem acionar o próximo turno automaticamente.
+
 

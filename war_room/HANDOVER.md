@@ -2,32 +2,27 @@
 
 * **Tech Lead / Chefe**: `Claudão (Claude Code)` 👑
 * **Implementador**: `Antigravity (Gemini)` ⚡
-* **Turno Atual**: `Antigravity` ⚡
-* **Próximo Turno**: `Claudão (revisão da micro-tarefa abaixo)`
+* **Turno Atual**: `Usuário` 🛑 (ponte autônoma pausada — ver abaixo)
+* **Próximo Turno**: `Antigravity` ⚡ (somente após "continua" explícito do Usuário)
 
 ---
 
 ## 📌 Status Atual
-* **Último Agente a Atuar**: Claudão — formalizou as decisões do usuário no `docs/GDD.md`, `docs/epicas/EPICA-001-jogo-horde-survival.md` e `ROADMAP.md` (marcações 🟡 → ✅).
-* **Decisões do usuário confirmadas em 2026-09-08** (via `war_room/dashboard/index.html`, registradas em `ROADMAP.md`, `war_room/CHAT.md` e agora também no GDD/épica):
-  1. Motion design/VFX/cutscenes (Rodada 3): confirmado — VFX de impacto "juicy" (hit flash, partículas, screen shake), transições de onda animadas, cutscenes curtas via IA.
-  2. Estilo artístico: confirmado — **Low Poly 3D** (Blender → Meshy → Godot), Pixel Art descartado.
-  3. Plataforma-alvo: confirmado — **Mobile-first** (Android/iOS), build secundária PC/Web via Godot.
-  4. Escopo numérico do MVP: confirmado — 1 personagem jogável, 3 tipos de inimigo comum, 1 chefão, 5 ondas por run (sem mudança no que já estava implementado).
-  5. Monetização: confirmado — Free-to-play com anúncios opcionais + IAP cosmético.
-* **Ainda em aberto**: só o **nome definitivo do jogo** e o **modo de jogo** (itens 1-2 da tabela de premissas da épica) seguem pendentes — não bloqueiam a tarefa abaixo.
-* **MVP jogável completo**: Menu → Jogar → 3 tipos de inimigo em 5 ondas → Chefão → Vitória/Derrota → Reiniciar ou voltar ao Menu. Loop fechado ponta a ponta no Godot.
+* **Último Agente a Atuar**: Claudão — revisou e aprovou os ajustes de performance mobile do Antigravity (`project.godot` + `scenes/main.tscn`), confirmados diretamente no repo, sem desvio de escopo.
+* **Resumo da Entrega (Antigravity, turno anterior)**:
+  1. `project.godot`: rendering method `mobile` (features `["4.3", "Mobile"]`), fallback web `gl_compatibility`.
+  2. Viewport configurado em modo **Portrait One-Thumb** (720x1280), orientação `sensor_portrait` (5), stretch mode `canvas_items/expand`.
+  3. `energy_saving/keep_screen_on = true`, VSync ativado, 2x MSAA e compressão de textura ETC2/ASTC ativada.
+  4. `scenes/main.tscn`: Camera3D ajustada com `keep_aspect = 0` (`KEEP_WIDTH`) para manter o enquadramento perfeito da viela sem cortes.
+  5. Teste de integridade headless (smoke test de config + carga de cena, não benchmark real) executado com sucesso no Godot 4.3 oficial.
+* **MVP jogável completo**: Menu → Jogar → 3 tipos de inimigo em 5 ondas → Chefão → Vitória/Derrota → Reiniciar ou voltar ao Menu. Agora otimizado para celulares (configuração; falta validação em hardware real).
 
 ---
 
-## ▶️ Próxima tarefa (Antigravity)
+## ⏸️ Ponte autônoma pausada (turno 3/3)
 
-Com a plataforma confirmada (Mobile-first, Android/iOS), a tarefa "Ajustes de performance para o dispositivo-alvo" do Milestone 3 (`ROADMAP.md`) está desbloqueada:
+Regra da seção 4 do `COLLAB_PROTOCOL.md`: limite de 3 turnos autônomos consecutivos atingido. O `watch.sh` não deve auto-invocar ninguém agora — precisa de um "continua" explícito do Usuário no `war_room/CHAT.md` (ou aqui) pra retomar, ou o Usuário pode já indicar a próxima prioridade do Milestone 3 (ex.: HUD móvel com botões táteis, camada de VFX de impacto/feedback visual).
 
-1. Revisar `project.godot`: configurar o rendering method pra mobile (`Forward Mobile` em vez de `Forward+`), checar viewport/resolução-alvo pra celular.
-2. Testar export para Android (mesmo que só localmente, sem assinar/publicar) e reportar aqui qualquer erro de configuração do template de export.
-3. Não mexer em arte/pipeline 3D nesta tarefa — isso continua bloqueado por falta de acesso a Meshy/MCP de Blender, sem mudança nessa rodada.
-4. Ao terminar: marcar o item no `ROADMAP.md`, registrar o resultado em `war_room/CHAT.md`, e devolver o turno pro Claudão aqui no `HANDOVER.md`.
 
 ---
 
