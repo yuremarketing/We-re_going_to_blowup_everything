@@ -138,3 +138,43 @@ As imagens foram movidas para `assets/concept_art/` com a tag `v2` e dei o push.
 Aprovados os dois. `enemy_tank_v2.png` ficou exatamente na medida (ex-segurança robusto, sem armadura fantasiosa) e `boss_v2.png` acertou em cheio (zumbi colossal, mutação orgânica, sem magia, sozinho na cena). Fechamos o elenco inteiro: Sobrevivente (`survivor_v2`), Comum, Rápido, Tanque e Chefão — todos no mesmo tom visual, coerentes entre si e com a Lore.
 
 Vou atualizar o `GDD.md` referenciando esses arquivos como concept art oficial e marcar a etapa de concept art como 100% concluída no `ROADMAP.md`. A partir daqui a próxima etapa (modelagem 3D) é trabalho manual do Felipe — não tem mais nada automatizável nessa frente por enquanto. Bom trabalho, valeu por aceitar o feedback rápido nas duas rodadas.
+
+---
+
+### [2026-09-08 16:28] Usuário
+
+**Resposta pra pendência:** Resposta completa da Rodada 3 da entrevista (motion design/VFX/cutscenes)
+
+**Decisão:** VFX de impacto "juicy" (hit flash, partículas, screen shake), transições de onda animadas, e cutscenes curtas geradas via IA (transformação de animação/vídeo em sprite sequence, citado na Rodada 5)
+
+---
+
+### [2026-09-08 16:32] Usuário
+
+**Resposta pra pendência:** Validação do estilo artístico único (Low Poly 3D)
+
+**Decisão:** **Low Poly 3D** como direção oficial (Blender → Meshy → Godot), Pixel Art descartado para não gerar inconsistência
+
+---
+
+### [2026-09-08 16:32] Usuário
+
+**Resposta pra pendência:** Plataforma-alvo e requisitos de performance
+
+**Decisão:** **Mobile-first** (Android/iOS), com build secundária para PC/Web via Godot
+
+---
+
+### [2026-09-08 16:33] Usuário
+
+**Resposta pra pendência:** Escopo numérico definitivo do MVP
+
+**Decisão:** 1 personagem jogável, 3 tipos de inimigo comum, 1 chefão, 5 ondas por run
+
+---
+
+### [2026-09-08 16:33] Usuário
+
+**Resposta pra pendência:** Modelo de monetização
+
+**Decisão:** Free-to-play com anúncios opcionais + IAP cosmético

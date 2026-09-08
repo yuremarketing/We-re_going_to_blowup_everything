@@ -38,9 +38,9 @@
 
 ### Perguntas em aberto (herdadas da épica — bloqueiam decisões de escopo)
 1. ~~Tema definitivo~~ — resolvido (apocalipse zumbi confirmado). Nome do jogo ainda em aberto.
-2. Resposta completa da Rodada 3 da entrevista (motion design/VFX/cutscenes)
-3. Validação do estilo artístico único (Low Poly 3D)
-4. Plataforma-alvo e requisitos de performance
-5. Escopo numérico definitivo do MVP
-6. Modelo de monetização
+2. ~~Resposta completa da Rodada 3 da entrevista (motion design/VFX/cutscenes)~~ — respondido pelo usuário (2026-09-08): "VFX de impacto "juicy" (hit flash, partículas, screen shake), transições de onda animadas, e cutscenes curtas geradas via IA (transformação de animação/vídeo em sprite sequence, citado na Rodada 5)"
+3. ~~Validação do estilo artístico único (Low Poly 3D)~~ — respondido pelo usuário (2026-09-08): "**Low Poly 3D** como direção oficial (Blender → Meshy → Godot), Pixel Art descartado para não gerar inconsistência"
+4. ~~Plataforma-alvo e requisitos de performance~~ — respondido pelo usuário (2026-09-08): "**Mobile-first** (Android/iOS), com build secundária para PC/Web via Godot"
+5. ~~Escopo numérico definitivo do MVP~~ — respondido pelo usuário (2026-09-08): "1 personagem jogável, 3 tipos de inimigo comum, 1 chefão, 5 ondas por run"
+6. ~~Modelo de monetização~~ — respondido pelo usuário (2026-09-08): "Free-to-play com anúncios opcionais + IAP cosmético"
 7. ~~Viabilidade de um MCP para Godot~~ — resolvido, ver Milestone 1
