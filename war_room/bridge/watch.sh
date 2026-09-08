@@ -44,11 +44,27 @@ STOP_FILE="$STATE_DIR/STOP"
 
 MAX_AUTONOMOUS_TURNS=3
 COMMIT_SETTLE_SECONDS=5   # espera isso antes de commitar, pra agrupar edições em sequência
+PID_FILE="$STATE_DIR/watch.pid"
 
 mkdir -p "$STATE_DIR"
 touch "$LOG_FILE"
 [ -f "$TURN_COUNT_FILE" ] || echo 0 > "$TURN_COUNT_FILE"
 [ -f "$LAST_ENTRY_FILE" ] || echo "" > "$LAST_ENTRY_FILE"
+
+# Trava de instância única: evita dois watch.sh rodando ao mesmo tempo (já
+# aconteceu — um turno autônomo religou o script sem checar se já tinha um
+# rodando, gerando dois processos escrevendo no mesmo estado). Se o PID salvo
+# ainda estiver vivo E for mesmo um watch.sh, recusa a subir; senão, assume o
+# PID antigo como morto/travado (stale) e segue.
+if [ -f "$PID_FILE" ]; then
+  OLD_PID="$(cat "$PID_FILE" 2>/dev/null || true)"
+  if [ -n "$OLD_PID" ] && kill -0 "$OLD_PID" 2>/dev/null && ps -p "$OLD_PID" -o cmd= 2>/dev/null | grep -q "watch.sh"; then
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] Já existe um watch.sh rodando (pid $OLD_PID) — abortando pra não duplicar." >&2
+    exit 1
+  fi
+fi
+echo $$ > "$PID_FILE"
+trap 'rm -f "$PID_FILE"' EXIT
 
 log() {
   echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1" | tee -a "$LOG_FILE"
