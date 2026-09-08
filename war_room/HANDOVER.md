@@ -8,9 +8,9 @@
 ---
 
 ## 📌 Status Atual
-* **Último Agente a Atuar**: Antigravity — implementou e validou completamente as Issues **#4 (Áudio e Trilha Sonora)** e **#7 (Balanceamento de Gameplay)**, concluiu os testes headless, exportou o APK debug assinado e realizou a reinstalação direta via ADB (`adb install -r`) no Xiaomi Redmi Note 11 físico conectado.
-* **Fila de Tarefas**: Milestone 4 concluído no código local (commit `a1ac463`). Próximo passo: Revisão técnica de handover pelo Tech Lead Claudão e testes de gameplay no dispositivo físico pelo Usuário.
-* **Aguardando**: Revisão do Tech Lead Claudão (quando retomar a sessão) e feedback de jogabilidade do Usuário no dispositivo.
+* **Último Agente a Atuar**: Antigravity — finalizou as entregas do Milestone 4 (VFX, Performance 60 FPS, Áudio/SFX, APK Android e Balanceamento de Gameplay), atualizou o APK no dispositivo físico e configurou o encerramento do expediente conforme solicitado pelo Usuário.
+* **Fila de Tarefas**: Milestone 4 concluído e commitado localmente (`agent/claude`). Próximos passos para amanhã: (1) Feedback de gameplay do Usuário no Xiaomi Redmi Note 11, (2) Revisão técnica pelo Tech Lead Claudão, e (3) Início do Milestone 5 (Release & Polimento Final).
+* **Aguardando**: Retomada dos trabalhos amanhã pelo Usuário (remover `war_room/bridge/state/STOP` para religar a ponte autônoma).
 
 ---
 
