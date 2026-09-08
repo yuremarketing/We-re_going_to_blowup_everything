@@ -45,6 +45,7 @@ shape = SubResource("CapsuleShape3D_player")
 
 [node name="Camera3D" type="Camera3D" parent="Player"]
 transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 4, 6)
+keep_aspect = 0
 
 [node name="WaveManager" type="Node3D" parent="."]
 script = ExtResource("2_wm")

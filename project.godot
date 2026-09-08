@@ -10,8 +10,22 @@ config_version=5
 config/name="HORDA"
 config/description="Jogo de ação/sobrevivência contra multidão (horde/lane survival) — codinome HORDA. Ver docs/epicas/EPICA-001-jogo-horde-survival.md."
 run/main_scene="res://scenes/main_menu.tscn"
-config/features=PackedStringArray("4.3", "Forward Plus")
+config/features=PackedStringArray("4.3", "Mobile")
+
+[display]
+
+window/size/viewport_width=720
+window/size/viewport_height=1280
+window/size/mode=0
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+window/handheld/orientation=5
+window/energy_saving/keep_screen_on=true
+window/vsync/vsync_mode=1
 
 [rendering]
 
 renderer/rendering_method="mobile"
+renderer/rendering_method.web="gl_compatibility"
+textures/vram_compression/import_etc2_astc=true
+anti_aliasing/quality/msaa_3d=1
