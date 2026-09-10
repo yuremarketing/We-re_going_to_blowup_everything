@@ -11,6 +11,11 @@ config/name="We're Going to Blow Up Everything"
 config/description="Jogo de ação/sobrevivência contra multidão (horde/lane survival). Ver docs/epicas/EPICA-001-jogo-horde-survival.md."
 run/main_scene="res://scenes/main_menu.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
+config/icon="res://assets/icons/android/main_192x192.png"
+boot_splash/bg_color=Color(0.043, 0.047, 0.043, 1)
+boot_splash/image="res://assets/icons/android/boot_splash.png"
+boot_splash/fullsize=false
+boot_splash/use_filter=true
 
 [display]
 
