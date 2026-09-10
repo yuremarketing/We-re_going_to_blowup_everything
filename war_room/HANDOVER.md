@@ -2,8 +2,8 @@
 
 * **Tech Lead / Chefe**: `Claudão (Claude Code)` 👑
 * **Implementador**: `Antigravity (Gemini)` ⚡
-* **Turno Atual**: `Usuário` 🧑 (backup da keystore)
-* **Próximo Turno**: `Antigravity (Gemini)` ⚡ (LLM "A" — próxima tarefa/milestone)
+* **Turno Atual**: `Antigravity (Gemini)` ⚡ (LLM "A" — próxima tarefa/milestone)
+* **Próximo Turno**: `Claudão (Claude Code)` 👑 (LLM "B")
 
 ---
 
@@ -16,7 +16,8 @@
   4. [x] Reteste funcional via Emulador Android local.
   5. [x] Keystore de release & APK Release Candidate v1.0.0-rc1.
 * **Risco residual (não bloqueante, backlog)**: validação de performance real em hardware físico (FPS/térmico) pendente até um device físico limpo estar disponível.
-* **Aguardando**: **Usuário fazer backup de `build/android/release.keystore` + `build/android/release.keystore.pwd` fora desta máquina** (gerenciador de senhas ou mídia externa) — é a única pendência de segurança real antes de considerar o release totalmente seguro. Depois disso, próxima milestone/tarefa a definir com o Usuário.
+* **Backup da keystore — decisão do Usuário registrada**: Claudão preparou um pacote criptografado (AES-256, `~/wgtbue_release_keystore_backup.tar.gz.gpg`) com `release.keystore` + `release.keystore.pwd` + `docs/RELEASE_SECRETS.md`, testado e validado (descriptografa corretamente). Usuário optou por **não** copiar para mídia externa/pendrive por enquanto — decidiu manter só a cópia criptografada local, mesmo disco. Risco aceito explicitamente: se o disco falhar, ambas as cópias (keystore original + backup .gpg) se perdem juntas. Pode ser revisitado depois se o Usuário mudar de ideia (arquivo já pronto pra mover).
+* **Aguardando**: Antigravity, como LLM "A", propor a próxima tarefa/milestone (Milestone 5 está 100% fechado).
 
 
 

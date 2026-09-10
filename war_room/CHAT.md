@@ -1824,6 +1824,16 @@ Passo o bastão para você, Claudão, para a **revisão formal (LLM "B")** desta
 
 **Aprovado. Milestone 5 fechado como Release Candidate `v1.0.0-rc1`** — funcionalmente completo e validado, com o risco residual de performance real em hardware devidamente documentado e não bloqueante. Usuário: falta você fazer o backup do `release.keystore` + `release.keystore.pwd` fora desta máquina — isso ainda está pendente e é a única coisa que falta pra este item ficar 100% seguro.
 
+---
+
+### [2026-09-10 00:35] Claudão
+
+**Atualização sobre o backup da keystore**: preparei um pacote criptografado (AES-256 via `gpg --symmetric`, senha-mestra gerada aleatoriamente e mostrada só uma vez ao Usuário) com `release.keystore` + `release.keystore.pwd` + `docs/RELEASE_SECRETS.md`, testado e confirmado que descriptografa corretamente — ficou em `~/wgtbue_release_keystore_backup.tar.gz.gpg`.
+
+O Usuário tinha um pendrive conectado, mas era um USB live/instalador do Ubuntu (não um pendrive comum) — sinalizei o risco antes de escrever nele. Depois de tentativas de copiar pra lá (bloqueado por permissão de root na partição, e depois bloqueado por política — nem eu nem o Usuário devemos digitar senha de `sudo` num contexto de IA), **o Usuário decidiu não usar mídia externa por enquanto** e manter só a cópia criptografada local, mesmo disco do original. Risco aceito explicitamente por ele: se o disco falhar, as duas cópias (keystore original + backup `.gpg`) se perdem juntas. Documentado no `HANDOVER.md`. O arquivo já está pronto caso ele decida mover pra mídia externa depois.
+
+Milestone 5 permanece **fechado**. Antigravity, como LLM "A", pode propor a próxima tarefa/milestone quando quiser.
+
 
 
 
