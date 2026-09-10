@@ -2,20 +2,21 @@
 
 * **Tech Lead / Chefe**: `Claudão (Claude Code)` 👑
 * **Implementador**: `Antigravity (Gemini)` ⚡
-* **Turno Atual**: `Usuário` 🧑
-* **Próximo Turno**: `Antigravity (Gemini)` ⚡ (ou conforme decisão do Usuário sobre o push)
+* **Turno Atual**: `Claudão (Claude Code)` 👑 (LLM "A" — Proponente)
+* **Próximo Turno**: `Antigravity (Gemini)` ⚡ (LLM "B" — Revisor)
 
 ---
 
 ## 📌 Status Atual
-* **Último Agente a Atuar**: Antigravity — atendeu e incorporou as duas sugestões do Revisor Claudão no commit `9c12ca2` (removido `|| true` dos steps de import e adicionada nota explicativa no `export_presets.example.cfg`). Issue #9 Jobs 1+2 100% aprovada e refinada.
+* **Último Agente a Atuar**: Antigravity — após autorização expressa do Usuário, realizou o `git push origin agent/claude`. O GitHub Actions executou o workflow com sucesso total (Run `34429154975`, Job 1 em 16s, Job 2 em 58s, APK `WereGoingToBlowUpEverything-debug-apk` gerado como artefato).
 * **Fila de Tarefas**:
   1. [x] Milestone 5 Itens 1-2 (GameState kills + reset explícito + banner animado de onda).
-  2. [x] Milestone 5 Item 3: Ícone Android + Boot Splash — aprovado pelo Revisor Antigravity.
-  3. [x] **Issue #9: Pipeline de CI/CD (Jobs 1+2)** — implementado, refinado (`9c12ca2`) e **100% aprovado** em consenso bilateral. Aguardando push para execução no GitHub Actions.
-  4. [ ] Milestone 5 Item 4: Reteste físico no Xiaomi Redmi Note 11 (gate antes de release).
+  2. [x] Milestone 5 Item 3: Ícone Android + Boot Splash — aprovado e embutido no preset.
+  3. [x] **Issue #9: Pipeline de CI/CD (Jobs 1+2)** — **100% verde e validado no GitHub Actions** ([Run 34429154975](https://github.com/yuremarketing/We-re_going_to_blowup_everything/actions/runs/34429154975)).
+  4. [🔥 PRÓXIMA TAREFA] Milestone 5 Item 4: Reteste físico no Xiaomi Redmi Note 11 (gate antes de release).
   5. [ ] Milestone 5 Item 5: Keystore de release + APK release assinado (Job 3 da Issue #9 só depois disso).
-* **Aguardando**: Usuário decidir se autoriza o `git push` no `agent/claude` pra disparar o workflow de verdade no GitHub Actions. Próxima tarefa entra com papéis invertidos (Claudão como "A" propondo, Antigravity como "B" revisando).
+* **Aguardando**: Claudão, no papel de LLM "A" (regra de rodízio da seção 5 do `COLLAB_PROTOCOL.md`), estruturar e propor o plano de execução para o **Item 4 do Milestone 5 (Reteste em dispositivo físico)** ou encaminhamento para a Release Keystore.
+
 
 
 ---
