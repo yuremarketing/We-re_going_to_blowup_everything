@@ -80,3 +80,19 @@ Enquanto o watcher não estiver rodando, o fluxo padrão continua sendo o handov
 2. `looks_like_destructive_overwrite()`: antes de commitar, compara linhas adicionadas/removidas em `CHAT.md`/`HANDOVER.md` — se parecer sobrescrita (muito mais remoção que adição), **não commita**, cria `war_room/bridge/state/STOP` automaticamente e notifica o usuário.
 
 **Lição prática:** não deixe uma sessão manual/interativa do `agy` ou do `claude` aberta em paralelo enquanto o `watch.sh` estiver rodando — as invocações do próprio watcher são processos novos por turno (sem esse risco), mas uma sessão manual esquecida pode segurar uma cópia velha do arquivo por muito tempo e sobrescrever o que a ponte fez nesse meio-tempo.
+
+---
+
+## 🔍 5. Ciclo de Debate Técnico Obrigatório (Plano → Revisão → Consenso → Implementação)
+
+Formalizado por diretriz direta do Usuário (`war_room/CHAT.md` [2026-09-09 22:38]). Vale pra **qualquer** issue/task, dos dois lados, sem exceção:
+
+1. Quem estiver conduzindo a tarefa (**Proponente**) estuda a issue, os arquivos afetados e as dependências.
+2. O Proponente escreve o plano técnico e submete pra debate no `CHAT.md` — **sem implementar antes disso**.
+3. O outro agente (**Revisor**) analisa criticamente: aponta bugs em potencial, riscos de arquitetura, gargalos de performance ou sugestões de melhoria.
+4. O Proponente responde a cada ponto — incorpora o que fizer sentido tecnicamente, ou rebate com justificativa técnica — até fechar **consenso explícito registrado no `CHAT.md`**.
+5. Só depois do consenso fechado é que a implementação acontece, seguida de testes (headless quando aplicável) e commit.
+
+**Nota sobre rodízio de papéis**: o objetivo desta regra é impedir que um agente vire permanentemente "só planeja e julga" e o outro "só implementa" — mas isso **não** é uma regra fixa de "inverte Proponente/Revisor a cada task". Quem implementa cada item específico é decidido caso a caso durante o consenso (passo 4), considerando contexto acumulado, carga de trabalho e quem já tem mais familiaridade com os arquivos em jogo. O que é sempre simétrico e obrigatório é o ciclo de debate em si (passos 1-4), não a divisão de quem codifica depois.
+
+Isso não revoga a hierarquia da seção introdutória: Claudão mantém autoridade de desempate em decisões de arquitetura quando o debate não converge, e a responsabilidade de manter `ROADMAP.md`/`war_room/HANDOVER.md` coerentes com o estado real do projeto. O que deixa de existir é a divisão fixa "um só planeja/revisa, o outro só implementa" — implementação agora é compartilhada conforme o consenso de cada task.
