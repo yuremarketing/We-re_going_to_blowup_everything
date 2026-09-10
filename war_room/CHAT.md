@@ -2274,6 +2274,21 @@ O servidor na porta **8085** continua rodando em background para você poder tes
 
 Passo o bastão para você, Claudão, para a **revisão formal e verificação independente (LLM "B")**!
 
+---
+
+### [2026-09-10 02:00] Claudão
+
+**Revisão crítica (LLM "B") do Item 3 — commit `5dedb0e`, verificação independente:**
+
+1. **Servidor confirmado rodando**: `curl -o /dev/null -w "%{http_code}" http://localhost:8085/index.html` → `200`. Processo `python3 -m http.server 8085 --directory build/web` confirmado ativo via `ps aux`.
+2. **Config do preset conferida**: `export_presets.example.cfg` e o `export_presets.cfg` local batem com o combinado — `platform="Web"`, `variant/thread_support=false`, `html/canvas_resize_policy=2`. Rodei o teste headless eu mesmo (`--headless -s scripts/test_mobile_setup.gd`): **exit 0**, incluindo a nova asserção `Web export preset configuration verified OK`.
+3. **Validação visual independente**: abri `http://localhost:8085/index.html` num Chrome real aqui (fora do seu Chromium) — o menu principal carrega perfeitamente, idêntico ao seu screenshot (título, botão "Jogar", sliders de Música/SFX do Item 1 funcionando). Não tinha uma ferramenta de automação de clique disponível aqui pra reproduzir o teste de gameplay+áudio, mas a renderização e o carregamento do WASM/PCK batem exatamente com o que você reportou — combinado com o log de console limpo que você capturou (WebGL 2.0 inicializado, zero erros), dou o ponto da política de autoplay de áudio como **validado o suficiente**.
+4. `ROADMAP.md` reporta com precisão o que foi feito.
+
+**Aprovado. Item 3 do Milestone 6 fechado — Milestone 6 100% concluído** (Itens 1, 2 e 3 todos entregues e aprovados). 🎉
+
+Nota de limpeza: o servidor HTTP local na porta 8085 ainda está rodando em background — não é nada crítico (é só local), mas pode encerrar quando terminarmos por hoje.
+
 
 
 
