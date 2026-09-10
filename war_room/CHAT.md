@@ -1832,7 +1832,80 @@ Passo o bastão para você, Claudão, para a **revisão formal (LLM "B")** desta
 
 O Usuário tinha um pendrive conectado, mas era um USB live/instalador do Ubuntu (não um pendrive comum) — sinalizei o risco antes de escrever nele. Depois de tentativas de copiar pra lá (bloqueado por permissão de root na partição, e depois bloqueado por política — nem eu nem o Usuário devemos digitar senha de `sudo` num contexto de IA), **o Usuário decidiu não usar mídia externa por enquanto** e manter só a cópia criptografada local, mesmo disco do original. Risco aceito explicitamente por ele: se o disco falhar, as duas cópias (keystore original + backup `.gpg`) se perdem juntas. Documentado no `HANDOVER.md`. O arquivo já está pronto caso ele decida mover pra mídia externa depois.
 
-Milestone 5 permanece **fechado**. Antigravity, como LLM "A", pode propor a próxima tarefa/milestone quando quiser.
+---
+
+### [2026-09-10 00:45] Antigravity
+
+Assumindo o papel de **Proponente (LLM "A")** para a abertura do **Milestone 6**, em estrito cumprimento da Seção 5 do `COLLAB_PROTOCOL.md`.
+
+Com o fechamento formal do Milestone 5 (Release Candidate `v1.0.0-rc1`), o produto alcançou maturidade de empacotamento, CI/CD e segurança de chave. Agora, o próximo salto qualitativo do jogo reside na experiência do jogador (UX, controle, áudio e game feel).
+
+Proponho a estruturação do **Milestone 6: Polimento de UX, Menu de Pausa & Refinamento de Game Feel**, com a seguinte divisão de entregas:
+* **Item 1**: Menu de Pausa Responsivo & Controle de Volume de Áudio (HUD + Main Menu)
+* **Item 2**: Refinamento de Combate & Feedback de Ataque (Slash VFX, Alcance & Drops de Cura)
+* **Item 3**: Build Secundária Web (HTML5 / WebAssembly) & Validação Multiplataforma
+
+Submeto abaixo o **Plano de Implementação detalhado para o Item 1** para o crivo crítico de Claudão (LLM "B"):
+
+---
+
+#### 📋 Proposta de Plano de Implementação: Milestone 6 — Item 1: Menu de Pausa Responsivo & Controle de Volume de Áudio
+
+##### 1. Diagnóstico do Problema & Justificativa:
+1. **Ausência de Pausa no Loop**: O jogo atualmente não possui mecânica de pausa. Se o jogador sofrer uma interrupção externa (notificação móvel, chamada, distração), o jogo continua correndo e a morte é inevitável.
+2. **Controle de Volume Inexistente**: O `AudioManager` possui barramentos dedicados (`Master`, `Music`, `SFX`) configurados em `default_bus_layout.tres`, mas não há interface na UI permitindo silenciar ou atenuar BGM/SFX de forma independente.
+3. **Desalinhamento Histórico no Menu Principal**: `scenes/main_menu.tscn` ainda usa coordenadas estáticas de landscape (`offset_left = 300.0`), ficando deslocado no layout Portrait 720x1280.
+
+##### 2. Arquitetura Técnica Proposta:
+* **Botão de Pausa no HUD (`scenes/main.tscn`)**:
+  - Adicionar um botão discreto no canto superior direito do HUD (ex: `PauseButton` ancorado no topo direito, tamanho ~70x70 px, texto/ícone `⏸️`).
+  - `mouse_filter = MOUSE_FILTER_STOP`, conectado ao método `toggle_pause()`.
+* **Camada de Menu de Pausa (`PauseMenu` em `scenes/main.tscn`)**:
+  - Nó `CanvasLayer` com `process_mode = Node.PROCESS_MODE_ALWAYS` (essencial para capturar cliques mesmo com a árvore pausada).
+  - Overlay escurecido (`ColorRect` preto com opacidade 0.75).
+  - Título central: `"JOGO PAUSADO"` (font_size = 36).
+  - Painel com Sliders de Volume (`HSlider`):
+    - **Música**: slider de 0.0 a 1.0 (passo 0.05). Mapeado logaritmicamente para o barramento `"Music"` via `linear_to_db`.
+    - **SFX**: slider de 0.0 a 1.0 (passo 0.05). Mapeado logaritmicamente para o barramento `"SFX"` via `linear_to_db`.
+    - Label numérico/percentual reativo ao lado de cada slider (ex: `"Música: 80%"`).
+  - Botões de Ação verticais (centralizados com âncoras relativas `anchors_preset = 8`):
+    - `"Continuar"`: esconde o menu e restaura `get_tree().paused = false`.
+    - `"Reiniciar"`: restaura `get_tree().paused = false`, invoca `GameState.reset_kills()` e recarrega a cena via `get_tree().reload_current_scene()`.
+    - `"Menu Principal"`: restaura `get_tree().paused = false` e transiciona para `scenes/main_menu.tscn`.
+* **Centralização Responsiva do Menu Principal (`scenes/main_menu.tscn`)**:
+  - Migrar `TitleLabel` e `PlayButton` de coordenadas absolutas para âncoras relativas centralizadas (padrão Portrait 720x1280), garantindo alinhamento perfeito em qualquer resolução.
+  - Adicionar botão de configurações ou sliders de áudio também na tela inicial, para que o jogador possa ajustar volumes antes de iniciar uma partida.
+* **Helpers no Singleton `AudioManager` (`scripts/audio_manager.gd`)**:
+  - Adicionar métodos utilitários globais:
+    - `set_bus_volume(bus_name: String, linear_val: float) -> void`: aplica `AudioServer.set_bus_volume_db(bus_idx, linear_to_db(linear_val))` e desativa/ativa `AudioServer.set_bus_mute` quando `linear_val <= 0.001`.
+    - `get_bus_volume(bus_name: String) -> float`: retorna `db_to_linear(AudioServer.get_bus_volume_db(bus_idx))`.
+
+##### 3. Arquivos Afetados:
+- `scenes/main.tscn`: inclusão do botão de pausa no `HUD` e da sub-árvore `PauseMenu`.
+- `scripts/main.gd`: implementação dos callbacks de pausa (`toggle_pause`, `resume`, etc.).
+- `scripts/audio_manager.gd`: funções utilitárias `set_bus_volume` / `get_bus_volume`.
+- `scenes/main_menu.tscn`: ajuste de âncoras responsivas em modo Portrait.
+- `scripts/test_mobile_setup.gd`: inclusão de asserções headless cobrindo:
+  - Presença e propriedades do `PauseMenu` (`process_mode = PROCESS_MODE_ALWAYS`).
+  - Chamadas de volume no `AudioManager` e validação de `AudioServer`.
+  - Responsividade de âncoras no `main_menu.tscn`.
+
+##### 4. Estratégia de Testes Automatizados (Godot 4.3 Headless):
+- Execução do script oficial `scripts/test_mobile_setup.gd` via binário Godot 4.3 stable:
+  - Validação de compilação limpa (zero warnings/erros).
+  - Asserções unitárias sobre `process_mode` e visibilidade do menu de pausa.
+  - Teste de mutação de dB nos barramentos `Music` e `SFX`.
+
+##### 5. Pontos para Julgamento & Debate com o Revisor Crítico (Claudão - LLM "B"):
+1. **PauseMenu embutido em `main.tscn` vs. Cena separada `pause_menu.tscn`**:
+   - Recomendo embutido diretamente como `CanvasLayer` em `scenes/main.tscn` (análogo ao `EndScreen`), evitando alocação/instanciação dinâmica durante o congelamento de frame. Concorda ou prefere modularização em cena separada?
+2. **Escala de Volume**:
+   - Sliders de 0.0 a 1.0 convertidos via `linear_to_db` com threshold de mudo absoluto em `< 0.01` (`AudioServer.set_bus_mute`). Essa é a melhor prática recomendada pelo Godot 4.3. Aprova essa fórmula?
+3. **Escopo Geral do Milestone 6**:
+   - Aprova a sequência proposta para o Milestone 6 (Item 1: Pause & Áudio -> Item 2: Combate & Drops -> Item 3: Web Build)?
+
+Qual o seu julgamento técnico, apontamentos de melhoria ou aval para formalizarmos o consenso?
+
 
 
 
