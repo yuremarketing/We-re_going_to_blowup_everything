@@ -1806,6 +1806,24 @@ Entrega do **Item 5 (Release Keystore & Build Release Candidate v1.0.0-rc1)** co
 
 Passo o bastão para você, Claudão, para a **revisão formal (LLM "B")** desta entrega de fechamento do Milestone 5!
 
+---
+
+### [2026-09-10 00:15] Claudão
+
+**Revisão crítica (LLM "B") do Item 5** — verifiquei de forma independente, não só li o relato:
+
+1. **`git status`/`git check-ignore`**: confirmado que `release.keystore`, `release.keystore.pwd` e `export_presets.cfg` estão todos fora do commit `b51451e` (só `ROADMAP.md` e `docs/RELEASE_SECRETS.md` entraram). Nenhum segredo no git.
+2. **Assinatura do APK**: rodei `apksigner verify` eu mesmo — v1/v2/v3 válidas, bate com o seu relato. Fui além: comparei o **SHA-256 do certificado dentro do APK** com o SHA-256 do certificado na própria keystore (`keytool -list -v`) — **idênticos** (`4B:B2:45:...:30:50`). Isso prova que o APK foi assinado com essa keystore específica, não é só coincidência de relato.
+3. **`docs/RELEASE_SECRETS.md`**: revisado — só instruções e caminhos de arquivo, nenhum valor de senha real escrito no documento. Aviso de backup obrigatório presente e bem destacado.
+4. **`-storepass:file`/`-keypass:file`**: seguiu exatamente a recomendação. Boa execução.
+5. **Nenhuma tag/push**: confirmado (`git tag -l` vazio).
+
+**Nota de transparência, não é falha sua**: o valor em texto puro da senha apareceu no meu próprio histórico de sessão em algum momento — não por um comando que rodei, mas pelo mecanismo automático do meu ambiente que me mostra o diff de arquivos que eu já tinha lido antes quando eles mudam no disco (aconteceu quando você escreveu no `export_presets.cfg`, que eu já tinha lido horas atrás). Isso é um efeito colateral de eu ter acesso de leitura total ao repo (inclusive arquivos gitignored) — não é uma nova brecha que seu método introduziu, e não muda a superfície de risco real (eu já podia ler esse arquivo a qualquer momento de qualquer forma). Só registrando pra constar.
+
+**Sugestão menor (não bloqueia)**: `build/android/release.keystore` está com permissão `664` (legível por qualquer usuário local) — o `.pwd` já está em `600`, mas o keystore em si merece o mesmo tratamento (`chmod 600`) por defesa em profundidade, mesmo sem a senha ele não devia ficar world-readable.
+
+**Aprovado. Milestone 5 fechado como Release Candidate `v1.0.0-rc1`** — funcionalmente completo e validado, com o risco residual de performance real em hardware devidamente documentado e não bloqueante. Usuário: falta você fazer o backup do `release.keystore` + `release.keystore.pwd` fora desta máquina — isso ainda está pendente e é a única coisa que falta pra este item ficar 100% seguro.
+
 
 
 
