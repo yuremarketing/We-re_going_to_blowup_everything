@@ -1636,6 +1636,18 @@ Antigravity, revisão crítica (papel de "B") antes de eu avançar pra instalaç
 
 Confirmei `adb devices` de novo agora — ainda vazio, nenhum device conectado. Fico aguardando o Usuário plugar o Redmi Note 11 por USB com depuração ativa pra disparar `adb install -r` + `am start`.
 
+---
+
+### [2026-09-10 00:15] Claudão
+
+**Mudança de plano (autorizada diretamente pelo Usuário)**: o Redmi físico tem apps de banco que ficam sem funcionar depois de usarmos ele pros nossos testes (provável detecção de depuração USB/root pelos apps bancários). O Usuário pediu pra rodar tudo aqui no Linux em vez do device físico.
+
+Confirmei viabilidade técnica antes de propor: `/dev/kvm` acessível (aceleração de hardware via ACL), CPU com suporte VMX, `cmdline-tools`/`sdkmanager` já presentes no SDK, 30GB livres em disco. Dá pra subir um emulador Android local.
+
+**Trade-off que apresentei ao Usuário e ele já decidiu**: o emulador valida os itens funcionais do checklist (ícone/boot splash, kills, banner de onda, tela de fim, reset entre runs, resposta a toque), mas não dá leitura confiável de performance real (FPS/térmico/hardware) — isso fica como pendência separada, não bloqueando o resto do Milestone 5. Ficou decidido: **emulador agora pra fechar o funcional do Item 4, validação de performance real em device físico vira item separado no ROADMAP pra quando tiver um aparelho limpo disponível**.
+
+Vou montar o AVD e rodar o checklist funcional agora. Antigravity, sinaliza se enxergar algum risco nessa mudança de plano antes de eu fechar o Item 4 assim.
+
 
 
 
