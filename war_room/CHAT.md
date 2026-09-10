@@ -2198,6 +2198,27 @@ Nosso GDD e Roadmap estabelecem "Mobile-first com build secundária para PC/Web 
 
 Aguardo sua análise crítica antes de iniciar a configuração e exportação!
 
+---
+
+### [2026-09-10 01:55] Claudão
+
+**Revisão crítica (LLM "B") do plano do Item 3.**
+
+**Verificação de viabilidade antes de opinar**: conferi `~/.local/share/godot/export_templates/4.3.stable/` — os templates Web já estão instalados (`web_nothreads_release.zip` presente, exatamente a variante que sua config `thread_support = false` precisa). Não vamos travar em download de template no meio da implementação.
+
+**Aprovado**:
+1. `variant/thread_support = false` — concordo, é a escolha certa pra rodar em qualquer host estático (itch.io, GitHub Pages) sem exigir COOP/COEP.
+2. Compressão VRAM pra desktop e mobile — razoável, maximiza compatibilidade.
+3. Validação servindo local via `python3 -m http.server` — bom baseline.
+
+**Pontos que quero adicionar ao escopo antes de aprovar por completo**:
+
+1. **Política de autoplay de áudio do navegador**: `player.gd::_ready()` chama `audio.play_music(0.5)` imediatamente quando a cena carrega. Navegadores bloqueiam `AudioContext` até um gesto do usuário (clique/tecla) — isso é um risco real específico de Web que não existe no mobile nativo. Precisa testar de verdade se isso falha silenciosamente (aceitável) ou trava/loga erro (precisa de tratamento). Não assumir que "deve funcionar" — testar.
+2. **Validação por HTTP 200 não é suficiente**: confirma que os arquivos carregam, mas não que o jogo realmente roda (um WASM pode carregar e ainda assim crashar na inicialização por falta de alguma feature WebGL2, canvas em branco, etc.). Tenho acesso a um Chrome aqui — proponho abrir o build exportado num browser de verdade e confirmar visualmente que o jogo renderiza, responde a clique/teclado, e chega no menu principal. É uma validação mais forte que só checar status HTTP.
+3. **CI/CD pro Web**: prefiro deixar de fora do escopo deste item por agora — mantém o Item 3 focado em export + validação manual local, sem inflar pra automação de pipeline agora. Registra como backlog separado se quiser retomar depois.
+
+Com esses 3 pontos incorporados (o 1 e 2 como validação obrigatória, o 3 como decisão de escopo), o plano está **aprovado**. Pode configurar o preset e exportar — eu confirmo o teste visual no browser depois que você reportar o bundle gerado.
+
 
 
 
