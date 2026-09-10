@@ -83,16 +83,17 @@ Enquanto o watcher não estiver rodando, o fluxo padrão continua sendo o handov
 
 ---
 
-## 🔍 5. Ciclo de Debate Técnico Obrigatório (Plano → Revisão → Consenso → Implementação)
+## 🔍 5. Engenharia de Pares Simétrica (Ciclo LLM "A" ↔ LLM "B")
 
-Formalizado por diretriz direta do Usuário (`war_room/CHAT.md` [2026-09-09 22:38]). Vale pra **qualquer** issue/task, dos dois lados, sem exceção:
+Formalizado por diretriz direta do Usuário (`war_room/CHAT.md` [2026-09-09 22:38], confirmada e endossada explicitamente em [2026-09-09 23:0X] — foi o próprio Usuário quem pediu ao Antigravity pra trazer essa proposta). Vale pra **qualquer** issue/task, dos dois lados, sem exceção, substituindo o modelo antigo de "um só planeja/julga, o outro só implementa":
 
-1. Quem estiver conduzindo a tarefa (**Proponente**) estuda a issue, os arquivos afetados e as dependências.
-2. O Proponente escreve o plano técnico e submete pra debate no `CHAT.md` — **sem implementar antes disso**.
-3. O outro agente (**Revisor**) analisa criticamente: aponta bugs em potencial, riscos de arquitetura, gargalos de performance ou sugestões de melhoria.
-4. O Proponente responde a cada ponto — incorpora o que fizer sentido tecnicamente, ou rebate com justificativa técnica — até fechar **consenso explícito registrado no `CHAT.md`**.
-5. Só depois do consenso fechado é que a implementação acontece, seguida de testes (headless quando aplicável) e commit.
+1. **Análise da Issue (LLM do Turno / "A")**: quem estiver com o turno da tarefa estuda os requisitos da issue, os arquivos afetados e as dependências.
+2. **Elaboração do Plano ("A")**: cria o plano técnico detalhado e submete pra debate no `CHAT.md` — sem implementar antes disso.
+3. **Julgamento & Análise Crítica ("B")**: a outra LLM analisa criticamente o plano, com a obrigação de apontar potenciais bugs, falhas lógicas, gargalos de performance, quebras de arquitetura ou melhorias.
+4. **Tréplica Técnica & Consenso ("A" ↔ "B")**: "A" avalia os apontamentos — o que tiver coerência técnica, atende e incorpora ao plano; o que for equívoco ou tiver trade-off inferior, debate e rebate com fundamentos técnicos sólidos. Segue até o consenso formal estar fechado e registrado no `CHAT.md`.
+5. **Implementação ("A")**: a LLM que propôs e defendeu o plano vai para o código, implementa, roda os testes obrigatórios (headless quando aplicável), comita e documenta.
+6. **Inversão de Papéis para a Próxima Tarefa**: na issue seguinte, os papéis se invertem — quem revisou ("B") assume o turno como "A" (analisa, propõe o plano, defende e coda), e quem codou assume como "B" (julga, critica e revisa).
 
-**Nota sobre rodízio de papéis**: o objetivo desta regra é impedir que um agente vire permanentemente "só planeja e julga" e o outro "só implementa" — mas isso **não** é uma regra fixa de "inverte Proponente/Revisor a cada task". Quem implementa cada item específico é decidido caso a caso durante o consenso (passo 4), considerando contexto acumulado, carga de trabalho e quem já tem mais familiaridade com os arquivos em jogo. O que é sempre simétrico e obrigatório é o ciclo de debate em si (passos 1-4), não a divisão de quem codifica depois.
+Isso não revoga a hierarquia da seção introdutória: Claudão mantém autoridade de desempate em decisões de arquitetura quando o debate não converge, e a responsabilidade de manter `ROADMAP.md`/`war_room/HANDOVER.md` coerentes com o estado real do projeto. O que deixa de existir é a divisão fixa "um só planeja/revisa, o outro só implementa".
 
 Isso não revoga a hierarquia da seção introdutória: Claudão mantém autoridade de desempate em decisões de arquitetura quando o debate não converge, e a responsabilidade de manter `ROADMAP.md`/`war_room/HANDOVER.md` coerentes com o estado real do projeto. O que deixa de existir é a divisão fixa "um só planeja/revisa, o outro só implementa" — implementação agora é compartilhada conforme o consenso de cada task.
