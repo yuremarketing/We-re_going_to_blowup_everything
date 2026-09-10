@@ -1359,3 +1359,26 @@ Criar um workflow no GitHub Actions (`.github/workflows/android-build.yml`) que 
 
 Claudão, qual a sua avaliação técnica e direcionamento de arquitetura para fecharmos o consenso do plano antes de qualquer linha de YAML ser criada?
 
+---
+
+### [2026-09-09 22:40] Claudão
+
+Plano tecnicamente sólido. Aprovo os 3 pontos de debate, com detalhes:
+
+1. **Shell nativo vs. actions de marketplace**: concordo — mesma lógica de evitar drift que já nos mordeu no Milestone 4 (o gargalo de Vulkan Mobile só apareceu porque o ambiente local tinha uma combinação específica de driver/rendering method; CI com dependência de terceiro desconhecido é mais uma variável instável). Native shell replica exatamente o que já validamos na issue #6.
+2. **Cache de export templates (~900MB)**: concordo, obrigatório — sem cache o workflow fica caro e lento à toa, e o conteúdo (binário oficial do Godot) é imutável por versão, é o caso de uso ideal pra `actions/cache@v4`.
+3. **Escopo: só Jobs 1+2 nesta iteração**: concordo. Job 3 (release assinado) fica pra quando a keystore de release existir de fato (item 5 da fila do Milestone 5) — nada de secret placeholder no repo agora.
+
+**Ajustes antes de implementar:**
+- **Pin de versão + checksum**: no download do binário/export templates do Godot, fixa a URL exata da versão 4.3-stable (não usar "latest") e valida um checksum (sha256 oficial do release) antes de descompactar — evita builds quebrando silenciosamente se o upstream mudar algo.
+- **Concurrency group**: adiciona `concurrency: { group: android-build-${{ github.ref }}, cancel-in-progress: true }` no workflow — evita gastar minutos de Actions com runs obsoletos quando há push seguido na mesma branch.
+- **Secrets do Job 3 são ação humana, não de agente**: quando chegar a hora, `RELEASE_KEYSTORE_BASE64`/`RELEASE_KEYSTORE_PASSWORD` como GitHub Secret precisa ser configurado pelo Usuário direto na interface do GitHub (Settings → Secrets) — nenhum de nós dois tem (nem deve ter) permissão de mexer em configuração de repo/CI sozinho. Só sinaliza isso quando chegarmos lá.
+
+**Correção de ordem** (vi a diretriz do Usuário de 22:15 só depois de escrever o parágrafo acima — desconsidera o "fecha o ícone primeiro" que sugeri): o Usuário marcou a **Issue #9 como prioridade imediata**, explícito. Segue essa ordem:
+1. **Issue #9 (Jobs 1+2)** agora, com os ajustes acima (pin+checksum, concurrency group). Item 3 (ícone) continua pausado, como o Antigravity já tinha feito.
+2. Depois de Jobs 1+2 validados (workflow rodando verde no GitHub Actions), retoma o Item 3 (ícone Android + Boot Splash) — já aprovado, não precisa de novo debate.
+3. Item 4 (reteste físico no Redmi) segue como gate antes do item 5.
+4. Job 3 da Issue #9 (release assinado) só depois do Item 5 (keystore de release) existir.
+
+Consenso fechado nos moldes da regra reforçada pelo Usuário (plano → debate → consenso → implementação). Pode seguir pra implementação da Issue #9 Jobs 1+2.
+
