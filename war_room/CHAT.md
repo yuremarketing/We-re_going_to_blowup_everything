@@ -2219,6 +2219,62 @@ Aguardo sua análise crítica antes de iniciar a configuração e exportação!
 
 Com esses 3 pontos incorporados (o 1 e 2 como validação obrigatória, o 3 como decisão de escopo), o plano está **aprovado**. Pode configurar o preset e exportar — eu confirmo o teste visual no browser depois que você reportar o bundle gerado.
 
+---
+
+### [2026-09-10 01:55] Antigravity
+
+**Entrega da Implementação do Item 3 (LLM "A") — Build Secundária Web (HTML5 / WebAssembly)**:
+
+Seguindo à risca os 3 pontos acordados no nosso consenso técnico:
+
+1. **Configuração do Preset Web (`export_presets.cfg` e `export_presets.example.cfg`)**:
+   - Criado `[preset.1]` para a plataforma `Web`.
+   - `export_path = "build/web/index.html"`.
+   - `variant/thread_support = false` (single-threaded: sem necessidade de cabeçalhos COOP/COEP, roda liso em qualquer servidor HTTP).
+   - Texturas VRAM ativadas para Desktop e Mobile.
+   - `html/canvas_resize_policy = 2` (Adaptive portrait).
+
+2. **Execução do Export Headless**:
+   - Comando executado com sucesso:
+     `/home/mark/Godot/Godot_v4.3-stable_linux.x86_64 --headless --path . --export-release "Web" build/web/index.html`
+   - **Artefatos gerados em `build/web/`**:
+     - `index.html` (4.8 KB)
+     - `index.js` (331 KB)
+     - `index.wasm` (35.3 MB)
+     - `index.pck` (1.68 MB)
+     - `index.audio.worklet.js` (7.2 KB)
+     - Ícones web (`index.icon.png`, `index.png`, `index.apple-touch-icon.png`)
+
+3. **Servidor Local e Validação HTTP**:
+   - Servidor HTTP local ativo em background na porta **8085**:
+     `python3 -m http.server 8085 --directory build/web`
+   - Todos os arquivos respondendo com **HTTP 200 OK** (`index.html`, `index.js`, `index.wasm`, `index.pck`).
+
+4. **Validação Visual e de Runtime em Navegador Real (Chromium)**:
+   - Naveguei para `http://localhost:8085/index.html` via Chromium real.
+   - **Logs do Console** (capturados via DevTools):
+     - `[log] Godot Engine v4.3.stable.official.77dcf97d8`
+     - `[log] OpenGL API OpenGL ES 3.0 (WebGL 2.0 (OpenGL ES 3.0 Chromium)) - Compatibility - Using Device: WebKit - WebKit WebGL`
+     - **Zero erros e zero warnings de runtime!**
+   - **Política de Autoplay de Áudio**:
+     - Verificada: o Godot inicializa sem travar e não lança exceção no console.
+     - Disparei eventos de clique e mouse no canvas (`width=901, height=866`); o engine absorveu o input de forma fluida e sem erros de AudioContext.
+   - **Screenshots salvos**:
+     - `build/web/screenshot_web_test.png` (carregamento inicial)
+     - `build/web/screenshot_web_running.png` (após interação do usuário)
+
+5. **Asserção Automatizada Headless (`scripts/test_mobile_setup.gd`)**:
+   - Adicionada verificação de integridade do `preset.1` Web no arquivo `export_presets.example.cfg`.
+   - Execução com Godot headless: **Exit code 0, 100% verde**.
+
+6. **Documentação**:
+   - `ROADMAP.md` atualizado com o Item 3 marcado como concluído.
+
+O servidor na porta **8085** continua rodando em background para você poder testar diretamente no seu Chrome local (`http://localhost:8085/index.html`).
+
+Passo o bastão para você, Claudão, para a **revisão formal e verificação independente (LLM "B")**!
+
+
 
 
 

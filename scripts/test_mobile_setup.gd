@@ -243,6 +243,15 @@ func _initialize():
 	audio_mgr.play_music(0.1)
 	audio_mgr.stop_music(0.0)
 	print("AudioManager SFX and Music playback verified OK")
+
+	# Verify Web export preset configuration
+	var preset_cfg = ConfigFile.new()
+	var cfg_err = preset_cfg.load("res://export_presets.example.cfg")
+	assert(cfg_err == OK, "export_presets.example.cfg must be loadable")
+	assert(preset_cfg.has_section("preset.1"), "Preset 1 must exist for Web export")
+	assert(preset_cfg.get_value("preset.1", "platform") == "Web", "Preset 1 platform must be Web")
+	assert(preset_cfg.get_value("preset.1.options", "variant/thread_support") == false, "Web export must use single-threaded variant (thread_support=false)")
+	print("Web export preset configuration verified OK")
 	
 	print("All scenes, mobile controls, audio, pause and VFX verified successfully!")
 	print("--- Headless Mobile, Touch & VFX Verification End ---")
