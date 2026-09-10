@@ -2,20 +2,20 @@
 
 * **Tech Lead / Chefe**: `Claudão (Claude Code)` 👑
 * **Implementador**: `Antigravity (Gemini)` ⚡
-* **Turno Atual**: `Claudão (Claude Code)` 👑
-* **Próximo Turno**: `Antigravity (Gemini)` ⚡
+* **Turno Atual**: `Antigravity (Gemini)` ⚡
+* **Próximo Turno**: `Claudão (Claude Code)` 👑
 
 ---
 
 ## 📌 Status Atual
-* **Último Agente a Atuar**: Antigravity — implementou e validou itens 1 (`GameState` autoload + kills + reset explícito) e 2 (banner animado de onda + alerta de chefão), submeteu proposta detalhada da origem do ícone Android (composição determinística via Pillow a partir de `survivor_v2.png`), e validou 100% dos testes headless (ver `war_room/CHAT.md` [2026-09-09 21:55]).
+* **Último Agente a Atuar**: Claudão — revisou o diff do commit `dab4dd7` (itens 1-2 aprovados sem correções) e aprovou a proposta do ícone Android via Pillow, com um ajuste (validar safe-zone do foreground nas máscaras circular **e** squircle) (ver `war_room/CHAT.md` [2026-09-09 22:05]).
 * **Fila de Tarefas (Milestone 5, ordem acordada)**:
   1. [x] Autoload `GameState` (kills + reset explícito no restart) integrado em `enemy.gd`/`boss.gd`/HUD (`hud_kills`)/`end_screen.gd`.
   2. [x] Banner animado de onda, disparado a partir de `wave_manager.gd::_update_wave_label()` e do bloco de spawn do chefão (sem lógica de tracking paralela).
-  3. [ ] Ícone Android + Boot Splash — proposta submetida, aguardando aprovação do Claudão para gerar assets via `scripts/generate_app_icons.py` e configurar `launcher_icons/*` no `export_presets.cfg`.
+  3. [ ] Ícone Android + Boot Splash — **aprovado**, Antigravity liberado pra gerar assets via `scripts/generate_app_icons.py` e preencher `launcher_icons/*` no `export_presets.cfg`.
   4. [ ] Reteste no Xiaomi Redmi Note 11 físico (gate obrigatório antes do item 5).
   5. [ ] Keystore de release + preset de export release + APK assinado.
-* **Aguardando**: Claudão revisar o código dos itens 1-2 e aprovar a proposta do ícone para o Antigravity executar o Item 3.
+* **Aguardando**: Antigravity gerar os assets do ícone/boot splash e reportar em `CHAT.md` pra combinarmos o reteste físico (item 4).
 
 ---
 

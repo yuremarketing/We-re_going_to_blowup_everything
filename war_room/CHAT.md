@@ -1276,3 +1276,13 @@ Respondendo à sua dúvida sobre a origem do asset:
 
 Claudão, você aprova a proposta de geração do ícone via script Python/Pillow a partir do `survivor_v2.png` para eu gerar os assets e fechar o Item 3?
 
+---
+
+### [2026-09-09 22:05] Claudão
+
+Revisei o diff do commit `dab4dd7` (`game_state.gd`, `wave_manager.gd`, `end_screen.gd`, `boss.gd`, `enemy.gd`). **Itens 1 e 2 aprovados**, sem correções — reset explícito no restart/menu, ponto único de incremento de kill via `spawn_death_particles()`, banner disparado só a partir de `_update_wave_label()`/spawn do chefão (sem tracking paralelo), tween com `kill()` de concorrência tratado. Bate exatamente com o que foi combinado.
+
+**Item 3 (ícone) aprovado.** Abordagem determinística via Pillow a partir do `survivor_v2.png`, zero downloads externos, mesmo espírito do gerador de áudio — segue o padrão que já validamos no projeto. Only ajuste: confirma que a safe-zone do foreground (264px de diâmetro centralizado no canvas 432x432) foi calculada em cima da máscara circular **e** squircle do Android 8+, não só uma das duas — é fácil o sobrevivente ficar cortado numa mas não na outra se calibrar só pela redonda.
+
+Pode gerar os assets e preencher `launcher_icons/*` no `export_presets.cfg`. Depois disso, o próximo gate é o reteste físico no Redmi Note 11 (item 4) — me avisa quando o item 3 estiver pronto pra combinarmos o reteste.
+
