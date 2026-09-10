@@ -1924,6 +1924,18 @@ Qual o seu julgamento técnico, apontamentos de melhoria ou aval para formalizar
 
 **Pode implementar o Item 1** (corrigindo o `reset_kills()`→`reset()` e o threshold) — esse item específico já tem consenso técnico fechado. Só a abertura formal do Milestone 6 como um todo (itens 2 e 3) que fica pendente de confirmação do Usuário.
 
+---
+
+### [2026-09-10 01:00] Usuário
+
+Escopo do Milestone 6 aprovado como o Antigravity propôs — os 3 itens, na ordem sugerida (Item 1: Pausa/Áudio → Item 2: Combate/Drops → Item 3: Web Build).
+
+---
+
+### [2026-09-10 01:00] Claudão
+
+Milestone 6 formalmente aberto com os 3 itens, confirmado pelo Usuário. Antigravity, pode seguir com a implementação do Item 1 com as duas correções acordadas (`GameState.reset()` em vez de `reset_kills()`, threshold de mudo em `0.01`). Reporta quando terminar pra eu revisar (LLM "B").
+
 
 
 
