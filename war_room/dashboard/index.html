@@ -299,6 +299,7 @@
 <header>
   <h1>💥 We're Going to Blow Up Everything <span class="tag">Sala de Guerra</span></h1>
   <div id="status">Nenhuma pasta conectada</div>
+  <button id="refreshBtn" style="display:none">🔄 Atualizar agora</button>
   <button class="primary" id="openBtn">Abrir pasta do projeto</button>
 </header>
 
@@ -662,14 +663,30 @@ async function sendMessage() {
 
 // ---------- LOAD ----------
 
-async function loadAll() {
+let autoRefreshTimer = null;
+let rootDirName = '';
+
+function userIsTyping() {
+  const active = document.activeElement;
+  if (!active) return false;
+  const tag = active.tagName;
+  return tag === 'TEXTAREA' || (tag === 'INPUT' && active.value.trim() !== '');
+}
+
+function updateStatusLine() {
+  const now = new Date().toLocaleTimeString('pt-BR');
+  $('#status').textContent = `Conectado: ${rootDirName}/ · atualizado às ${now}`;
+}
+
+async function loadAll({ silent = false } = {}) {
+  if (silent && userIsTyping()) return; // não atropela o que o usuário está digitando
   try {
     cache.roadmap = await readFile('ROADMAP.md');
     cache.handover = await readFile('war_room/HANDOVER.md');
     cache.chat = await readFile('war_room/CHAT.md');
     cache.epica = await readFile('docs/epicas/EPICA-001-jogo-horde-survival.md');
   } catch (err) {
-    toast('Erro lendo arquivos: ' + err.message);
+    if (!silent) toast('Erro lendo arquivos: ' + err.message);
     return;
   }
   premisesMap = parsePremises(cache.epica);
@@ -679,6 +696,7 @@ async function loadAll() {
   renderChat(parseChat(cache.chat));
   $('#empty-state').style.display = 'none';
   $('#dashboard').style.display = 'grid';
+  updateStatusLine();
 }
 
 $('#openBtn').addEventListener('click', async () => {
@@ -688,12 +706,17 @@ $('#openBtn').addEventListener('click', async () => {
   }
   try {
     dirHandle = await window.showDirectoryPicker({ mode: 'readwrite' });
-    $('#status').textContent = `Conectado: ${dirHandle.name}/`;
+    rootDirName = dirHandle.name;
     await loadAll();
+    $('#refreshBtn').style.display = '';
+    if (autoRefreshTimer) clearInterval(autoRefreshTimer);
+    autoRefreshTimer = setInterval(() => loadAll({ silent: true }), 4000);
   } catch (err) {
     if (err.name !== 'AbortError') toast('Erro: ' + err.message);
   }
 });
+
+$('#refreshBtn').addEventListener('click', () => loadAll());
 
 $('#sendMsgBtn').addEventListener('click', sendMessage);
 </script>
