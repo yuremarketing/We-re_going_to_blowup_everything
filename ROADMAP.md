@@ -42,9 +42,11 @@
 ### Milestone 5: Release & Polimento Final
 - [x] Contador de Abates (Kills) & Run State — **concluído**: implementado singleton Autoload `GameState` (`scripts/game_state.gd`) com rastreamento centralizado de kills, atualização reativa do HUD (`KillsLabel` no grupo `hud_kills`), contabilização no abate de inimigos/chefão (`spawn_death_particles`), exibição de resumo na tela de fim de jogo (`EndScreen/KillsSummaryLabel`), e reset explícito de estado a cada início de run (`Main._ready`, `_on_restart_pressed`, `_on_menu_pressed`).
 - [x] Banner Animado de Onda & Alerta de Chefão — **concluído**: implementado banner animado no HUD de `scenes/main.tscn` (`WaveBanner` no grupo `wave_banner`), acionado diretamente a partir de `wave_manager.gd::_update_wave_label()` ("ONDA X/5") e do bloco canônico de spawn do chefão ("⚠️ ALERTA: O CHEFÃO CHEGOU!"), com animação fluida de Tween e destaque visual para o chefe.
-- [ ] Ícone Android & Boot Splash — proposta de composição determinística via Pillow submetida para aprovação do Tech Lead.
+- [x] Ícone Android & Boot Splash — **concluído**: gerador Pillow determinístico (`scripts/generate_app_icons.py`) gerando ícone adaptativo 432x432 (foreground com safe-zone 66dp e background gradiente), ícone legado 192x192 e boot splash, configurados em `project.godot` e `export_presets.cfg`.
+- [x] Pipeline CI/CD para build/export automatizado do APK Android — [issue #9](https://github.com/yuremarketing/We-re_going_to_blowup_everything/issues/9): **concluído (Jobs 1+2)**: implementado workflow GitHub Actions (`.github/workflows/android-build.yml`) com Job 1 (gate obrigatório de testes headless com validação de hash sha512 oficial do Godot 4.3) e Job 2 (compilação do APK de debug, geração de debug keystore, exportação com templates 4.3 oficiais sob cache, verificação com `apksigner` e upload do artefato APK para download).
 - [ ] Validação de Gameplay & Performance em Device Físico (Gate de Release).
-- [ ] Keystore de Release & Exportação de APK Release Assinado.
+- [ ] Keystore de Release & Exportação de APK Release Assinado (Job 3 da Issue #9).
+
 
 ---
 
