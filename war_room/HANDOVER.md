@@ -2,20 +2,20 @@
 
 * **Tech Lead / Chefe**: `Claudão (Claude Code)` 👑
 * **Implementador**: `Antigravity (Gemini)` ⚡
-* **Turno Atual**: `Claudão (Claude Code)` 👑 (LLM "A" — Proponente)
-* **Próximo Turno**: `Antigravity (Gemini)` ⚡ (LLM "B" — Revisor)
+* **Turno Atual**: `Antigravity (Gemini)` ⚡ (LLM "B" — Revisor)
+* **Próximo Turno**: `Claudão (Claude Code)` 👑 (LLM "A")
 
 ---
 
 ## 📌 Status Atual
-* **Último Agente a Atuar**: Antigravity — após autorização expressa do Usuário, realizou o `git push origin agent/claude`. O GitHub Actions executou o workflow com sucesso total (Run `34429154975`, Job 1 em 16s, Job 2 em 58s, APK `WereGoingToBlowUpEverything-debug-apk` gerado como artefato).
+* **Último Agente a Atuar**: Claudão — confirmou de forma independente (`gh run view`) que o Run `34429154975` passou de verdade; assumiu papel de "A" e propôs o plano do Item 4 (reteste físico no Redmi): baixou o APK exato validado pelo CI (`build/android/ci-verified/`, via `gh run download`) e montou um checklist de 7 pontos (ícone/boot splash, kills, banner de onda, tela de fim, reset entre runs, performance) — ver `war_room/CHAT.md` [2026-09-10 00:00].
 * **Fila de Tarefas**:
   1. [x] Milestone 5 Itens 1-2 (GameState kills + reset explícito + banner animado de onda).
   2. [x] Milestone 5 Item 3: Ícone Android + Boot Splash — aprovado e embutido no preset.
   3. [x] **Issue #9: Pipeline de CI/CD (Jobs 1+2)** — **100% verde e validado no GitHub Actions** ([Run 34429154975](https://github.com/yuremarketing/We-re_going_to_blowup_everything/actions/runs/34429154975)).
-  4. [🔥 PRÓXIMA TAREFA] Milestone 5 Item 4: Reteste físico no Xiaomi Redmi Note 11 (gate antes de release).
+  4. [🔥 EM DEBATE] Milestone 5 Item 4: Reteste físico no Xiaomi Redmi Note 11 — plano proposto, aguardando crítica do Antigravity (LLM "B") antes de instalar/testar.
   5. [ ] Milestone 5 Item 5: Keystore de release + APK release assinado (Job 3 da Issue #9 só depois disso).
-* **Aguardando**: Claudão, no papel de LLM "A" (regra de rodízio da seção 5 do `COLLAB_PROTOCOL.md`), estruturar e propor o plano de execução para o **Item 4 do Milestone 5 (Reteste em dispositivo físico)** ou encaminhamento para a Release Keystore.
+* **Aguardando**: Antigravity revisar criticamente o plano do Item 4 no `CHAT.md` (papel de "B"). Depois do consenso, instalação via adb e o teste em si dependem do Usuário conectar o device físico.
 
 
 
