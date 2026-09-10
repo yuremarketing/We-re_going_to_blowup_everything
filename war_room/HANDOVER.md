@@ -2,20 +2,20 @@
 
 * **Tech Lead / Chefe**: `Claudão (Claude Code)` 👑
 * **Implementador**: `Antigravity (Gemini)` ⚡
-* **Turno Atual**: `Antigravity (Gemini)` ⚡
-* **Próximo Turno**: `Claudão (Claude Code)` 👑
+* **Turno Atual**: `Claudão (Claude Code)` 👑
+* **Próximo Turno**: `Antigravity (Gemini)` ⚡
 
 ---
 
 ## 📌 Status Atual
-* **Último Agente a Atuar**: Claudão — revisou o diff do commit `dab4dd7` (itens 1-2 aprovados sem correções) e aprovou a proposta do ícone Android via Pillow, com um ajuste (validar safe-zone do foreground nas máscaras circular **e** squircle) (ver `war_room/CHAT.md` [2026-09-09 22:05]).
-* **Fila de Tarefas (Milestone 5, ordem acordada)**:
-  1. [x] Autoload `GameState` (kills + reset explícito no restart) integrado em `enemy.gd`/`boss.gd`/HUD (`hud_kills`)/`end_screen.gd`.
-  2. [x] Banner animado de onda, disparado a partir de `wave_manager.gd::_update_wave_label()` e do bloco de spawn do chefão (sem lógica de tracking paralela).
-  3. [ ] Ícone Android + Boot Splash — **aprovado**, Antigravity liberado pra gerar assets via `scripts/generate_app_icons.py` e preencher `launcher_icons/*` no `export_presets.cfg`.
-  4. [ ] Reteste no Xiaomi Redmi Note 11 físico (gate obrigatório antes do item 5).
-  5. [ ] Keystore de release + preset de export release + APK assinado.
-* **Aguardando**: Antigravity gerar os assets do ícone/boot splash e reportar em `CHAT.md` pra combinarmos o reteste físico (item 4).
+* **Último Agente a Atuar**: Antigravity — registrou a diretriz do Usuário (priorização da Issue #9 e reforço do fluxo obrigatório de planejamento antes de implementar), pausou a execução do ícone e submeteu a proposta completa de arquitetura da Issue #9 (CI/CD GitHub Actions) para debate técnico com o Tech Lead (ver `war_room/CHAT.md` [2026-09-09 22:16]).
+* **Fila de Tarefas**:
+  1. [x] Milestone 5 Itens 1-2 (GameState kills + reset explícito + banner animado de onda).
+  2. [🔥 PRIORIDADE ATUAL] **Issue #9: Pipeline de CI/CD para build/export automatizado do APK Android** — proposta de arquitetura submetida no `CHAT.md`, aguardando debate e consenso do Tech Lead.
+  3. [ ] Milestone 5 Item 3: Ícone Android + Boot Splash (plano aprovado, execução em espera após Issue #9).
+  4. [ ] Milestone 5 Item 4: Reteste físico no Xiaomi Redmi Note 11 (gate antes de release).
+  5. [ ] Milestone 5 Item 5: Keystore de release + APK release assinado.
+* **Aguardando**: Claudão debater a proposta técnica da Issue #9 no `CHAT.md` e fechar o consenso do plano antes de qualquer implementação de código/YAML.
 
 ---
 

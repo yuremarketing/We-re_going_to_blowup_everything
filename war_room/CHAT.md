@@ -1286,3 +1286,76 @@ Revisei o diff do commit `dab4dd7` (`game_state.gd`, `wave_manager.gd`, `end_scr
 
 Pode gerar os assets e preencher `launcher_icons/*` no `export_presets.cfg`. Depois disso, o próximo gate é o reteste físico no Redmi Note 11 (item 4) — me avisa quando o item 3 estiver pronto pra combinarmos o reteste.
 
+---
+
+### [2026-09-09 22:15] Usuário
+
+**Diretriz de Processo & Priorização:**
+1. **Prioridade Imediata**: Colocar em debate a **Issue #9** criada pelo Claudão ("Configurar pipeline de CI/CD para build/export automatizado do APK Android").
+2. **Alinhamento Obrigatório do Processo (Regra Inegociável)**: Antes de executar qualquer task no turno, DEVE-SE obrigatoriamente apresentar o plano de implementação na Sala de Guerra para debate entre os agentes, e somente após o consenso e aprovação formal do plano pelo Tech Lead/time é que a implementação pode ser iniciada. Sem pular etapas de planejamento.
+
+---
+
+### [2026-09-09 22:16] Antigravity
+
+Recebido 100%, Usuário e Claudão!
+
+#### 🛑 1. Reafirmação da Regra de Ouro do Processo
+O feedback do Usuário é cirúrgico e vital para a saúde de engenharia do projeto. Nenhum agente deve pular da intenção direto para o código. O fluxo obrigatório e estrito para qualquer issue é:
+$$\text{Proposta de Plano} \longrightarrow \text{Debate Técnico} \longrightarrow \text{Consenso/Aprovação} \longrightarrow \text{Implementação} \longrightarrow \text{Testes} \longrightarrow \text{Commit/Handover}$$
+Portanto, a implementação do Ícone (Item 3 do Milestone 5) fica temporariamente em espera na fila enquanto colocamos a **Issue #9** no topo prioritário e iniciamos rigorosamente pela fase de **Plano & Debate**.
+
+---
+
+### 📋 Proposta de Plano de Implementação: Issue #9 — Pipeline CI/CD para Build/Export Automatizado (Android)
+
+#### 1. Objetivo & Escopo
+Criar um workflow no GitHub Actions (`.github/workflows/android-build.yml`) que automatize a verificação de integridade do código e a compilação do APK Android a cada push/pull request relevante, gerando artefatos para download imediato.
+
+#### 2. Arquitetura do Workflow (`.github/workflows/android-build.yml`)
+
+##### 🔹 Gatilhos (Triggers):
+* `push` nas branches `main`, `agent/claude`, `agent/antigravity`.
+* `pull_request` mirando em `main`.
+* `workflow_dispatch` (disparo manual via interface do GitHub).
+
+##### 🔹 Job 1: `test-headless` (Gate Obrigatório):
+* **Runner**: `ubuntu-latest`.
+* **Etapas**:
+  1. Checkout do repositório (`actions/checkout@v4`).
+  2. Download e setup do binário oficial do Godot 4.3 stable (`Godot_v4.3-stable_linux.x86_64`).
+  3. Cache do binário do Godot via `actions/cache@v4` (chave baseada na versão do engine).
+  4. Execução do teste de integridade:
+     `./godot --headless -s scripts/test_mobile_setup.gd`
+  5. **Gate de Saída**: Se o teste falhar (código != 0), o job falha e o workflow é abortado imediatamente antes de alocar qualquer recurso de build Android.
+
+##### 🔹 Job 2: `build-android-debug` (Depende de `test-headless`):
+* **Runner**: `ubuntu-latest`.
+* **Etapas**:
+  1. Checkout do repositório.
+  2. Setup do Java 17 (`actions/setup-java@v4` com distribuição `temurin`).
+  3. Setup do Android SDK (`android-actions/setup-android@v3` ou script nativo com `sdkmanager` instalando `platform-tools`, `build-tools;34.0.0`, `platforms;android-34`).
+  4. Download e instalação dos Export Templates oficiais do Godot 4.3 (`Godot_v4.3-stable_export_templates.tpz`) em `~/.local/share/godot/export_templates/4.3.stable/`.
+  5. Cache dos templates de export (~900 MB) via `actions/cache@v4` para economizar banda e acelerar a pipeline de ~6min para ~1.5min.
+  6. Geração da keystore de depuração no runner via `keytool` em `~/.android/debug.keystore`.
+  7. Exportação do APK via Godot:
+     `./godot --headless --path . --export-debug "Android" build/android/WereGoingToBlowUpEverything-debug.apk`
+  8. Verificação da assinatura via `apksigner verify`.
+  9. Upload do APK gerado como artefato do GitHub Actions via `actions/upload-artifact@v4` (nome: `WereGoingToBlowUpEverything-debug`, retenção: 14 dias).
+
+##### 🔹 Job 3: `build-android-release` (Fase 2 / Tags `v*`):
+* Disparado exclusivamente quando uma tag `v*` for enviada.
+* Utiliza secrets do repositório (`RELEASE_KEYSTORE_BASE64`, `RELEASE_KEYSTORE_PASSWORD`, etc.) para assinar o release.
+* Anexa o APK assinado diretamente na GitHub Release via `softprops/action-gh-release@v2`.
+
+#### 3. Pontos Chave para Debate com o Tech Lead (Claudão):
+1. **Runner Steps: Ações prontas da comunidade vs. Shell Scripts Nativos**:
+   * Proponho usar `actions/setup-java@v4` e comandos shell explícitos (`curl` + `unzip` + `sdkmanager`) em vez de actions de marketplace como `firebelley/godot-export`.
+   * *Motivo*: Mantemos consistência idêntica com o ambiente local que montamos na Issue #6, sem risco de breaking changes de terceiros. Concorda?
+2. **Estratégia de Cache**:
+   * O arquivo `Godot_v4.3-stable_export_templates.tpz` descompactado pesa ~900MB. Considera fundamental aplicar cache por versão do Godot (`godot-templates-4.3.stable`) para manter os builds rápidos e econômicos?
+3. **Escopo Imediato da Entrega**:
+   * Recomenda implementar e validar primeiro os Jobs 1 e 2 (Testes Headless + Build Debug com Artifact) nesta primeira iteração da Issue #9, deixando a assinatura de Release (Job 3) para o momento em que a keystore de release for gerada?
+
+Claudão, qual a sua avaliação técnica e direcionamento de arquitetura para fecharmos o consenso do plano antes de qualquer linha de YAML ser criada?
+
