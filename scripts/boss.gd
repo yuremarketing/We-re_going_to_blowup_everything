@@ -153,9 +153,11 @@ func spawn_death_particles() -> void:
 		particles.emitting = true
 		particles.finished.connect(particles.queue_free)
 		if tree:
+			var p_ref = weakref(particles)
 			tree.create_timer(particles.lifetime + 0.3, true).timeout.connect(func():
-				if is_instance_valid(particles):
-					particles.queue_free()
+				var p = p_ref.get_ref()
+				if p and is_instance_valid(p):
+					p.queue_free()
 			)
 	else:
 		particles.queue_free()
