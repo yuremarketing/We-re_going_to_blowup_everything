@@ -53,7 +53,7 @@ jobs:
 
       - name: Import project resources
         run: |
-          ~/godot-bin/godot --headless --editor --quit || true
+          ~/godot-bin/godot --headless --editor --quit
 
       - name: Run Headless Verification Script
         run: |
@@ -144,7 +144,7 @@ jobs:
 
       - name: Import project resources
         run: |
-          ~/godot-bin/godot --headless --editor --quit || true
+          ~/godot-bin/godot --headless --editor --quit
 
       - name: Export Android Debug APK
         run: |
