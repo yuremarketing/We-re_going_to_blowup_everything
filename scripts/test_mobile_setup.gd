@@ -1,6 +1,6 @@
 extends SceneTree
 
-func _init():
+func _initialize():
 	print("--- Headless Mobile, Touch & VFX Verification Start ---")
 	var project_name = ProjectSettings.get_setting("application/config/name")
 	var render_method = ProjectSettings.get_setting("rendering/renderer/rendering_method")
@@ -29,6 +29,15 @@ func _init():
 	root.add_child(audio_mgr)
 	print("AudioManager initialized OK")
 	
+	var state_script = preload("res://scripts/game_state.gd")
+	var state_mgr = state_script.new()
+	state_mgr.name = "GameState"
+	root.add_child(state_mgr)
+	print("GameState initialized OK")
+	
+	var autoload_state = ProjectSettings.get_setting("autoload/GameState")
+	assert(autoload_state != null, "autoload/GameState must be configured in ProjectSettings")
+	
 	var main_scene = load("res://scenes/main.tscn")
 	if not main_scene:
 		printerr("ERROR: Could not load scenes/main.tscn")
@@ -36,6 +45,7 @@ func _init():
 		return
 	var inst = main_scene.instantiate()
 	root.add_child(inst)
+	current_scene = inst
 	
 	# Verify Camera3D and Screen Shake method
 	var player = inst.get_node_or_null("Player")
@@ -63,7 +73,26 @@ func _init():
 	assert(touch_attack.action == "ui_accept", "TouchAttack action must be ui_accept")
 	print("TouchScreenButton actions verified OK")
 	
-	# Verify Enemy VFX (Hit Flash & Death Particles)
+	# Verify HUD Kills Label
+	var kills_label = inst.get_node_or_null("HUD/KillsLabel")
+	assert(kills_label != null, "HUD/KillsLabel must exist")
+	assert(kills_label.is_in_group("hud_kills"), "KillsLabel must be in group hud_kills")
+	assert(kills_label.text == "Kills: 0", "Initial kills label text must be 'Kills: 0'")
+	print("HUD KillsLabel verified OK")
+	
+	# Verify Wave Banner
+	var wave_banner = inst.get_node_or_null("HUD/WaveBanner")
+	assert(wave_banner != null, "HUD/WaveBanner must exist")
+	assert(wave_banner.is_in_group("wave_banner"), "WaveBanner must be in group wave_banner")
+	assert(wave_banner.get_node_or_null("BannerLabel") != null, "BannerLabel must exist in WaveBanner")
+	var wm = inst.get_node_or_null("WaveManager")
+	assert(wm != null, "WaveManager must exist")
+	assert(wm.has_method("show_wave_banner"), "WaveManager must implement show_wave_banner")
+	wm.show_wave_banner("TEST WAVE")
+	print("Wave Banner and WaveManager integration verified OK")
+	
+	# Verify Enemy VFX (Hit Flash & Death Particles) and Kill Counting
+	var initial_kills = state_mgr.kills
 	var enemy_scene = load("res://scenes/enemy.tscn")
 	var enemy_inst = enemy_scene.instantiate()
 	inst.add_child(enemy_inst)
@@ -71,7 +100,9 @@ func _init():
 	assert(enemy_inst.has_method("spawn_death_particles"), "Enemy must implement spawn_death_particles")
 	enemy_inst.play_hit_flash()
 	enemy_inst.take_damage(1)
-	print("Enemy Hit Flash & Death Particles verified OK")
+	assert(state_mgr.kills == initial_kills + 1, "Killing enemy must increment GameState.kills")
+	assert(kills_label.text == "Kills: 1", "HUD KillsLabel must update to 'Kills: 1'")
+	print("Enemy Hit Flash, Death Particles & Kill counting verified OK")
 	
 	# Verify Boss VFX (Hit Flash & Death Particles)
 	var boss_scene = load("res://scenes/boss.tscn")
@@ -83,13 +114,24 @@ func _init():
 	boss_inst.take_damage(2)
 	print("Boss Hit Flash verified OK (HP remaining: ", boss_inst.hp, ")")
 	
-	# Verify EndScreen nodes
+	# Verify EndScreen nodes and summary
 	var end_screen = inst.get_node_or_null("EndScreen")
 	assert(end_screen != null, "EndScreen node must exist")
 	assert(end_screen.get_node_or_null("ResultLabel") != null, "ResultLabel must exist")
+	assert(end_screen.get_node_or_null("KillsSummaryLabel") != null, "KillsSummaryLabel must exist")
 	assert(end_screen.get_node_or_null("RestartButton") != null, "RestartButton must exist")
 	assert(end_screen.get_node_or_null("MenuButton") != null, "MenuButton must exist")
-	print("EndScreen buttons & labels verified OK")
+	
+	end_screen.show_result("VITÓRIA!", state_mgr.kills)
+	var kills_summary = end_screen.get_node_or_null("KillsSummaryLabel")
+	assert(kills_summary.text == "Inimigos abatidos: %d" % state_mgr.kills, "EndScreen must show total kills")
+	print("EndScreen buttons, labels & kills summary verified OK")
+	
+	# Test GameState reset
+	state_mgr.reset()
+	assert(state_mgr.kills == 0, "GameState.reset() must reset kills to 0")
+	assert(kills_label.text == "Kills: 0", "HUD KillsLabel must reset to 'Kills: 0'")
+	print("GameState reset verified OK")
 	
 	var menu_scene = load("res://scenes/main_menu.tscn")
 	var menu_inst = menu_scene.instantiate()

@@ -39,6 +39,13 @@
 - [x] Áudio e trilha sonora — [issue #4](https://github.com/yuremarketing/We-re_going_to_blowup_everything/issues/4): **concluído**: implementado gerador de SFX e BGM procedurais (`scripts/generate_audio_assets.py` com 8 assets `.wav` em `assets/audio/`), barramentos de áudio Master/Music/SFX (`default_bus_layout.tres`), singleton Autoload `AudioManager` (`scripts/audio_manager.gd`) com pool polifônico de 8 canais, jitter de pitch e controle de fade de música, e hooks de áudio integrados no jogador (ataque, acerto, dano recebido), inimigos/chefão (morte e aparição), e telas de vitória/derrota. Validado 100% headless no Godot 4.3 e empacotado no APK Android.
 - [x] Balancear parâmetros de gameplay via playtest (HP, velocidade, dano, progressão entre ondas) — [issue #7](https://github.com/yuremarketing/We-re_going_to_blowup_everything/issues/7): **concluído**: implementados cooldown de ataque (0.22s) e quadros de invulnerabilidade (i-frames de 0.75s com piscar de opacidade) no sobrevivente, cooldown de dano de contato no chefão (1.0s) eliminando morte instantânea a 60Hz, despawn de segurança de inimigos passados da pista (`position.z > 25.0`), e progressão dinâmica de ondas no `wave_manager.gd` (ondas 1 a 5 escalando de 5 a 15 inimigos, redução gradual de intervalo de 1.8s a 0.9s e distribuição inteligente entre comuns, rápidos e tanques). Validado headless e testado no Android.
 
+### Milestone 5: Release & Polimento Final
+- [x] Contador de Abates (Kills) & Run State — **concluído**: implementado singleton Autoload `GameState` (`scripts/game_state.gd`) com rastreamento centralizado de kills, atualização reativa do HUD (`KillsLabel` no grupo `hud_kills`), contabilização no abate de inimigos/chefão (`spawn_death_particles`), exibição de resumo na tela de fim de jogo (`EndScreen/KillsSummaryLabel`), e reset explícito de estado a cada início de run (`Main._ready`, `_on_restart_pressed`, `_on_menu_pressed`).
+- [x] Banner Animado de Onda & Alerta de Chefão — **concluído**: implementado banner animado no HUD de `scenes/main.tscn` (`WaveBanner` no grupo `wave_banner`), acionado diretamente a partir de `wave_manager.gd::_update_wave_label()` ("ONDA X/5") e do bloco canônico de spawn do chefão ("⚠️ ALERTA: O CHEFÃO CHEGOU!"), com animação fluida de Tween e destaque visual para o chefe.
+- [ ] Ícone Android & Boot Splash — proposta de composição determinística via Pillow submetida para aprovação do Tech Lead.
+- [ ] Validação de Gameplay & Performance em Device Físico (Gate de Release).
+- [ ] Keystore de Release & Exportação de APK Release Assinado.
+
 ---
 
 ## 📝 Backlog Detalhado

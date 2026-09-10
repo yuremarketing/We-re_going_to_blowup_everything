@@ -148,4 +148,6 @@ func game_over() -> void:
 	get_tree().paused = true
 	var screen = get_tree().get_first_node_in_group("end_screen")
 	if screen:
-		screen.show_result("GAME OVER")
+		var state = get_node_or_null("/root/GameState")
+		var total_kills = state.kills if state else 0
+		screen.show_result("GAME OVER", total_kills)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3]
+[gd_scene load_steps=24 format=3]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_script"]
 [ext_resource type="Script" path="res://scripts/wave_manager.gd" id="2_wm"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" path="res://scenes/enemy_fast.tscn" id="5_fast"]
 [ext_resource type="PackedScene" path="res://scenes/enemy_tank.tscn" id="6_tank"]
 [ext_resource type="Script" path="res://scripts/end_screen.gd" id="7_endscreen"]
+[ext_resource type="Script" path="res://scripts/main.gd" id="8_main"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_floor"]
 size = Vector3(10, 1, 100)
@@ -57,6 +58,7 @@ height = 180
 size = Vector2(180, 180)
 
 [node name="Main" type="Node3D"]
+script = ExtResource("8_main")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, -0.75, 0.433013, 0, 10, 0)
@@ -107,6 +109,47 @@ offset_right = 200.0
 offset_bottom = 115.0
 theme_override_font_sizes/font_size = 24
 text = "Onda: 0/5"
+
+[node name="KillsLabel" type="Label" parent="HUD" groups=["hud_kills"]]
+offset_left = 30.0
+offset_top = 120.0
+offset_right = 200.0
+offset_bottom = 155.0
+theme_override_font_sizes/font_size = 24
+text = "Kills: 0"
+
+[node name="WaveBanner" type="Control" parent="HUD" groups=["wave_banner"]]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 3
+anchors_preset = 14
+anchor_top = 0.35
+anchor_right = 1.0
+anchor_bottom = 0.45
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Background" type="ColorRect" parent="HUD/WaveBanner"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.75)
+
+[node name="BannerLabel" type="Label" parent="HUD/WaveBanner"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 32
+text = "ONDA 1/5"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="MobileControls" type="Control" parent="HUD"]
 layout_mode = 3
@@ -192,13 +235,30 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -200.0
-offset_top = -140.0
+offset_top = -150.0
 offset_right = 200.0
-offset_bottom = -80.0
+offset_bottom = -90.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 36
 text = "GAME OVER"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="KillsSummaryLabel" type="Label" parent="EndScreen"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -80.0
+offset_right = 200.0
+offset_bottom = -45.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 22
+text = "Inimigos abatidos: 0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -209,9 +269,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -140.0
-offset_top = -40.0
+offset_top = -25.0
 offset_right = 140.0
-offset_bottom = 25.0
+offset_bottom = 35.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 24
@@ -224,7 +284,7 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -140.0
-offset_top = 45.0
+offset_top = 50.0
 offset_right = 140.0
 offset_bottom = 110.0
 grow_horizontal = 2

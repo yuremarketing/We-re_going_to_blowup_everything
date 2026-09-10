@@ -15,6 +15,7 @@ var _current_wave: int = 0
 var _timer: Timer
 var _waiting_for_next_wave: bool = false
 var _boss_spawned: bool = false
+var _banner_tween: Tween = null
 
 func _ready() -> void:
 	_timer = Timer.new()
@@ -77,11 +78,14 @@ func _on_spawn_tick() -> void:
 			if not _boss_spawned:
 				var boss = boss_scene.instantiate()
 				boss.position = Vector3(0, 1.0, spawn_z_offset)
-				get_tree().current_scene.add_child(boss)
+				var scene_root = get_tree().current_scene if get_tree().current_scene else get_parent()
+				if scene_root:
+					scene_root.add_child(boss)
 				_boss_spawned = true
 				var audio = get_node_or_null("/root/AudioManager")
 				if audio:
 					audio.play_sfx("boss_spawn")
+				show_wave_banner("⚠️ ALERTA: O CHEFÃO CHEGOU!", true)
 				print("Todas as ondas concluídas! Chefão spawnado!")
 			_timer.stop()
 			return
@@ -98,10 +102,49 @@ func _on_spawn_tick() -> void:
 		var enemy = enemy_scene.instantiate()
 		var x = randf_range(-lane_width / 2.0, lane_width / 2.0)
 		enemy.position = Vector3(x, 1.0, spawn_z_offset)
-		get_tree().current_scene.add_child(enemy)
+		var scene_root = get_tree().current_scene if get_tree().current_scene else get_parent()
+		if scene_root:
+			scene_root.add_child(enemy)
 	_spawned_this_wave += 1
 
 func _update_wave_label() -> void:
 	var label = get_tree().get_first_node_in_group("hud_wave")
+	var current_display = min(_current_wave + 1, total_waves)
 	if label:
-		label.text = "Onda: %d/%d" % [min(_current_wave + 1, total_waves), total_waves]
+		label.text = "Onda: %d/%d" % [current_display, total_waves]
+	if _current_wave < total_waves:
+		show_wave_banner("ONDA %d/%d" % [current_display, total_waves])
+
+func show_wave_banner(text: String, is_boss: bool = false) -> void:
+	if not is_inside_tree():
+		return
+	var banner = get_tree().get_first_node_in_group("wave_banner")
+	if not banner:
+		return
+	var label = banner.get_node_or_null("BannerLabel")
+	if not label:
+		label = banner.get_node_or_null("Label")
+	if label:
+		label.text = text
+		if is_boss:
+			label.modulate = Color(1.0, 0.25, 0.25)
+		else:
+			label.modulate = Color.WHITE
+
+	if _banner_tween and _banner_tween.is_valid():
+		_banner_tween.kill()
+
+	banner.modulate.a = 0.0
+	banner.scale = Vector2(0.85, 0.85)
+	banner.pivot_offset = banner.size / 2.0
+
+	_banner_tween = create_tween()
+	_banner_tween.set_parallel(true)
+	_banner_tween.tween_property(banner, "modulate:a", 1.0, 0.25)
+	_banner_tween.tween_property(banner, "scale", Vector2(1.0, 1.0), 0.25).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+
+	_banner_tween.chain().tween_interval(1.2)
+
+	_banner_tween.chain().set_parallel(true)
+	_banner_tween.tween_property(banner, "modulate:a", 0.0, 0.35)
+	_banner_tween.tween_property(banner, "scale", Vector2(1.05, 1.05), 0.35)

@@ -80,9 +80,24 @@ func play_hit_flash() -> void:
 	)
 
 func _get_audio():
+	if not is_inside_tree():
+		return null
 	return get_node_or_null("/root/AudioManager")
 
+func _get_game_state():
+	if is_inside_tree():
+		var root_node = get_node_or_null("/root/GameState")
+		if root_node:
+			return root_node
+	var state_script = load("res://scripts/game_state.gd")
+	if state_script and state_script.instance:
+		return state_script.instance
+	return null
+
 func spawn_death_particles() -> void:
+	var state = _get_game_state()
+	if state:
+		state.add_kill(1)
 	if not is_inside_tree():
 		return
 	var audio = _get_audio()
