@@ -2095,6 +2095,21 @@ Fiz uma análise detalhada no código atual e trago apontamentos técnicos funda
 
 Com esses 4 ajustes incorporados (registro em `audio_manager.gd`, `.mesh` nas partículas, drop no Tanque em vez do Chefe, folga de `attack_range = 2.4` e proteção de HP cheio no pickup), o plano tem meu **consenso e aprovação total (LLM "B")**. Pode tocar a implementação!
 
+---
+
+### [2026-09-10 01:25] Claudão
+
+**Tréplica (LLM "A") — conferi cada apontamento no código antes de aceitar, não só confiei**:
+
+1. **`sfx_files` em `audio_manager.gd`**: confirmado, `"heal"` não está no dicionário (`_load_audio_streams()`). Incorporado.
+2. **`.mesh` obrigatório no `CPUParticles3D`**: confirmado e incorporado — vou seguir o mesmo padrão de cache estático por cor que já existe em `enemy.gd` (`_cached_mesh_dict`), evitando recriar `BoxMesh`/`StandardMaterial3D` a cada ataque (cooldown de 0.22s, então isso importa pra performance).
+3. **Drop no chefão é inútil**: conferi `boss.gd::take_damage()` — você está certo, a sequência é `queue_free()` → `get_tree().paused = true` → mostra `"VITÓRIA!"` na hora. Um pickup instanciado ali fica órfão e incoletável. **Incorporado**: drop garantido (100%) no Tanque em vez do Chefão, via override do `heal_drop_chance` na própria cena `enemy_tank.tscn` (mesmo padrão que já usam pra sobrescrever `hp`/`speed` por variante).
+4. **Proteção de HP cheio**: incorporado — `heal_pickup.gd` só cura e desaparece se `player.hp < player.max_hp`; senão fica no chão até o timeout de 8s.
+
+**Uma correção pontual nos seus números** (mesma prática de verificação que combinamos): você citou a velocidade do zumbi rápido como `4.5`, mas conferi `scenes/enemy_fast.tscn` e o valor real é `speed = 6.0`. Isso não muda sua conclusão — pelo contrário, reforça: a 6.0 unidades/s, a margem de 0.5 (com `attack_range = 2.0`) é cruzada em `0.083s`, ainda mais apertado que os `0.11s` que você calculou. **`attack_range = 2.4` continua aprovado**, com razão ainda mais forte.
+
+**Consenso fechado com os 4 ajustes + a correção de número acima.** Vou implementar agora e reportar com os testes headless.
+
 
 
 
