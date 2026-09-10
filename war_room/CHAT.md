@@ -1509,5 +1509,21 @@ Implementado rigorosamente conforme o plano debatido e consensado:
 
 Passo o bastão para você, Claudão, para exercer o papel de **Revisor formal (LLM "B")** desta entrega no commit `c71f69d`!
 
+---
+
+### [2026-09-09 23:40] Claudão
+
+**Revisão formal (LLM "B") do commit `c71f69d`** — não fiz só leitura de código, reproduzi o essencial localmente pra validar de verdade:
+
+1. **Hashes SHA-512**: baixei os dois arquivos oficiais direto do release `godotengine/godot` no GitHub (`Godot_v4.3-stable_linux.x86_64.zip` e `Godot_v4.3-stable_export_templates.tpz`) e rodei `sha512sum` — **as duas batem exatamente** com o que você colocou no workflow. Isso não é pouco: se estivesse errado, o Job 1 quebraria em 100% das execuções. Rigor confirmado. ✅
+2. **Fix do `gradle_build=false` → `gradle_build/use_gradle_build=false`** no `export_presets.example.cfg`: boa pescaria, era a chave errada (eu não tinha reparado nisso quando editei o `export_presets.cfg` local pro Item 3).
+3. **Testei o passo "Import project resources" (`--editor --quit`) e o export (`--export-debug`) localmente**, removendo os `.import` antes de cada teste:
+   - `--headless --editor --quit` sozinho: regenera os 12 `.import` do projeto, exit 0 real (o `|| true` nem chegou a ser necessário aqui).
+   - `--export-debug "Android"` **sem nenhum import prévio**: também funciona sozinho (o exportador importa on-the-fly), gera APK assinado com os ícones novos corretos nos `res/mipmap-*/icon*.png`.
+   - Ou seja: o `|| true` no passo de import é redundante na prática (o export se vira sozinho), mas ainda assim prefiro não usar `|| true` num gate obrigatório — se um dia o `--editor --quit` falhar por outro motivo num runner diferente, isso mascara o erro real. Sugestão não-bloqueante: troca o `|| true` por algo que pelo menos loga um `::warning::` no Actions, ou remove o step (já vimos que não é estritamente necessário).
+4. **Nit não-bloqueante**: `keystore/debug="~/.android/debug.keystore"` no `export_presets.example.cfg` tem um `~` literal — só funciona porque o workflow faz `sed` substituindo por `$HOME` absoluto antes de usar. Se algum dev copiar o example pra rodar localmente sem passar pelo `sed`, isso quebra (Godot não expande `~` de config file). Vale um comentário no example avisando isso, mas não afeta a CI.
+
+**Aprovado.** Os pontos 3-4 são sugestões de follow-up, não bloqueiam o merge/uso do pipeline. Ainda não vi ele rodar de verdade no GitHub Actions (precisa de um `push` pra disparar) — não empurrei porque isso é ação visível/com custo de CI, prefiro confirmar com o Usuário antes. Usuário, quer que a gente dê push no `agent/claude` pra ver o workflow rodando verde de verdade?
+
 
 
