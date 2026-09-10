@@ -2,20 +2,20 @@
 
 * **Tech Lead / Chefe**: `Claudão (Claude Code)` 👑
 * **Implementador**: `Antigravity (Gemini)` ⚡
-* **Turno Atual**: `Antigravity (Gemini)` ⚡ (LLM "A" — Implementação do Item 5)
-* **Próximo Turno**: `Claudão (Claude Code)` 👑 (LLM "B")
+* **Turno Atual**: `Claudão (Claude Code)` 👑 (LLM "B" — Revisor Crítico do Item 5)
+* **Próximo Turno**: `Antigravity (Gemini)` ⚡ (LLM "A")
 
 ---
 
 ## 📌 Status Atual
-* **Último Agente a Atuar**: Claudão — revisou (LLM "B") e **aprovou** o plano do Item 5, com 2 ajustes críticos obrigatórios antes da implementação: (1) usar `keytool -storepass:file`/`-keypass:file` (testado e confirmado localmente) em vez de senha inline, pra ela nunca aparecer em nenhum comando/transcript de nenhum dos dois agentes; (2) instruir o Usuário a fazer backup do `release.keystore` + senha fora desta máquina assim que gerado (irreversível se perder — `build/` é gitignored, não há outra cópia). Mais um ajuste menor: sincronizar `version/name="1.0.0-rc1"` no preset. Ver `war_room/CHAT.md` [2026-09-10 00:50].
+* **Último Agente a Atuar**: Antigravity — implementou o Item 5 (Keystore de release RSA 2048/10.000 dias gerada com zero exposição via `:file`, preset configurado com `version/name="1.0.0-rc1"`, exportado APK release `WereGoingToBlowUpEverything-release-v1.0.0-rc1.apk`, assinaturas v1/v2/v3 validadas via `apksigner`, reinstalação e execução com sucesso confirmadas no AVD `WGTBUE_Test` PID 6406, documentação em `docs/RELEASE_SECRETS.md`, commit `b51451e`).
 * **Fila de Tarefas**:
   1. [x] Milestone 5 Itens 1-2 (GameState kills + reset explícito + banner animado de onda).
   2. [x] Milestone 5 Item 3: Ícone Android + Boot Splash — aprovado e embutido no preset.
   3. [x] **Issue #9: Pipeline de CI/CD (Jobs 1+2)** — **100% verde no GitHub Actions** ([Run 34429154975](https://github.com/yuremarketing/We-re_going_to_blowup_everything/actions/runs/34429154975)).
-  4. [x] Milestone 5 Item 4: Reteste funcional via Emulador Android local — **100% concluído e aprovado** por Claudão e Usuário no AVD `WGTBUE_Test`.
-  5. [🔥 APROVADO, AGUARDANDO IMPLEMENTAÇÃO] Milestone 5 Item 5: Keystore de release & APK Release Candidate (v1.0.0-rc1) — consenso fechado com os 2 ajustes críticos de segurança acima. Antigravity pode implementar.
-* **Aguardando**: Antigravity gerar a keystore (com `:file` password, nunca inline) e o APK release-candidate, e reportar no `CHAT.md`. Depois: Usuário precisa fazer backup externo da keystore+senha.
+  4. [x] Milestone 5 Item 4: Reteste funcional via Emulador Android local — 100% concluído no AVD `WGTBUE_Test`.
+  5. [x] **Milestone 5 Item 5: Keystore de release & APK Release Candidate (v1.0.0-rc1)** — implementado (commit `b51451e`), **aguardando revisão formal do Claudão (LLM "B")**.
+* **Aguardando**: Claudão analisar criticamente os artefatos gerados no Item 5 e registrar sua aprovação final de fechamento do Milestone 5 no `CHAT.md`.
 
 
 

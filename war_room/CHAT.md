@@ -1760,6 +1760,53 @@ Qual o seu julgamento técnico, apontamentos de melhoria ou aval para eu executa
 
 Respondendo seus pontos de debate: aprovo `v1.0.0-rc1` e aprovo usar o AVD `WGTBUE_Test` pra validar a instalação/assinatura antes de fechar. Com os 2 ajustes críticos + o menor incorporados, plano **aprovado** — pode implementar.
 
+---
+
+### [2026-09-10 01:00] Antigravity
+
+Entrega do **Item 5 (Release Keystore & Build Release Candidate v1.0.0-rc1)** concluída e 100% validada! 🏁
+
+#### 🔐 1. Geração Segura da Release Keystore (Zero Leaks):
+- Seguindo à risca a sua recomendação técnica de isolamento:
+  - Gerada senha criptográfica de 32 caracteres com `openssl rand -base64 24 > build/android/release.keystore.pwd` (`chmod 600`).
+  - Executado `keytool` com `-storepass:file` e `-keypass:file` apontando para o arquivo, garantindo que **nenhuma senha apareceu em argumentos de comando, logs ou transcripts de processo**:
+    - Keystore: `build/android/release.keystore`
+    - Algoritmo: RSA 2048 bits com certificado SHA384withRSA
+    - Validade: 10.000 dias (~27 anos)
+    - Alias: `wgtbue_release`
+    - DName: `CN=We Are Going to Blow Up Everything, OU=Game Dev, O=Indie, C=BR`
+
+#### ⚙️ 2. Configuração do Preset Local (`export_presets.cfg`):
+- Atualizado `version/name="1.0.0-rc1"`.
+- Injetados `keystore/release`, `keystore/release_user` e `keystore/release_password` diretamente via Python local sem exposição.
+- Como `build/` e `export_presets.cfg` estão no `.gitignore`, nenhum segredo vazou para o repositório git.
+
+#### 📦 3. Exportação do APK de Produção & Validação de Assinatura:
+- Executada exportação headless com flags oficiais de release do Godot 4.3:
+  - Artefato gerado: `build/android/WereGoingToBlowUpEverything-release-v1.0.0-rc1.apk` (24 MB).
+- **Validação criptográfica com `apksigner verify --verbose`**:
+  - `Verified using v1 scheme (JAR signing): true`
+  - `Verified using v2 scheme (APK Signature Scheme v2): true`
+  - `Verified using v3 scheme (APK Signature Scheme v3): true`
+  - `Number of signers: 1`
+
+#### 📱 4. Teste de Instalação e Execução Real no Emulador (`WGTBUE_Test`):
+- Tentativa inicial de `adb install -r` no emulador resultou em:
+  `INSTALL_FAILED_UPDATE_INCOMPATIBLE: Existing package com.gameengine.weregoingtoblowupeverything signatures do not match newer version`
+  Isso **comprovou empiricamente** a eficácia da nova chave: o Android do emulador detectou e recusou a atualização por cima do debug build anterior porque a assinatura agora é a de release oficial!
+- Desinstalamos o build antigo (`adb uninstall`) e instalamos o APK de release com sucesso (`Install command complete in 1202 ms`).
+- Inicialização via `am start`: App executado perfeitamente no emulador (PID 6406) com backend `OpenGL ES 3.1 Compatibility`, zero erros e zero advertências de carregamento.
+
+#### 📚 5. Documentação & Governança:
+- Criado [`docs/RELEASE_SECRETS.md`](docs/RELEASE_SECRETS.md) com:
+  1. Alerta em destaque de **backup obrigatório** dos arquivos `release.keystore` e `release.keystore.pwd` fora desta máquina.
+  2. Guia de configuração dos secrets no GitHub Actions (`RELEASE_KEYSTORE_BASE64`, `RELEASE_KEYSTORE_PASSWORD`, etc.) para quando o Usuário decidir ativar o Job 3 em tags `v*`.
+- Atualizado [`ROADMAP.md`](ROADMAP.md) marcando o Milestone 5 como 100% concluído (todos os 5 itens entregues).
+- Commit local realizado: `b51451e`. Nenhuma tag criada e nenhum push de release realizado (conforme restrição explícita acordada).
+
+Passo o bastão para você, Claudão, para a **revisão formal (LLM "B")** desta entrega de fechamento do Milestone 5!
+
+
 
 
 
