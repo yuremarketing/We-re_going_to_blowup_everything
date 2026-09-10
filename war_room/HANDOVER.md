@@ -2,21 +2,22 @@
 
 * **Tech Lead / Chefe**: `Claudão (Claude Code)` 👑
 * **Implementador**: `Antigravity (Gemini)` ⚡
-* **Turno Atual**: `Antigravity (Gemini)` ⚡ (LLM "A" — implementar Item 1)
-* **Próximo Turno**: `Claudão (Claude Code)` 👑 (LLM "B")
+* **Turno Atual**: `Claudão (Claude Code)` 👑 (LLM "B" — revisão crítica da entrega do Item 1)
+* **Próximo Turno**: `Antigravity (Gemini)` ⚡
 
 ---
 
 ## 📌 Status Atual
-* **Último Agente a Atuar**: Claudão — Usuário confirmou o escopo completo do Milestone 6 (3 itens, ordem proposta pelo Antigravity). Milestone 6 formalmente aberto. Item 1 liberado pra implementação com as 2 correções já acordadas.
+* **Último Agente a Atuar**: Antigravity — implementação do Item 1 do Milestone 6 (Menu de Pausa Responsivo & Controle de Volume de Áudio) concluída e 100% validada nos testes automatizados headless (Godot 4.3). Relato submetido no `war_room/CHAT.md`.
 * **Fila de Tarefas — Milestone 6 (escopo confirmado pelo Usuário)**:
-  1. [🔥 LIBERADO PRA IMPLEMENTAR] Item 1: Menu de Pausa Responsivo & Controle de Volume de Áudio (HUD + Main Menu) — corrigir `reset_kills()`→`reset()` e threshold de mudo pra `0.01`.
+  1. [x] Item 1: Menu de Pausa Responsivo & Controle de Volume de Áudio (HUD + Main Menu) — implementado e validado headless.
   2. [ ] Item 2: Refinamento de Combate & Feedback de Ataque (Slash VFX, Alcance & Drops de Cura).
   3. [ ] Item 3: Build Secundária Web (HTML5 / WebAssembly) & Validação Multiplataforma.
 * **Status do Milestone 5**: 100% concluído e aprovado como Release Candidate `v1.0.0-rc1`.
 * **Risco residual (não bloqueante, backlog)**: validação de performance real em hardware físico (FPS/térmico) pendente até um device físico limpo estar disponível.
 * **Backup da keystore**: mantido localmente em `~/wgtbue_release_keystore_backup.tar.gz.gpg` conforme decisão do Usuário.
-* **Aguardando**: Antigravity implementar o Item 1 com as correções e reportar no `CHAT.md` pra revisão do Claudão (LLM "B").
+* **Aguardando**: Claudão realizar a revisão crítica e independente (LLM "B") da entrega do Item 1 no `war_room/CHAT.md`.
+
 
 
 

@@ -46,6 +46,8 @@ func _initialize():
 	var inst = main_scene.instantiate()
 	root.add_child(inst)
 	current_scene = inst
+
+
 	
 	# Verify Camera3D and Screen Shake method
 	var player = inst.get_node_or_null("Player")
@@ -113,6 +115,7 @@ func _initialize():
 	boss_inst.play_hit_flash()
 	boss_inst.take_damage(2)
 	print("Boss Hit Flash verified OK (HP remaining: ", boss_inst.hp, ")")
+	boss_inst.free()
 	
 	# Verify EndScreen nodes and summary
 	var end_screen = inst.get_node_or_null("EndScreen")
@@ -125,6 +128,8 @@ func _initialize():
 	end_screen.show_result("VITÓRIA!", state_mgr.kills)
 	var kills_summary = end_screen.get_node_or_null("KillsSummaryLabel")
 	assert(kills_summary.text == "Inimigos abatidos: %d" % state_mgr.kills, "EndScreen must show total kills")
+	end_screen.visible = false
+	paused = false
 	print("EndScreen buttons, labels & kills summary verified OK")
 	
 	# Test GameState reset
@@ -132,9 +137,64 @@ func _initialize():
 	assert(state_mgr.kills == 0, "GameState.reset() must reset kills to 0")
 	assert(kills_label.text == "Kills: 0", "HUD KillsLabel must reset to 'Kills: 0'")
 	print("GameState reset verified OK")
+
+	
+	# Verify Pause Button and Pause Menu in main.tscn
+	var pause_btn = inst.get_node_or_null("HUD/PauseButton")
+	assert(pause_btn != null, "PauseButton must exist in HUD")
+	assert(pause_btn.text == "⏸️", "PauseButton text must be ⏸️")
+	
+	var pause_menu = inst.get_node_or_null("PauseMenu")
+	assert(pause_menu != null, "PauseMenu node must exist")
+	assert(pause_menu.process_mode == Node.PROCESS_MODE_ALWAYS, "PauseMenu process_mode must be PROCESS_MODE_ALWAYS")
+
+	assert(pause_menu.visible == false, "PauseMenu must initially be hidden")
+	assert(pause_menu.get_node_or_null("Panel/VBox/ResumeButton") != null, "ResumeButton must exist in PauseMenu")
+	assert(pause_menu.get_node_or_null("Panel/VBox/RestartButton") != null, "RestartButton must exist in PauseMenu")
+	assert(pause_menu.get_node_or_null("Panel/VBox/MenuButton") != null, "MenuButton must exist in PauseMenu")
+	assert(pause_menu.get_node_or_null("Panel/VBox/MusicBox/MusicSlider") != null, "MusicSlider must exist in PauseMenu")
+	assert(pause_menu.get_node_or_null("Panel/VBox/SFXBox/SFXSlider") != null, "SFXSlider must exist in PauseMenu")
+	
+	# Test Pause toggle logic
+	inst.toggle_pause()
+	assert(paused == true, "SceneTree must be paused when toggle_pause is called")
+	assert(pause_menu.visible == true, "PauseMenu must be visible when paused")
+	pause_menu.close_pause()
+	assert(paused == false, "SceneTree must be unpaused when close_pause is called")
+	assert(pause_menu.visible == false, "PauseMenu must be hidden after close_pause")
+	print("PauseButton and PauseMenu toggling verified OK")
+	
+	# Verify AudioManager volume helper functions and mute thresholds
+	audio_script.set_bus_volume("Music", 0.6)
+	var music_vol = audio_script.get_bus_volume("Music")
+	assert(abs(music_vol - 0.6) < 0.05, "Music volume should reflect set value")
+	var music_bus_idx = AudioServer.get_bus_index("Music")
+	assert(AudioServer.is_bus_mute(music_bus_idx) == false, "Music bus should not be muted at 0.6")
+	
+	audio_script.set_bus_volume("Music", 0.0)
+	assert(AudioServer.is_bus_mute(music_bus_idx) == true, "Music bus must be muted at 0.0")
+	
+	audio_script.set_bus_volume("SFX", 0.8)
+	var sfx_vol = audio_script.get_bus_volume("SFX")
+	assert(abs(sfx_vol - 0.8) < 0.05, "SFX volume should reflect set value")
+	var sfx_bus_idx = AudioServer.get_bus_index("SFX")
+	assert(AudioServer.is_bus_mute(sfx_bus_idx) == false, "SFX bus should not be muted at 0.8")
+	
+	audio_script.set_bus_volume("SFX", 0.0)
+	assert(AudioServer.is_bus_mute(sfx_bus_idx) == true, "SFX bus must be muted at 0.0")
+	
+	# Restore normal volumes
+	audio_script.set_bus_volume("Music", 0.7)
+	audio_script.set_bus_volume("SFX", 1.0)
+	print("AudioManager set_bus_volume and get_bus_volume verified OK")
 	
 	var menu_scene = load("res://scenes/main_menu.tscn")
 	var menu_inst = menu_scene.instantiate()
+	assert(menu_inst.get_node_or_null("Panel/VBox/PlayButton") != null, "PlayButton must exist in MainMenu")
+	assert(menu_inst.get_node_or_null("Panel/VBox/TitleLabel") != null, "TitleLabel must exist in MainMenu")
+	assert(menu_inst.get_node_or_null("Panel/VBox/MusicBox/MusicSlider") != null, "MusicSlider must exist in MainMenu")
+	assert(menu_inst.get_node_or_null("Panel/VBox/SFXBox/SFXSlider") != null, "SFXSlider must exist in MainMenu")
+	print("MainMenu layout and audio controls verified OK")
 	
 	# Verify AudioManager SFX and Music
 	audio_mgr.play_sfx("attack")
@@ -148,8 +208,9 @@ func _initialize():
 	audio_mgr.stop_music(0.0)
 	print("AudioManager SFX and Music playback verified OK")
 	
-	print("All scenes, mobile controls, audio and VFX verified successfully!")
+	print("All scenes, mobile controls, audio, pause and VFX verified successfully!")
 	print("--- Headless Mobile, Touch & VFX Verification End ---")
 	inst.free()
 	menu_inst.free()
 	quit(0)
+

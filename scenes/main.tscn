@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3]
+[gd_scene load_steps=25 format=3]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_script"]
 [ext_resource type="Script" path="res://scripts/wave_manager.gd" id="2_wm"]
@@ -8,6 +8,8 @@
 [ext_resource type="PackedScene" path="res://scenes/enemy_tank.tscn" id="6_tank"]
 [ext_resource type="Script" path="res://scripts/end_screen.gd" id="7_endscreen"]
 [ext_resource type="Script" path="res://scripts/main.gd" id="8_main"]
+[ext_resource type="Script" path="res://scripts/pause_menu.gd" id="9_pause"]
+
 
 [sub_resource type="BoxMesh" id="BoxMesh_floor"]
 size = Vector3(10, 1, 100)
@@ -117,6 +119,19 @@ offset_right = 200.0
 offset_bottom = 155.0
 theme_override_font_sizes/font_size = 24
 text = "Kills: 0"
+
+[node name="PauseButton" type="Button" parent="HUD"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -110.0
+offset_top = 40.0
+offset_right = -30.0
+offset_bottom = 120.0
+grow_horizontal = 0
+theme_override_font_sizes/font_size = 32
+text = "⏸️"
+
 
 [node name="WaveBanner" type="Control" parent="HUD" groups=["wave_banner"]]
 modulate = Color(1, 1, 1, 0)
@@ -291,3 +306,102 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 24
 text = "Menu Principal"
+
+[node name="PauseMenu" type="CanvasLayer" parent="." groups=["pause_menu"]]
+process_mode = 3
+visible = false
+script = ExtResource("9_pause")
+
+[node name="Background" type="ColorRect" parent="PauseMenu"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.75)
+
+[node name="Panel" type="Control" parent="PauseMenu"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -220.0
+offset_top = -280.0
+offset_right = 220.0
+offset_bottom = 280.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="PauseMenu/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 16
+
+[node name="TitleLabel" type="Label" parent="PauseMenu/Panel/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "JOGO PAUSADO"
+horizontal_alignment = 1
+
+[node name="HSeparator1" type="HSeparator" parent="PauseMenu/Panel/VBox"]
+layout_mode = 2
+
+[node name="MusicBox" type="VBoxContainer" parent="PauseMenu/Panel/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="MusicLabel" type="Label" parent="PauseMenu/Panel/VBox/MusicBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Música: 70%"
+
+[node name="MusicSlider" type="HSlider" parent="PauseMenu/Panel/VBox/MusicBox"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+max_value = 1.0
+step = 0.05
+value = 0.7
+
+[node name="SFXBox" type="VBoxContainer" parent="PauseMenu/Panel/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="SFXLabel" type="Label" parent="PauseMenu/Panel/VBox/SFXBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "SFX: 100%"
+
+[node name="SFXSlider" type="HSlider" parent="PauseMenu/Panel/VBox/SFXBox"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+max_value = 1.0
+step = 0.05
+value = 1.0
+
+[node name="HSeparator2" type="HSeparator" parent="PauseMenu/Panel/VBox"]
+layout_mode = 2
+
+[node name="ResumeButton" type="Button" parent="PauseMenu/Panel/VBox"]
+custom_minimum_size = Vector2(0, 54)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Continuar"
+
+[node name="RestartButton" type="Button" parent="PauseMenu/Panel/VBox"]
+custom_minimum_size = Vector2(0, 54)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Reiniciar"
+
+[node name="MenuButton" type="Button" parent="PauseMenu/Panel/VBox"]
+custom_minimum_size = Vector2(0, 54)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Menu Principal"
+

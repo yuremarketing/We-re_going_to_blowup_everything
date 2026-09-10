@@ -48,8 +48,13 @@
 - [ ] **Risco residual**: Validação de Performance real em hardware físico (FPS/térmico/toque real) segue **pendente** — não coberta pelo emulador. Depende de um device físico limpo (sem apps sensíveis) ficar disponível; não bloqueia o restante do Milestone 5, mas deve ser reavaliada antes de uma publicação pública ampla.
 - [x] Keystore de Release & Exportação de APK Release Assinado (v1.0.0-rc1) — **concluído**: gerada release keystore local segura (`build/android/release.keystore`, RSA 2048, 10.000 dias, alias `wgtbue_release`) sem exposição de senhas via flag `:file`, preset configurado com `version/name="1.0.0-rc1"` e APK oficial compilado em `build/android/WereGoingToBlowUpEverything-release-v1.0.0-rc1.apk`. Assinaturas digitais v1, v2 e v3 verificadas com `apksigner` e execução validada no emulador Android (AVD `WGTBUE_Test`). Criado guia de segurança e configuração de CI secrets em `docs/RELEASE_SECRETS.md`.
 
+### Milestone 6: Polimento de UX, Menu de Pausa & Game Feel
+- [x] Menu de Pausa Responsivo & Controle de Volume de Áudio (HUD + Main Menu) — **concluído**: implementados botão de pausa no HUD (`PauseButton` ⏸️), camada `PauseMenu` (`CanvasLayer` com `process_mode = Node.PROCESS_MODE_ALWAYS`) contendo botões "Continuar", "Reiniciar" (com `GameState.reset()`) e "Menu Principal", sliders de volume logarítmicos independentes para Música e SFX (`linear_to_db` com threshold de mudo em `0.01`), centralização responsiva da tela inicial (`scenes/main_menu.tscn`) com controles de volume integrados, e bateria de testes automatizados 100% verde em `scripts/test_mobile_setup.gd`.
+- [ ] Refinamento de Combate & Feedback de Ataque (Slash VFX, Alcance & Drops de Cura)
+- [ ] Build Secundária Web (HTML5 / WebAssembly) & Validação Multiplataforma
 
 ---
+
 
 ## 📝 Backlog Detalhado
 *(Atualizado pelos agentes conforme o avanço das tarefas)*

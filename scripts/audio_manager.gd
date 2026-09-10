@@ -111,3 +111,41 @@ func _stop_music_internal(fade_out: float = 0.5) -> void:
 		_music_tween.tween_callback(_music_player.stop)
 	else:
 		_music_player.stop()
+
+static func set_bus_volume(bus_name: String, linear_val: float) -> void:
+	if instance:
+		instance._set_bus_volume_internal(bus_name, linear_val)
+	else:
+		_apply_bus_volume(bus_name, linear_val)
+
+static func get_bus_volume(bus_name: String) -> float:
+	if instance:
+		return instance._get_bus_volume_internal(bus_name)
+	return _read_bus_volume(bus_name)
+
+static func _apply_bus_volume(bus_name: String, linear_val: float) -> void:
+	var bus_idx = AudioServer.get_bus_index(bus_name)
+	if bus_idx == -1:
+		return
+	linear_val = clampf(linear_val, 0.0, 1.0)
+	if linear_val < 0.01:
+		AudioServer.set_bus_mute(bus_idx, true)
+		AudioServer.set_bus_volume_db(bus_idx, -80.0)
+	else:
+		AudioServer.set_bus_mute(bus_idx, false)
+		AudioServer.set_bus_volume_db(bus_idx, linear_to_db(linear_val))
+
+static func _read_bus_volume(bus_name: String) -> float:
+	var bus_idx = AudioServer.get_bus_index(bus_name)
+	if bus_idx == -1:
+		return 1.0
+	if AudioServer.is_bus_mute(bus_idx):
+		return 0.0
+	return db_to_linear(AudioServer.get_bus_volume_db(bus_idx))
+
+func _set_bus_volume_internal(bus_name: String, linear_val: float) -> void:
+	_apply_bus_volume(bus_name, linear_val)
+
+func _get_bus_volume_internal(bus_name: String) -> float:
+	return _read_bus_volume(bus_name)
+
