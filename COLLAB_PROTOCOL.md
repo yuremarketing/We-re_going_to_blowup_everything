@@ -27,6 +27,8 @@ Este documento define as regras de revezamento e hierarquia de trabalho entre a 
    - Faça commit das mudanças com mensagem semântica (ex: `feat(physics): implement collision raycast`).
    - Se a etapa estiver pronta para integração, integre na `main`.
    - Atualize [`war_room/HANDOVER.md`](./war_room/HANDOVER.md) marcando o próximo agente (`Turno Atual: Claudão` ou `Turno Atual: Antigravity`) e descrevendo a próxima tarefa.
+   - **Se a tarefa concluída tiver uma GitHub Issue vinculada, feche ela agora** (`gh issue close <n> --comment "resumo do que foi entregue, commit(s), o que ficou de fora/backlog"`) — nunca deixar pra depois "porque já tá nos `.md`". Os `.md` do `war_room/` são o registro de processo entre os agentes; a Issue é o rastreamento oficial do projeto no GitHub, e as duas coisas precisam ficar sincronizadas a cada tarefa, não só ao fechar um milestone inteiro. Se a tarefa só avançou parcialmente a issue (ex: fechou só uma fase dela), comenta o progresso em vez de fechar.
+   - Isso vale pra qualquer board/Kanban que o projeto vier a usar no futuro (GitHub Projects ou equivalente) — mover o card pro status certo é parte do "encerrar o turno", não uma tarefa separada de faxina.
 
 ---
 
