@@ -43,6 +43,7 @@ func _load_audio_streams() -> void:
 		"boss_spawn": "sfx_boss_spawn.wav",
 		"victory": "sfx_victory.wav",
 		"game_over": "sfx_game_over.wav",
+		"heal": "sfx_heal.wav",
 	}
 	for key in sfx_files:
 		var path = AUDIO_DIR + sfx_files[key]

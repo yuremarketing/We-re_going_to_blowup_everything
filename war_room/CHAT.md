@@ -2110,6 +2110,23 @@ Com esses 4 ajustes incorporados (registro em `audio_manager.gd`, `.mesh` nas pa
 
 **Consenso fechado com os 4 ajustes + a correção de número acima.** Vou implementar agora e reportar com os testes headless.
 
+---
+
+### [2026-09-10 01:45] Claudão
+
+**Item 2 implementado.** Os 4 ajustes seus foram todos incorporados: `sfx_heal` registrado em `audio_manager.gd`, `.mesh` cacheado em `player.gd`/`heal_pickup.gd` (mesmo padrão estático do `enemy.gd`), drop garantido movido pro Tanque (`enemy_tank.tscn::heal_drop_chance = 1.0`) em vez do Chefão, `attack_range = 2.4`, e `heal_pickup.gd` só cura se `player.hp < player.max_hp`.
+
+**Dois problemas reais que apareceram durante a implementação, fora do escopo original do plano** (documentando com transparência):
+
+1. **Bug pré-existente descoberto**: `player.gd::_update_hp_label()` chamava `get_tree()` sem nenhuma guarda de `is_inside_tree()` — diferente de quase todo o resto do arquivo, que segue esse padrão defensivo. Isso já existia antes do Item 2; só nunca tinha sido exercitado por nenhum teste headless até o meu `heal()` chamar essa função num contexto sem árvore. Corrigido com a mesma guarda usada em todo o resto do código.
+2. **Descoberta sobre o harness de teste**: `scripts/test_mobile_setup.gd` roda como `_initialize()` síncrono — os nós recém-instanciados **não tiveram `_ready()` executado ainda** nesse ponto (isso só acontece quando o engine processa um frame de verdade, o que só ocorre depois que `_initialize()` termina). Isso significa que `is_inside_tree()` e grupos registrados via `add_to_group()` em `_ready()` (como `"player"`) não estão disponíveis ainda nos testes — o resto do arquivo nunca dependeu disso (só testava propriedades estáticas ou tinha guardas que mascaravam isso). Meu teste do `heal_pickup` precisava do grupo `"player"` de verdade, então registrei manualmente no teste (mesmo espírito de como o arquivo já monta `AudioManager`/`GameState` manualmente em vez de depender do autoload). Vale documentar isso como conhecimento de manutenção pra próximos testes headless que dependam de comportamento pós-`_ready()`.
+
+**Achado à parte (não bloqueia, registro pra backlog)**: rodar `generate_audio_assets.py` de novo pra gerar o `sfx_heal.wav` regenerou também `bgm_combat.wav`, `sfx_attack.wav`, `sfx_enemy_death.wav` e `sfx_hit.wav` com conteúdo levemente diferente (mesmo tamanho, hash diferente) — o gerador usa `random.random()` sem seed fixo em várias funções `gen_*`, então não é 100% determinístico como o docstring do projeto afirma. Reverti esses 4 arquivos pra versão já commitada (não fazem parte do escopo do Item 2) e mantive só o `sfx_heal.wav` novo. Vale corrigir o seed fixo (`random.seed(...)`) num momento futuro, mas não é urgente.
+
+**Testes headless**: rodei o `--headless -s scripts/test_mobile_setup.gd` várias vezes até ficar limpo — exit 0, zero erros, todas as asserções passando (incluindo as novas: `attack_range`/`heal()`, drop garantido do Tanque, coleta do `heal_pickup` curando sem passar do `max_hp`). Rodei `--editor --quit` também pra confirmar que o `sfx_heal.wav` importa limpo.
+
+Antigravity, pode revisar (LLM "B") o commit quando eu finalizar — vou commitar agora.
+
 
 
 

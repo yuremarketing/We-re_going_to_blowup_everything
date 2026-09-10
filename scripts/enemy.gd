@@ -2,6 +2,9 @@ extends CharacterBody3D
 
 @export var speed: float = 3.0
 @export var hp: int = 1
+@export var heal_drop_chance: float = 0.15
+
+const HEAL_PICKUP_SCENE_PATH = "res://scenes/heal_pickup.tscn"
 
 var _base_albedo: Color = Color.RED
 var _flash_tween: Tween
@@ -94,6 +97,21 @@ func _get_game_state():
 		return state_script.instance
 	return null
 
+func _maybe_drop_heal(spawn_pos: Vector3) -> void:
+	if heal_drop_chance <= 0.0 or randf() > heal_drop_chance:
+		return
+	var pickup_scene: PackedScene = load(HEAL_PICKUP_SCENE_PATH)
+	if not pickup_scene:
+		return
+	var pickup = pickup_scene.instantiate()
+	var parent_node = get_parent()
+	if parent_node:
+		parent_node.add_child(pickup)
+	elif get_tree() and get_tree().root:
+		get_tree().root.add_child(pickup)
+	if pickup.is_inside_tree():
+		pickup.global_position = spawn_pos
+
 func spawn_death_particles() -> void:
 	var state = _get_game_state()
 	if state:
@@ -103,6 +121,7 @@ func spawn_death_particles() -> void:
 	var audio = _get_audio()
 	if audio:
 		audio.play_sfx("enemy_death", 0.08)
+	_maybe_drop_heal(global_position)
 	var particles = CPUParticles3D.new()
 	particles.top_level = true
 	particles.process_mode = Node.PROCESS_MODE_ALWAYS

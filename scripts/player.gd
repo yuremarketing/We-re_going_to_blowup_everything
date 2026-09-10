@@ -3,6 +3,9 @@ extends CharacterBody3D
 @export var max_hp: int = 5
 @export var attack_cooldown: float = 0.22
 @export var invulnerability_duration: float = 0.75
+@export var attack_range: float = 2.4
+
+static var _slash_mesh: BoxMesh = null
 
 var hp: int
 var is_dead: bool = false
@@ -69,17 +72,90 @@ func attack() -> void:
 	var tween = create_tween()
 	tween.tween_property(self, "scale", Vector3(1.2, 1.2, 1.2), 0.1)
 	tween.tween_property(self, "scale", Vector3(1.0, 1.0, 1.0), 0.1)
+	_spawn_slash_vfx()
 
 	var hit_any: bool = false
 	for enemy in get_tree().get_nodes_in_group("enemies"):
-		if abs(enemy.position.z - position.z) < 2.0:
+		if abs(enemy.position.z - position.z) < attack_range:
 			enemy.take_damage(1)
 			hit_any = true
-			
+
 	if hit_any:
 		if audio:
 			audio.play_sfx("hit", 0.05)
 		apply_shake(0.08, 0.12)
+
+func _spawn_slash_vfx() -> void:
+	if not is_inside_tree():
+		return
+	if not _slash_mesh:
+		_slash_mesh = BoxMesh.new()
+		_slash_mesh.size = Vector3(0.08, 0.08, 0.08)
+		var mat = StandardMaterial3D.new()
+		mat.albedo_color = Color(1.0, 1.0, 1.0)
+		mat.emission_enabled = true
+		mat.emission = Color(0.8, 0.9, 1.0)
+		_slash_mesh.material = mat
+
+	var particles = CPUParticles3D.new()
+	particles.top_level = true
+	particles.process_mode = Node.PROCESS_MODE_ALWAYS
+	particles.emitting = false
+	particles.one_shot = true
+	particles.explosiveness = 1.0
+	particles.amount = 7
+	particles.lifetime = 0.15
+	particles.direction = Vector3(0, 0, -1)
+	particles.spread = 35.0
+	particles.initial_velocity_min = 3.0
+	particles.initial_velocity_max = 5.0
+	particles.gravity = Vector3.ZERO
+	particles.mesh = _slash_mesh
+
+	var parent_node = get_parent()
+	if parent_node:
+		parent_node.add_child(particles)
+	elif get_tree() and get_tree().root:
+		get_tree().root.add_child(particles)
+
+	if particles.is_inside_tree():
+		particles.global_position = global_position + Vector3(0, 1.0, -0.8)
+		particles.emitting = true
+		particles.finished.connect(particles.queue_free)
+		var tree = get_tree()
+		if tree:
+			var p_ref = weakref(particles)
+			tree.create_timer(particles.lifetime + 0.2, true).timeout.connect(func():
+				var p = p_ref.get_ref()
+				if p and is_instance_valid(p):
+					p.queue_free()
+			)
+	else:
+		particles.queue_free()
+
+func heal(amount: int) -> void:
+	if is_dead or amount <= 0:
+		return
+	hp = mini(hp + amount, max_hp)
+	_update_hp_label()
+	_play_heal_blink()
+
+const _PLAYER_BASE_COLOR = Color(0.85, 0.85, 0.85)
+
+func _play_heal_blink() -> void:
+	var mesh = get_node_or_null("MeshInstance3D")
+	if not mesh:
+		return
+	# O mesh do player não tem material próprio (usa o default do engine) -
+	# cria um override na primeira vez pra poder animar a cor de feedback.
+	var mat = mesh.get_surface_override_material(0) as StandardMaterial3D
+	if not mat:
+		mat = StandardMaterial3D.new()
+		mat.albedo_color = _PLAYER_BASE_COLOR
+		mesh.set_surface_override_material(0, mat)
+	var heal_tween = create_tween()
+	heal_tween.tween_property(mat, "albedo_color", Color(0.4, 1.0, 0.5), 0.08)
+	heal_tween.tween_property(mat, "albedo_color", _PLAYER_BASE_COLOR, 0.12)
 
 func take_damage(amount: int) -> void:
 	if is_dead or _is_invulnerable:
@@ -135,6 +211,8 @@ func apply_shake(intensity: float = 0.1, duration: float = 0.15) -> void:
 	)
 
 func _update_hp_label() -> void:
+	if not is_inside_tree():
+		return
 	var label = get_tree().get_first_node_in_group("hud_hp")
 	if label:
 		label.text = "HP: %d/%d" % [hp, max_hp]

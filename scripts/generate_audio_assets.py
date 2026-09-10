@@ -125,6 +125,23 @@ def gen_game_over():
         samples.append(tone * env * 0.7)
     return samples
 
+def gen_heal():
+    # Soft rising chime: G4 -> C5, curto e suave (pickup de cura)
+    notes = [392.00, 523.25]
+    duration = 0.35
+    n = int(SAMPLE_RATE * duration)
+    note_dur = duration / len(notes)
+    samples = []
+    for i in range(n):
+        t = i / SAMPLE_RATE
+        idx = min(len(notes) - 1, int(t / note_dur))
+        freq = notes[idx]
+        note_t = t - (idx * note_dur)
+        env = math.exp(-note_t * 5.0) * math.sin(math.pi * min(1.0, note_t / 0.02))
+        tone = math.sin(2.0 * math.pi * freq * t) + 0.3 * math.sin(4.0 * math.pi * freq * t)
+        samples.append(tone * env * 0.55)
+    return samples
+
 def gen_bgm():
     # 4 bars at 120 BPM = 8.0s seamless loop
     bpm = 120.0
@@ -181,5 +198,6 @@ if __name__ == "__main__":
     write_wav(os.path.join(out_dir, "sfx_boss_spawn.wav"), gen_boss_spawn())
     write_wav(os.path.join(out_dir, "sfx_victory.wav"), gen_victory())
     write_wav(os.path.join(out_dir, "sfx_game_over.wav"), gen_game_over())
+    write_wav(os.path.join(out_dir, "sfx_heal.wav"), gen_heal())
     write_wav(os.path.join(out_dir, "bgm_combat.wav"), gen_bgm())
     print("All audio assets generated successfully!")

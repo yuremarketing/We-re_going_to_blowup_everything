@@ -55,6 +55,16 @@ func _initialize():
 	assert(player.has_method("apply_shake"), "Player must implement apply_shake")
 	player.apply_shake(0.1, 0.1)
 	print("Player apply_shake verified OK")
+
+	# Verify attack_range and heal()
+	assert(player.attack_range == 2.4, "Player attack_range must default to 2.4")
+	assert(player.has_method("heal"), "Player must implement heal(amount)")
+	player.hp = player.max_hp - 2
+	player.heal(1)
+	assert(player.hp == player.max_hp - 1, "heal() must increase hp by the given amount")
+	player.heal(10)
+	assert(player.hp == player.max_hp, "heal() must not exceed max_hp")
+	print("Player attack_range and heal() verified OK")
 	
 	var cam = inst.get_node_or_null("Player/Camera3D")
 	if cam:
@@ -105,7 +115,32 @@ func _initialize():
 	assert(state_mgr.kills == initial_kills + 1, "Killing enemy must increment GameState.kills")
 	assert(kills_label.text == "Kills: 1", "HUD KillsLabel must update to 'Kills: 1'")
 	print("Enemy Hit Flash, Death Particles & Kill counting verified OK")
-	
+
+	# Verify Enemy Tank guaranteed heal drop chance
+	var tank_scene = load("res://scenes/enemy_tank.tscn")
+	var tank_inst = tank_scene.instantiate()
+	assert(tank_inst.heal_drop_chance == 1.0, "EnemyTank must override heal_drop_chance to 1.0 (guaranteed drop)")
+	tank_inst.free()
+
+	# Verify HealPickup scene and heal-on-collect logic.
+	# Nota: neste harness headless (_initialize síncrono), o _ready() dos nós
+	# recém-instanciados ainda não rodou (só roda quando o engine processa um
+	# frame de verdade) - por isso registramos o grupo "player" manualmente
+	# aqui, do mesmo jeito que o resto deste arquivo já monta o cenário à mão
+	# em vez de depender de callbacks do engine ainda não disparados.
+	if not player.is_in_group("player"):
+		player.add_to_group("player")
+	var pickup_scene = load("res://scenes/heal_pickup.tscn")
+	var pickup_inst = pickup_scene.instantiate()
+	inst.add_child(pickup_inst)
+	assert(pickup_inst is Area3D, "HealPickup root must be an Area3D")
+	assert(pickup_inst.get_node_or_null("CollisionShape3D") != null, "HealPickup must have a CollisionShape3D")
+	player.hp = 1
+	pickup_inst._on_body_entered(player)
+	assert(player.hp == 2, "Collecting HealPickup must heal the player")
+	# Pickup deve ter sido removido (queue_free) apos a coleta
+	print("HealPickup collection and Tank guaranteed drop verified OK")
+
 	# Verify Boss VFX (Hit Flash & Death Particles)
 	var boss_scene = load("res://scenes/boss.tscn")
 	var boss_inst = boss_scene.instantiate()
@@ -204,6 +239,7 @@ func _initialize():
 	audio_mgr.play_sfx("boss_spawn")
 	audio_mgr.play_sfx("victory")
 	audio_mgr.play_sfx("game_over")
+	audio_mgr.play_sfx("heal")
 	audio_mgr.play_music(0.1)
 	audio_mgr.stop_music(0.0)
 	print("AudioManager SFX and Music playback verified OK")

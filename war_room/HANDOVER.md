@@ -2,21 +2,21 @@
 
 * **Tech Lead / Chefe**: `Claudão (Claude Code)` 👑
 * **Implementador**: `Antigravity (Gemini)` ⚡
-* **Turno Atual**: `Claudão (Claude Code)` 👑 (LLM "A" — implementação do Item 2 pós-consenso)
-* **Próximo Turno**: `Antigravity (Gemini)` ⚡ (LLM "B" — revisão pós-implementação)
+* **Turno Atual**: `Antigravity (Gemini)` ⚡ (LLM "B" — revisão da entrega do Item 2)
+* **Próximo Turno**: `Claudão (Claude Code)` 👑
 
 ---
 
 ## 📌 Status Atual
-* **Último Agente a Atuar**: Antigravity — revisão crítica (LLM "B") do plano do Item 2 concluída no `war_room/CHAT.md`. Apontados 4 ajustes cirúrgicos (registro de `sfx_heal.wav` em `audio_manager.gd`, `.mesh` obrigatório no `CPUParticles3D`, drop no Tanque em vez do Chefão já que a morte do chefe pausa e encerra a run, `attack_range = 2.4` para folga justa contra zumbis velozes, e proteção de não consumir drop com HP cheio). Plano consensuado e aprovado.
+* **Último Agente a Atuar**: Claudão — implementou o Item 2 (Slash VFX, `attack_range=2.4`, sistema de drops de cura com drop garantido no Tanque em vez do Chefão), incorporando os 4 ajustes do Antigravity. Corrigiu de brinde um bug pré-existente (`_update_hp_label()` sem guarda de árvore) e documentou uma descoberta sobre o harness de teste headless (nós recém-instanciados não têm `_ready()` executado no `_initialize()` síncrono). Reverteu 4 arquivos de áudio regenerados sem querer por não-determinismo pré-existente no gerador. **100% validado headless.**
 * **Fila de Tarefas — Milestone 6 (escopo confirmado pelo Usuário)**:
   1. [x] Item 1: Menu de Pausa Responsivo & Controle de Volume de Áudio — implementado e aprovado.
-  2. [🔥 APROVADO / EM IMPLEMENTAÇÃO] Item 2: Refinamento de Combate & Feedback de Ataque (Slash VFX, Alcance 2.4 & Drops de Cura no Tanque/Comuns) — Claudão implementando.
+  2. [🔥 IMPLEMENTADO, AGUARDANDO REVISÃO] Item 2: Refinamento de Combate & Feedback de Ataque (Slash VFX, Alcance 2.4, Drops de Cura no Tanque/Comuns) — Claudão reportou no `CHAT.md`, aguardando revisão crítica (LLM "B") do Antigravity.
   3. [ ] Item 3: Build Secundária Web (HTML5 / WebAssembly) & Validação Multiplataforma.
 * **Status do Milestone 5**: 100% concluído e aprovado como Release Candidate `v1.0.0-rc1`.
 * **Risco residual (não bloqueante, backlog)**: validação de performance real em hardware físico (FPS/térmico) pendente até um device físico limpo estar disponível.
 * **Backup da keystore**: mantido localmente em `~/wgtbue_release_keystore_backup.tar.gz.gpg` conforme decisão do Usuário.
-* **Aguardando**: Claudão implementar o Item 2 com os ajustes acordados, rodar os testes headless e reportar no `war_room/CHAT.md`.
+* **Aguardando**: Antigravity revisar criticamente (LLM "B") a entrega do Item 2 no `war_room/CHAT.md`.
 
 
 
