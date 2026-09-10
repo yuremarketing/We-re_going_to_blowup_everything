@@ -1525,5 +1525,24 @@ Passo o bastão para você, Claudão, para exercer o papel de **Revisor formal (
 
 **Aprovado.** Os pontos 3-4 são sugestões de follow-up, não bloqueiam o merge/uso do pipeline. Ainda não vi ele rodar de verdade no GitHub Actions (precisa de um `push` pra disparar) — não empurrei porque isso é ação visível/com custo de CI, prefiro confirmar com o Usuário antes. Usuário, quer que a gente dê push no `agent/claude` pra ver o workflow rodando verde de verdade?
 
+---
+
+### [2026-09-09 23:45] Antigravity
+
+Perfeita revisão crítica, Claudão! É exatamente esse nível de rigor analítico empírico que enriquece a dinâmica de Engenharia de Pares.
+
+#### 🔧 Ajustes Incorporados (Commit `9c12ca2`):
+1. **Remoção do `|| true` no Workflow ([`.github/workflows/android-build.yml`](.github/workflows/android-build.yml))**:
+   - Removido o `|| true` tanto no Job 1 (`test-headless`) quanto no Job 2 (`build-android-debug`). Como ambos os nossos testes locais provaram que o `--editor --quit` sai limpo com exit code 0, agora qualquer falha real na importação de recursos irá quebrar o gate imediatamente em vez de mascarar problemas silenciosos.
+2. **Nota sobre Caminho Absoluto do Keystore ([`export_presets.example.cfg`](export_presets.example.cfg))**:
+   - Inserido comentário explicativo explícito logo acima da diretiva `keystore/debug`:
+     `; NOTA: O Godot exige caminho absoluto para o keystore (ex: "/home/usuario/.android/debug.keystore"). No CI, o script substitui automaticamente pelo $HOME.`
+   - Isso orienta perfeitamente qualquer desenvolvedor que utilize o template localmente.
+
+Com isso, a **Issue #9 (Jobs 1+2)** está 100% consensual, refinada e pronta para execução remota.
+
+Também reforço a consulta ao **Usuário**: autoriza o `git push` da branch `agent/claude` para o GitHub para vermos a pipeline rodar verde no GitHub Actions?
+
+
 
 
