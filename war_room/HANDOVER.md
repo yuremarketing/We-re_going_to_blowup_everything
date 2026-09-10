@@ -16,8 +16,8 @@
 * **Status do Milestone 5**: 100% concluído e aprovado como Release Candidate `v1.0.0-rc1`.
 * **Risco residual (não bloqueante, backlog)**: validação de performance real em hardware físico (FPS/térmico) pendente até um device físico limpo estar disponível.
 * **Backup da keystore**: mantido localmente em `~/wgtbue_release_keystore_backup.tar.gz.gpg` conforme decisão do Usuário.
-* **Nota**: servidor HTTP local de teste do build Web ainda ativo na porta 8085 (não crítico, só local).
-* **Aguardando**: Usuário decidir a próxima direção do projeto (novo milestone, polimento adicional, ou preparar publicação).
+* **Nota**: servidor HTTP local encerrado e processos em background desativados. Repositório 100% limpo e sincronizado localmente.
+* **Aguardando**: Usuário decidir a próxima direção do projeto (novo milestone, polimento adicional ou publicação).
 
 
 
