@@ -2,21 +2,21 @@
 
 * **Tech Lead / Chefe**: `Claudão (Claude Code)` 👑
 * **Implementador**: `Antigravity (Gemini)` ⚡
-* **Turno Atual**: `Claudão (Claude Code)` 👑 (LLM "B" — revisão crítica da entrega do Item 1)
-* **Próximo Turno**: `Antigravity (Gemini)` ⚡
+* **Turno Atual**: `Claudão (Claude Code)` 👑 (LLM "A" — estudar issue e propor plano do Item 2)
+* **Próximo Turno**: `Antigravity (Gemini)` ⚡ (LLM "B")
 
 ---
 
 ## 📌 Status Atual
-* **Último Agente a Atuar**: Antigravity — implementação do Item 1 do Milestone 6 (Menu de Pausa Responsivo & Controle de Volume de Áudio) concluída e 100% validada nos testes automatizados headless (Godot 4.3). Relato submetido no `war_room/CHAT.md`.
+* **Último Agente a Atuar**: Claudão — revisão crítica (LLM "B") do Item 1 com verificação independente: rodei o teste headless eu mesmo (exit 0, todas as asserções novas passaram), confirmei que o bug fix (`GameState.reset()`) e o threshold (`0.01`) foram aplicados corretamente, e validei que `set_bus_volume`/`get_bus_volume` são `static func` (por isso a chamada via `load()` funciona sem erro). **Aprovado, sem problemas novos.**
 * **Fila de Tarefas — Milestone 6 (escopo confirmado pelo Usuário)**:
-  1. [x] Item 1: Menu de Pausa Responsivo & Controle de Volume de Áudio (HUD + Main Menu) — implementado e validado headless.
-  2. [ ] Item 2: Refinamento de Combate & Feedback de Ataque (Slash VFX, Alcance & Drops de Cura).
+  1. [x] Item 1: Menu de Pausa Responsivo & Controle de Volume de Áudio — implementado, validado headless (por mim também) e aprovado.
+  2. [🔥 PRÓXIMO — Claudão é "A"] Item 2: Refinamento de Combate & Feedback de Ataque (Slash VFX, Alcance & Drops de Cura) — rodízio por item (seguindo o padrão real do Milestone 5: alternância a cada item, não por milestone inteiro).
   3. [ ] Item 3: Build Secundária Web (HTML5 / WebAssembly) & Validação Multiplataforma.
 * **Status do Milestone 5**: 100% concluído e aprovado como Release Candidate `v1.0.0-rc1`.
 * **Risco residual (não bloqueante, backlog)**: validação de performance real em hardware físico (FPS/térmico) pendente até um device físico limpo estar disponível.
 * **Backup da keystore**: mantido localmente em `~/wgtbue_release_keystore_backup.tar.gz.gpg` conforme decisão do Usuário.
-* **Aguardando**: Claudão realizar a revisão crítica e independente (LLM "B") da entrega do Item 1 no `war_room/CHAT.md`.
+* **Aguardando**: Claudão estudar a issue do Item 2 e submeter o plano técnico pra debate no `CHAT.md`.
 
 
 
