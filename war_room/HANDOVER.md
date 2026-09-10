@@ -2,21 +2,21 @@
 
 * **Tech Lead / Chefe**: `Claudão (Claude Code)` 👑
 * **Implementador**: `Antigravity (Gemini)` ⚡
-* **Turno Atual**: `Claudão (Claude Code)` 👑 (LLM "A" — estudar issue e propor plano do Item 2)
-* **Próximo Turno**: `Antigravity (Gemini)` ⚡ (LLM "B")
+* **Turno Atual**: `Antigravity (Gemini)` ⚡ (LLM "B" — revisão crítica do plano do Item 2)
+* **Próximo Turno**: `Claudão (Claude Code)` 👑
 
 ---
 
 ## 📌 Status Atual
-* **Último Agente a Atuar**: Claudão — revisão crítica (LLM "B") do Item 1 com verificação independente: rodei o teste headless eu mesmo (exit 0, todas as asserções novas passaram), confirmei que o bug fix (`GameState.reset()`) e o threshold (`0.01`) foram aplicados corretamente, e validei que `set_bus_volume`/`get_bus_volume` são `static func` (por isso a chamada via `load()` funciona sem erro). **Aprovado, sem problemas novos.**
+* **Último Agente a Atuar**: Claudão — estudou o código atual (`player.gd`, `enemy.gd`, `boss.gd`, `wave_manager.gd`) e submeteu plano técnico detalhado do Item 2 (Slash VFX leve, `attack_range` exportado, sistema de drops de cura com `heal_pickup.gd`/`Area3D`, novo SFX procedural) pra debate no `CHAT.md`, com 3 pontos específicos de julgamento pro Antigravity.
 * **Fila de Tarefas — Milestone 6 (escopo confirmado pelo Usuário)**:
-  1. [x] Item 1: Menu de Pausa Responsivo & Controle de Volume de Áudio — implementado, validado headless (por mim também) e aprovado.
-  2. [🔥 PRÓXIMO — Claudão é "A"] Item 2: Refinamento de Combate & Feedback de Ataque (Slash VFX, Alcance & Drops de Cura) — rodízio por item (seguindo o padrão real do Milestone 5: alternância a cada item, não por milestone inteiro).
+  1. [x] Item 1: Menu de Pausa Responsivo & Controle de Volume de Áudio — implementado, validado headless e aprovado.
+  2. [🔥 EM DEBATE] Item 2: Refinamento de Combate & Feedback de Ataque (Slash VFX, Alcance & Drops de Cura) — plano submetido por Claudão ("A"), aguardando crítica do Antigravity ("B").
   3. [ ] Item 3: Build Secundária Web (HTML5 / WebAssembly) & Validação Multiplataforma.
 * **Status do Milestone 5**: 100% concluído e aprovado como Release Candidate `v1.0.0-rc1`.
 * **Risco residual (não bloqueante, backlog)**: validação de performance real em hardware físico (FPS/térmico) pendente até um device físico limpo estar disponível.
 * **Backup da keystore**: mantido localmente em `~/wgtbue_release_keystore_backup.tar.gz.gpg` conforme decisão do Usuário.
-* **Aguardando**: Claudão estudar a issue do Item 2 e submeter o plano técnico pra debate no `CHAT.md`.
+* **Aguardando**: Antigravity analisar criticamente o plano do Item 2 no `CHAT.md` (3 pontos de debate: % de drop de cura, escopo do alcance só em Z, uso de `CPUParticles3D` pro VFX).
 
 
 
