@@ -37,7 +37,15 @@ func _initialize():
 	
 	var autoload_state = ProjectSettings.get_setting("autoload/GameState")
 	assert(autoload_state != null, "autoload/GameState must be configured in ProjectSettings")
-	
+
+	var autoload_cutscene = ProjectSettings.get_setting("autoload/CutsceneManager")
+	assert(autoload_cutscene != null, "autoload/CutsceneManager must be configured in ProjectSettings")
+	var cutscene_script = preload("res://scripts/cutscene_manager.gd")
+	var cutscene_mgr = cutscene_script.new()
+	cutscene_mgr.name = "CutsceneManager"
+	root.add_child(cutscene_mgr)
+	print("CutsceneManager initialized OK")
+
 	var main_scene = load("res://scenes/main.tscn")
 	if not main_scene:
 		printerr("ERROR: Could not load scenes/main.tscn")
@@ -198,7 +206,30 @@ func _initialize():
 	assert(paused == false, "SceneTree must be unpaused when close_pause is called")
 	assert(pause_menu.visible == false, "PauseMenu must be hidden after close_pause")
 	print("PauseButton and PauseMenu toggling verified OK")
-	
+
+	# Verify CutsceneManager autoload and cutscene overlay integration (Milestone 7, issue #11)
+	assert(cutscene_mgr.is_playing == false, "CutsceneManager.is_playing must default to false")
+	assert(cutscene_mgr.skip_cutscenes == false, "CutsceneManager.skip_cutscenes must default to false")
+	assert(cutscene_mgr.has_method("play_intro"), "CutsceneManager must implement play_intro")
+	assert(cutscene_mgr.has_method("play_boss_alert"), "CutsceneManager must implement play_boss_alert")
+	assert(cutscene_mgr.has_method("skip"), "CutsceneManager must implement skip")
+	assert(cutscene_mgr.has_method("set_skip_cutscenes"), "CutsceneManager must implement set_skip_cutscenes")
+	cutscene_mgr.skip()
+	assert(cutscene_mgr.is_playing == false, "skip() called with no active cutscene must be a no-op")
+	print("CutsceneManager singleton verified OK")
+
+	var overlay_scene = load("res://scenes/cutscene_overlay.tscn")
+	var overlay_inst = overlay_scene.instantiate()
+	assert(overlay_inst.get_node_or_null("Root") != null, "CutsceneOverlay Root must exist")
+	assert(overlay_inst.get_node_or_null("Root/ArtTexture") != null, "CutsceneOverlay ArtTexture must exist")
+	assert(overlay_inst.get_node_or_null("Root/CaptionPanel/CaptionLabel") != null, "CutsceneOverlay CaptionLabel must exist")
+	assert(overlay_inst.get_node_or_null("Root/SkipButton") != null, "CutsceneOverlay SkipButton must exist")
+	overlay_inst.free()
+	print("CutsceneOverlay scene structure verified OK")
+
+	assert(player.has_method("reset_movement"), "Player must implement reset_movement (cutscene input-reset safety)")
+	print("Player reset_movement verified OK")
+
 	# Verify AudioManager volume helper functions and mute thresholds
 	audio_script.set_bus_volume("Music", 0.6)
 	var music_vol = audio_script.get_bus_volume("Music")
@@ -229,6 +260,7 @@ func _initialize():
 	assert(menu_inst.get_node_or_null("Panel/VBox/TitleLabel") != null, "TitleLabel must exist in MainMenu")
 	assert(menu_inst.get_node_or_null("Panel/VBox/MusicBox/MusicSlider") != null, "MusicSlider must exist in MainMenu")
 	assert(menu_inst.get_node_or_null("Panel/VBox/SFXBox/SFXSlider") != null, "SFXSlider must exist in MainMenu")
+	assert(menu_inst.get_node_or_null("Panel/VBox/SkipCutscenesCheck") != null, "SkipCutscenesCheck must exist in MainMenu")
 	print("MainMenu layout and audio controls verified OK")
 	
 	# Verify AudioManager SFX and Music

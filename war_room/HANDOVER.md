@@ -2,14 +2,14 @@
 
 * **Tech Lead / Chefe**: `Claudão (Claude Code)` 👑
 * **Implementador**: `Antigravity (Gemini)` ⚡
-* **Turno Atual**: `Claudão (Claude Code)` 👑 (tréplica técnica, consenso e implementação da issue #11, conforme `COLLAB_PROTOCOL.md` seção 5, passos 4-5)
-* **Próximo Turno**: Claudão avalia a crítica técnica do Antigravity em `war_room/CHAT.md` [2026-09-10 22:55], fecha o consenso e implementa o `CutsceneManager` / `cutscene_overlay.tscn` da [issue #11](https://github.com/yuremarketing/We-re_going_to_blowup_everything/issues/11). Depois volta pra Antigravity pra revisão de código (passo 6).
- 
+* **Turno Atual**: A definir — issue #11 implementada e fechada. Próxima tarefa inverte papéis: Antigravity assume como "A" (analisa/propõe), Claudão vira "B" (critica), conforme `COLLAB_PROTOCOL.md` seção 2, passo 6.
+* **Próximo Turno**: Aguardando Usuário apontar a próxima tarefa, ou Felipe Pessanha destravar a [issue #2](https://github.com/yuremarketing/We-re_going_to_blowup_everything/issues/2) (arte 3D). Validação manual pendente: Usuário jogar e ver a cutscene de intro/chefão tocando de verdade na janela (Claudão não conseguiu simular clique nesta sessão, sem ferramenta de input desktop).
+
 ---
 
 ## 📌 Status Atual
-* **Último Agente a Atuar**: Antigravity — realizou a revisão crítica e julgamento técnico (LLM "B") do plano da [issue #11](https://github.com/yuremarketing/We-re_going_to_blowup_everything/issues/11) em `war_room/CHAT.md` [2026-09-10 22:55], aprovando com 6 recomendações técnicas essenciais (conflito de pausa, unpause input reset, skip touch target, aspect ratio).
-* **Tarefa ativa — [issue #11](https://github.com/yuremarketing/We-re_going_to_blowup_everything/issues/11)**: Cutscenes curtas (MVP) usando concept art já aprovada (`assets/concept_art/`) como placeholder. Crítica técnica do Antigravity entregue. Claudão ("A") assume para tréplica/consenso e implementação.
+* **Último Agente a Atuar**: Claudão — implementou a [issue #11](https://github.com/yuremarketing/We-re_going_to_blowup_everything/issues/11) (cutscenes MVP) incorporando as 6 recomendações do Antigravity: `CutsceneManager` (autoload) + `cutscene_overlay.tscn`, guarda de conflito de pausa, reset de input do player, toque-em-qualquer-lugar + botão "Pular" 96x96px, aspect ratio `KEEP_ASPECT_COVERED`, intro só troca de cena após o sinal terminar. Achado no caminho: os arquivos de `assets/concept_art/` são JPEG com extensão `.png` trocada e a pasta tem `.gdignore` proposital — resolvido copiando as 3 stills necessárias pra `assets/cutscenes/*.jpg` (concept_art/ intocada). Suíte headless 100% verde (`scripts/test_mobile_setup.gd`, exit 0). Validação visual do menu confirmada via screenshot.
+* **🎉 Milestone 6 100% concluído + Issue #11 (cutscenes MVP) entregue e testada.**
 * **🎉 Milestone 6 100% concluído** (Itens 1, 2 e 3 todos entregues e aprovados):
   1. [x] Item 1: Menu de Pausa Responsivo & Controle de Volume de Áudio.
   2. [x] Item 2: Refinamento de Combate & Feedback de Ataque (Slash VFX, Alcance 2.4, Drops de Cura).

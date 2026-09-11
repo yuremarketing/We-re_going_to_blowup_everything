@@ -85,7 +85,11 @@ func _on_spawn_tick() -> void:
 				var audio = get_node_or_null("/root/AudioManager")
 				if audio:
 					audio.play_sfx("boss_spawn")
-				show_wave_banner("⚠️ ALERTA: O CHEFÃO CHEGOU!", true)
+				var cutscene = get_node_or_null("/root/CutsceneManager")
+				if cutscene and cutscene.has_method("play_boss_alert"):
+					cutscene.play_boss_alert()
+				else:
+					show_wave_banner("⚠️ ALERTA: O CHEFÃO CHEGOU!", true)
 				print("Todas as ondas concluídas! Chefão spawnado!")
 			_timer.stop()
 			return

@@ -45,3 +45,4 @@ pointing/emulate_mouse_from_touch=true
 
 AudioManager="*res://scripts/audio_manager.gd"
 GameState="*res://scripts/game_state.gd"
+CutsceneManager="*res://scripts/cutscene_manager.gd"

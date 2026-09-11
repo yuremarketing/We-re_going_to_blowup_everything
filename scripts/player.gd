@@ -133,6 +133,11 @@ func _spawn_slash_vfx() -> void:
 	else:
 		particles.queue_free()
 
+func reset_movement() -> void:
+	velocity.z = 0.0
+	Input.action_release("ui_up")
+	Input.action_release("ui_down")
+
 func heal(amount: int) -> void:
 	if is_dead or amount <= 0:
 		return

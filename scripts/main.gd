@@ -13,6 +13,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		toggle_pause()
 
 func toggle_pause() -> void:
+	var cutscene = get_node_or_null("/root/CutsceneManager")
+	if cutscene and cutscene.is_playing:
+		return
 	var pause_menu = get_node_or_null("PauseMenu")
 	if not pause_menu and is_inside_tree():
 		pause_menu = get_tree().get_first_node_in_group("pause_menu")
