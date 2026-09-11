@@ -1,6 +1,6 @@
 # 🗺️ Roadmap do Projeto: We-re_going_to_blowup_everything
 
-> Alinhado com [`docs/epicas/EPICA-001-jogo-horde-survival.md`](./docs/epicas/EPICA-001-jogo-horde-survival.md). Premissas marcadas 🟡 na épica ainda não foram validadas com o C-level/Felipe Pessanha — revisar antes de fechar escopo definitivo.
+> Alinhado com [`docs/epicas/EPICA-001-jogo-horde-survival.md`](./docs/epicas/EPICA-001-jogo-horde-survival.md). Todas as premissas de escopo (nome, modo de jogo, tema, plataforma, estilo artístico, monetização, escopo do MVP) foram confirmadas pelo usuário/C-level — ver seção 3 da épica. Falta apenas validação técnica direta com o Felipe Pessanha de que o escopo bate com o pipeline Blender/Meshy dele ([issue #2](https://github.com/yuremarketing/We-re_going_to_blowup_everything/issues/2)).
 
 ## 🎯 Visão Geral
 * **Objetivo do Projeto**: Jogo de ação/sobrevivência contra multidão em viela linear ("esteira"), estilo horde/lane survival — ondas progressivas de inimigos + chefões, partidas curtas e simples de jogar.
@@ -68,3 +68,7 @@
 5. ~~Escopo numérico definitivo do MVP~~ — respondido pelo usuário (2026-09-08): "1 personagem jogável, 3 tipos de inimigo comum, 1 chefão, 5 ondas por run"
 6. ~~Modelo de monetização~~ — respondido pelo usuário (2026-09-08): "Free-to-play com anúncios opcionais + IAP cosmético"
 7. ~~Viabilidade de um MCP para Godot~~ — resolvido, ver Milestone 1
+8. ~~Modo de jogo (fixo vs. endless com meta-progressão)~~ — resolvido pelo usuário (2026-09-10, [issue #10](https://github.com/yuremarketing/We-re_going_to_blowup_everything/issues/10)): **fica fixo** — 5 ondas → chefão → fim, sem meta-progressão nem persistência entre runs (já era o comportamento implementado; épica atualizada pra refletir isso como decisão final em vez de premissa assumida).
+
+### Backlog não-bloqueante (herdado da issue #10)
+* **Cutscenes curtas via IA** (transformação de animação/vídeo em sprite sequence) — citado na premissa #3 da épica (confirmada em 2026-09-08) mas nunca implementado. Hoje só existem VFX de impacto e banners de onda. Decisão de escopo (MVP vs. backlog definitivo) ainda pendente — não bloqueia a produção de arte 3D.

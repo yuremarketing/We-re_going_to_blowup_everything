@@ -2299,6 +2299,18 @@ Nota de limpeza: o servidor HTTP local na porta 8085 ainda está rodando em back
 - Repositório 100% limpo, estável e todos os 3 itens do Milestone 6 comitados e aprovados.
 - Sessão finalizada com sucesso. Até a próxima rodada! 🚀
 
+---
+
+### [2026-09-10 22:00] Claudão
+
+**Nova sessão. Levantamento de tarefas disponíveis** enquanto o Felipe Pessanha não responde (bloqueio da issue #2 — pipeline de arte 3D).
+
+Abri a [issue #10](https://github.com/yuremarketing/We-re_going_to_blowup_everything/issues/10): cruzando `docs/epicas/EPICA-001-jogo-horde-survival.md` com o `ROADMAP.md` e o código real, achei uma contradição não resolvida — a épica assumia "endless/arcade com meta-progressão leve entre runs" (premissa #2, nunca confirmada em rodada nenhuma), mas o que foi implementado nos Milestones 1-6 é partida de duração **fixa** (5 ondas → chefão → fim, sem persistência). Também achei que "cutscenes curtas via IA" (premissa #3, essa sim confirmada) nunca foi implementado, e que a seção 8 da épica tinha ficado desatualizada (listava o nome do jogo como pendente, já resolvido desde 2026-09-08).
+
+**Decisão do Usuário (2026-09-10)**: Opção A — mantém fixo, sem meta-progressão. Atualizei a épica (premissa #2 confirmada, critério de aceite da seção 7 fechado, seção 8 limpa) e o `ROADMAP.md` (nota do topo + item 8 nas perguntas em aberto + backlog não-bloqueante pra decisão pendente de cutscenes). Comentei o resumo e fechei a issue #10.
+
+**Sem trabalho de código pendente nesta rodada** — os dois itens que sobraram (#2 arte 3D, #5 performance em device real) dependem de bloqueios externos (Pessanha e device físico limpo, respectivamente). Deixo registrado pro Antigravity: nenhuma ação sua necessária agora, a não ser que o Usuário destrave um dos dois.
+
 
 
 

@@ -1,7 +1,7 @@
 # Épica 001 — Jogo de Ação/Sobrevivência contra Multidão (Horde/Lane Survival)
 
 > Status: rascunho v1 — baseado na entrevista de pré-elicitação com Felipe Pessanha (fonte: `Transcrição da Entrevista de Pré-Elicitação de Requisitos — Felipe Pessanha`).
-> Lacunas da entrevista foram preenchidas com premissas explícitas. Em 2026-09-08 o usuário confirmou, via `war_room/dashboard/`, as premissas #3, #5, #6, #7 e #8 (marcadas ✅ abaixo) — essas respostas vieram do usuário/C-level, não diretamente de uma nova rodada com o Felipe Pessanha; ainda vale checar com ele se o escopo técnico bate. Nome do jogo (#1) confirmado em 2026-09-08 diretamente pelo usuário; modo de jogo (#2) segue em aberto.
+> Lacunas da entrevista foram preenchidas com premissas explícitas. Em 2026-09-08 o usuário confirmou, via `war_room/dashboard/`, as premissas #3, #5, #6, #7 e #8 (marcadas ✅ abaixo) — essas respostas vieram do usuário/C-level, não diretamente de uma nova rodada com o Felipe Pessanha; ainda vale checar com ele se o escopo técnico bate. Nome do jogo (#1) confirmado em 2026-09-08 diretamente pelo usuário; modo de jogo (#2) confirmado em 2026-09-10 (ver issue [#10](../../../../issues/10)) — todas as premissas de escopo estão fechadas.
 
 ## 1. Contexto
 
@@ -18,7 +18,7 @@ Entregar um jogo rápido de produzir e rápido de jogar, com um pipeline de prod
 | # | Lacuna | Premissa assumida | Justificativa | Risco se errado |
 |---|---|---|---|---|
 | 1 | Nome do jogo | ✅ **Confirmado pelo usuário (2026-09-08)**: `We're Going to Blow Up Everything` (mesmo nome do repositório) | Decisão direta do usuário/C-level | Baixo — risco eliminado |
-| 2 | Modo de jogo | Single-player, corrida por ondas (**endless/arcade** com meta-progressão leve entre runs) | Consistente com "jogo simples e rápido" citado pelo C-level | Médio — muda estrutura de níveis e economia |
+| 2 | Modo de jogo | ✅ **Confirmado pelo usuário (2026-09-10)**: partida de **duração fixa** — 5 ondas → chefão → tela de fim ("VITÓRIA!"/"GAME OVER"), **sem meta-progressão nem persistência entre runs** (substitui a premissa original de endless/arcade). Decisão registrada na issue [#10](../../../../issues/10) | Já era o comportamento implementado (Milestones 1-6); usuário optou por oficializar em vez de construir um sistema novo de meta-progressão | Baixo — risco eliminado |
 | 3 | Motion design/VFX/Cutscenes (Rodada 3 truncada) | ✅ **Confirmado pelo usuário (2026-09-08)**: VFX de impacto "juicy" (hit flash, partículas, screen shake), transições de onda animadas, e cutscenes curtas geradas via IA (transformação de animação/vídeo em sprite sequence, citado na Rodada 5) | Único fio deixado pelo próprio Felipe na Rodada 5 | Baixo — risco eliminado |
 | 4 | Tema da multidão | ✅ **Confirmado pelo C-level**: apocalipse zumbi | Validado em 2026-08-18 (descartada alternativa cyberpunk que surgiu num teste de concept art) | Baixo — risco eliminado |
 | 5 | Plataforma-alvo | ✅ **Confirmado pelo usuário (2026-09-08)**: **Mobile-first** (Android/iOS), com build secundária para PC/Web via Godot | Perfil "jogo simples e rápido" é típico de mobile arcade; Godot facilita multiplataforma | Baixo — risco eliminado |
@@ -66,7 +66,7 @@ Entregar um jogo rápido de produzir e rápido de jogar, com um pipeline de prod
 
 ## 7. Critérios de aceite da épica
 
-- [~] Nome, modo de jogo, tema e plataforma-alvo confirmados com o C-level. — tema e plataforma-alvo confirmados (2026-09-08); nome e modo de jogo seguem em aberto.
+- [x] Nome, modo de jogo, tema e plataforma-alvo confirmados com o C-level. — todos confirmados: tema e plataforma-alvo (2026-09-08), nome (2026-09-08), modo de jogo (2026-09-10).
 - [x] Estilo artístico (Low Poly 3D) validado — confirmado pelo usuário/C-level em 2026-09-08 (ainda não revalidado diretamente com Felipe Pessanha).
 - [x] Spike técnico sobre existência/viabilidade de MCP para Godot concluído.
 - [x] GDD v1 e LDD v1 gerados e revisados por um humano.
@@ -75,8 +75,9 @@ Entregar um jogo rápido de produzir e rápido de jogar, com um pipeline de prod
 
 ## 8. Perguntas em aberto para a próxima rodada de elicitação
 
-1. Confirmar **nome definitivo do jogo** (tema já confirmado: apocalipse zumbi). Único item realmente em aberto.
-2. ~~Completar a resposta da Rodada 3 (motion design/VFX/cutscenes) diretamente com o Felipe.~~ — respondido pelo usuário em 2026-09-08 (ver premissa 3). Recomendado revalidar tecnicamente com o Felipe quando for implementar.
+1. ~~Confirmar **nome definitivo do jogo**~~ — confirmado pelo usuário em 2026-09-08 (ver premissa 1): `We're Going to Blow Up Everything`.
+1b. ~~Confirmar **modo de jogo**~~ — confirmado pelo usuário em 2026-09-10 (ver premissa 2): partida fixa de 5 ondas, sem meta-progressão. Todos os itens desta seção estão resolvidos.
+2. ~~Completar a resposta da Rodada 3 (motion design/VFX/cutscenes) diretamente com o Felipe.~~ — respondido pelo usuário em 2026-09-08 (ver premissa 3). Recomendado revalidar tecnicamente com o Felipe quando for implementar. **Nota (2026-09-10)**: o item "cutscenes curtas via IA" citado nessa premissa ainda não foi implementado no jogo (só VFX de impacto e banners de onda existem) — segue como pendência de backlog, não bloqueante para a produção de arte 3D.
 3. ~~Validar estilo artístico único (Low Poly 3D vs. outra direção).~~ — confirmado pelo usuário em 2026-09-08 (ver premissa 6).
 4. ~~Definir plataforma-alvo e requisitos de performance.~~ — confirmado pelo usuário em 2026-09-08 (ver premissa 5).
 5. ~~Definir escopo numérico do MVP (inimigos, armas, ondas, chefões).~~ — confirmado pelo usuário em 2026-09-08 (ver premissa 8).
