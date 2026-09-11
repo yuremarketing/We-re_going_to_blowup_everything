@@ -2,14 +2,14 @@
 
 * **Tech Lead / Chefe**: `Claudão (Claude Code)` 👑
 * **Implementador**: `Antigravity (Gemini)` ⚡
-* **Turno Atual**: `Antigravity` ⚡ (crítica técnica do plano abaixo, conforme `COLLAB_PROTOCOL.md` seção 2, passo 3)
-* **Próximo Turno**: Antigravity revisa o plano da [issue #11](https://github.com/yuremarketing/We-re_going_to_blowup_everything/issues/11) em `war_room/CHAT.md` [2026-09-10 22:15] e registra a crítica lá. Depois volta pra Claudão pra tréplica/consenso e implementação (passos 4-5). Issues #2 (arte 3D) e #5 (performance em device) seguem bloqueadas em fatores externos — não fazem parte deste turno.
-
+* **Turno Atual**: `Claudão (Claude Code)` 👑 (tréplica técnica, consenso e implementação da issue #11, conforme `COLLAB_PROTOCOL.md` seção 5, passos 4-5)
+* **Próximo Turno**: Claudão avalia a crítica técnica do Antigravity em `war_room/CHAT.md` [2026-09-10 22:55], fecha o consenso e implementa o `CutsceneManager` / `cutscene_overlay.tscn` da [issue #11](https://github.com/yuremarketing/We-re_going_to_blowup_everything/issues/11). Depois volta pra Antigravity pra revisão de código (passo 6).
+ 
 ---
 
 ## 📌 Status Atual
-* **Último Agente a Atuar**: Claudão — abriu, debateu e fechou a [issue #10](https://github.com/yuremarketing/We-re_going_to_blowup_everything/issues/10) (revisão de aderência à Épica 001). Achado: modo de jogo (endless/meta-progressão vs. fixo) nunca tinha sido confirmado oficialmente, apesar de já implementado como fixo. Usuário decidiu **Opção A** (2026-09-10): mantém fixo — 5 ondas → chefão → fim, sem meta-progressão nem persistência entre runs. Épica (`docs/epicas/EPICA-001-jogo-horde-survival.md`) e `ROADMAP.md` atualizados e issue fechada.
-* **Nova tarefa aberta — [issue #11](https://github.com/yuremarketing/We-re_going_to_blowup_everything/issues/11)**: Cutscenes curtas (MVP) usando concept art já aprovada (`assets/concept_art/`) como placeholder — não depende do Pessanha. Claudão ("A" nesta rodada) postou plano técnico completo em `war_room/CHAT.md` [2026-09-10 22:15]. **Aguardando crítica do Antigravity ("B") antes de qualquer implementação.**
+* **Último Agente a Atuar**: Antigravity — realizou a revisão crítica e julgamento técnico (LLM "B") do plano da [issue #11](https://github.com/yuremarketing/We-re_going_to_blowup_everything/issues/11) em `war_room/CHAT.md` [2026-09-10 22:55], aprovando com 6 recomendações técnicas essenciais (conflito de pausa, unpause input reset, skip touch target, aspect ratio).
+* **Tarefa ativa — [issue #11](https://github.com/yuremarketing/We-re_going_to_blowup_everything/issues/11)**: Cutscenes curtas (MVP) usando concept art já aprovada (`assets/concept_art/`) como placeholder. Crítica técnica do Antigravity entregue. Claudão ("A") assume para tréplica/consenso e implementação.
 * **🎉 Milestone 6 100% concluído** (Itens 1, 2 e 3 todos entregues e aprovados):
   1. [x] Item 1: Menu de Pausa Responsivo & Controle de Volume de Áudio.
   2. [x] Item 2: Refinamento de Combate & Feedback de Ataque (Slash VFX, Alcance 2.4, Drops de Cura).
