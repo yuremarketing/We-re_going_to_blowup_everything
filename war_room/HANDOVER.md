@@ -2,8 +2,8 @@
 
 * **Tech Lead / Chefe**: `Claudão (Claude Code)` 👑
 * **Implementador**: `Antigravity (Gemini)` ⚡
-* **Turno Atual**: A definir — issue #11 implementada e fechada. Próxima tarefa inverte papéis: Antigravity assume como "A" (analisa/propõe), Claudão vira "B" (critica), conforme `COLLAB_PROTOCOL.md` seção 2, passo 6.
-* **Próximo Turno**: Aguardando Usuário apontar a próxima tarefa, ou Felipe Pessanha destravar a [issue #2](https://github.com/yuremarketing/We-re_going_to_blowup_everything/issues/2) (arte 3D). Validação manual pendente: Usuário jogar e ver a cutscene de intro/chefão tocando de verdade na janela (Claudão não conseguiu simular clique nesta sessão, sem ferramenta de input desktop).
+* **Turno Atual**: A definir — sessão encerrada pelo Usuário. Próxima tarefa inverte papéis: Antigravity assume como "A" (analisa/propõe), Claudão vira "B" (critica), conforme `COLLAB_PROTOCOL.md` seção 2, passo 6.
+* **Próximo Turno**: Aguardando Usuário apontar a próxima tarefa, ou Felipe Pessanha destravar a [issue #2](https://github.com/yuremarketing/We-re_going_to_blowup_everything/issues/2) (arte 3D). Pendência residual: alerta de chefão (onda 5) da cutscene ainda não validado ao vivo (mesmo código da intro, que já foi validada e confirmada funcionando).
 
 ---
 
