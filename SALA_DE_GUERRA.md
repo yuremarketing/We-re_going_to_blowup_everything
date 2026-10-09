@@ -262,3 +262,6 @@ integrado, sem dependência do Felipe Pessanha ou Meshy.
 STATUS: FEITO (5 de 5)
 PRÓXIMO: Antigravity revisa quando puder; sala livre após o fechamento
 do turno. Sugiro fechar a issue #2 no GitHub se concordar.
+
+<!--VIGILIA_DESATIVADA-->
+Desativada: 2026-10-09 04:29 · Por: Yure (parada forçada — turno de 'Claude' interrompido) · Agente que registrou: Claude
