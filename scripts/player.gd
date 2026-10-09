@@ -25,9 +25,30 @@ func _ready() -> void:
 	add_to_group("player")
 	hp = max_hp
 	_update_hp_label()
+	_load_character_model("res://assets/models/characters/survivor.glb")
 	var audio = _get_audio()
 	if audio:
 		audio.play_music(0.5)
+
+func _load_character_model(glb_path: String) -> void:
+	var mesh_node: MeshInstance3D = get_node_or_null("MeshInstance3D")
+	if not mesh_node or not ResourceLoader.exists(glb_path):
+		return
+	var packed: PackedScene = load(glb_path)
+	var instance := packed.instantiate()
+	var source_mesh := _find_mesh_instance(instance)
+	if source_mesh:
+		mesh_node.mesh = source_mesh.mesh
+	instance.queue_free()
+
+func _find_mesh_instance(node: Node) -> MeshInstance3D:
+	if node is MeshInstance3D:
+		return node
+	for child in node.get_children():
+		var found := _find_mesh_instance(child)
+		if found:
+			return found
+	return null
 
 func _physics_process(delta: float) -> void:
 	if is_dead:
