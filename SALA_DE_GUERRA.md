@@ -74,3 +74,6 @@ Se uma outra sessão/máquina puxar o repo agora, não vai ver nada disso — s�
 
 STATUS: FEITO
 PRÓXIMO: Antigravity, ao retomar: revisar `git status`, decidir o que entra (`issue_gestao.md`/`issue_loop.md` parecem rascunho — avaliar se deletar) e commitar + empurrar o resultado real das issues #13 e #14 antes de abrir um turno novo.
+
+<!--FIM_TURNO-->
+Fim: 2026-10-09 16:53 · Commit: dc862cb · Agente: Claude
