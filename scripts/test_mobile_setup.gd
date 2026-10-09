@@ -261,6 +261,7 @@ func _initialize():
 	assert(menu_inst.get_node_or_null("Panel/VBox/MusicBox/MusicSlider") != null, "MusicSlider must exist in MainMenu")
 	assert(menu_inst.get_node_or_null("Panel/VBox/SFXBox/SFXSlider") != null, "SFXSlider must exist in MainMenu")
 	assert(menu_inst.get_node_or_null("Panel/VBox/SkipCutscenesCheck") != null, "SkipCutscenesCheck must exist in MainMenu")
+	assert(menu_inst.get_node_or_null("Panel/VBox/HighScoreLabel") != null, "HighScoreLabel must exist in MainMenu")
 	print("MainMenu layout and audio controls verified OK")
 	
 	# Verify AudioManager SFX and Music
@@ -275,6 +276,54 @@ func _initialize():
 	audio_mgr.play_music(0.1)
 	audio_mgr.stop_music(0.0)
 	print("AudioManager SFX and Music playback verified OK")
+
+	# Verify SaveManager autoload, High Score record independence and ConfigFile persistence
+	var save_mgr = root.get_node_or_null("SaveManager")
+	assert(save_mgr != null, "SaveManager autoload must exist")
+	assert(save_mgr.has_method("save_stats"), "SaveManager must implement save_stats")
+	assert(save_mgr.has_method("load_data"), "SaveManager must implement load_data")
+
+	save_mgr.best_time = -1.0
+	save_mgr.max_kills = 0
+	save_mgr.save_stats(120.0, 10, false)
+	assert(save_mgr.max_kills == 10, "max_kills must update even on a defeat (Game Over)")
+	assert(save_mgr.best_time == -1.0, "best_time must NOT update on a defeat")
+
+	save_mgr.save_stats(90.0, 5, true)
+	assert(save_mgr.max_kills == 10, "max_kills must not decrease when a later run has fewer kills")
+	assert(save_mgr.best_time == 90.0, "best_time must be set on the first victory")
+
+	save_mgr.save_stats(60.0, 20, true)
+	assert(save_mgr.best_time == 60.0, "best_time must update on a faster victory")
+	assert(save_mgr.max_kills == 20, "max_kills must update when exceeded")
+
+	save_mgr.save_stats(200.0, 1, true)
+	assert(save_mgr.best_time == 60.0, "best_time must not regress on a slower victory")
+	assert(save_mgr.max_kills == 20, "max_kills must not regress when a later run has fewer kills")
+	print("SaveManager record independence (time/kills, victory/defeat) verified OK")
+
+	var save_script = preload("res://scripts/save_manager.gd")
+	var fresh_save_mgr = save_script.new()
+	fresh_save_mgr.load_data()
+	assert(fresh_save_mgr.best_time == 60.0, "Reloaded SaveManager must read back the persisted best_time")
+	assert(fresh_save_mgr.max_kills == 20, "Reloaded SaveManager must read back the persisted max_kills")
+	fresh_save_mgr.free()
+	print("SaveManager ConfigFile persistence (save_data.cfg) verified OK")
+
+	# Verify GameState.time_elapsed exists and that reset() zeroes it.
+	# Nota: não chamamos state_mgr._process() aqui de propósito — nodes
+	# adicionados direto a `root` dentro deste harness síncrono (via -s
+	# script) nunca terminam de entrar na tree durante o próprio
+	# _initialize() (state_mgr.is_inside_tree() fica false o tempo todo),
+	# então get_tree() dentro de _process() sempre lançaria erro aqui,
+	# mesmo com o guard de pausa correto. Isso é uma limitação deste
+	# harness pra nodes-raiz, não um bug do GameState — em gameplay real
+	# o autoload já está na tree bem antes do primeiro frame.
+	assert("time_elapsed" in state_mgr, "GameState must expose time_elapsed")
+	state_mgr.time_elapsed = 42.0
+	state_mgr.reset()
+	assert(state_mgr.time_elapsed == 0.0, "GameState.reset() must zero time_elapsed")
+	print("GameState.time_elapsed field and reset() verified OK")
 
 	# Verify Web export preset configuration
 	var preset_cfg = ConfigFile.new()
