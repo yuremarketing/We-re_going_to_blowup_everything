@@ -3,34 +3,59 @@ extends CharacterBody3D
 @export var speed: float = 3.0
 @export var hp: int = 1
 @export var heal_drop_chance: float = 0.15
+@export var model_path: String = ""
 
 const HEAL_PICKUP_SCENE_PATH = "res://scenes/heal_pickup.tscn"
 
 var _base_albedo: Color = Color.RED
+var _base_albedos: Array[Color] = []
 var _flash_tween: Tween
 static var _cached_mesh_dict: Dictionary = {}
 
 func _ready() -> void:
 	add_to_group("enemies")
+	if model_path != "":
+		_load_character_model(model_path)
 	_setup_material()
+
+func _load_character_model(glb_path: String) -> void:
+	var mesh_node: MeshInstance3D = get_node_or_null("MeshInstance3D")
+	if not mesh_node or not ResourceLoader.exists(glb_path):
+		return
+	var packed: PackedScene = load(glb_path)
+	var instance := packed.instantiate()
+	var source_mesh := _find_mesh_instance(instance)
+	if source_mesh:
+		mesh_node.mesh = source_mesh.mesh
+	instance.queue_free()
+
+func _find_mesh_instance(node: Node) -> MeshInstance3D:
+	if node is MeshInstance3D:
+		return node
+	for child in node.get_children():
+		var found := _find_mesh_instance(child)
+		if found:
+			return found
+	return null
 
 func _setup_material() -> void:
 	var mesh_inst = get_node_or_null("MeshInstance3D")
-	if not mesh_inst:
+	if not mesh_inst or not mesh_inst.mesh:
 		return
-	var mat = mesh_inst.get_surface_override_material(0)
-	if mat is StandardMaterial3D:
-		var dup = mat.duplicate() as StandardMaterial3D
-		mesh_inst.set_surface_override_material(0, dup)
-		_base_albedo = dup.albedo_color
-	elif mesh_inst.material_override is StandardMaterial3D:
-		var dup = mesh_inst.material_override.duplicate() as StandardMaterial3D
-		mesh_inst.material_override = dup
-		_base_albedo = dup.albedo_color
-	elif mesh_inst.mesh and mesh_inst.mesh.material is StandardMaterial3D:
-		var dup = mesh_inst.mesh.material.duplicate() as StandardMaterial3D
-		mesh_inst.set_surface_override_material(0, dup)
-		_base_albedo = dup.albedo_color
+	_base_albedos.clear()
+	# meshes low poly importados têm 1 surface por parte do corpo (jaqueta,
+	# pele, etc.) — duplica e registra a cor de cada uma pro hit-flash
+	# cobrir o personagem inteiro, não só a 1ª surface.
+	for i in mesh_inst.mesh.get_surface_count():
+		var mat = mesh_inst.get_surface_override_material(i)
+		if not mat is StandardMaterial3D:
+			mat = mesh_inst.mesh.surface_get_material(i) as StandardMaterial3D
+		if mat:
+			var dup = mat.duplicate() as StandardMaterial3D
+			mesh_inst.set_surface_override_material(i, dup)
+			_base_albedos.append(dup.albedo_color)
+	if not _base_albedos.is_empty():
+		_base_albedo = _base_albedos[0]
 
 func _physics_process(delta: float) -> void:
 	if not is_inside_tree():
@@ -60,26 +85,27 @@ func play_hit_flash() -> void:
 	if not is_inside_tree():
 		return
 	var mesh_inst = get_node_or_null("MeshInstance3D")
-	if not mesh_inst:
-		return
-	var mat = mesh_inst.get_surface_override_material(0) as StandardMaterial3D
-	if not mat:
-		mat = mesh_inst.material_override as StandardMaterial3D
-	if not mat:
+	if not mesh_inst or not mesh_inst.mesh:
 		return
 	if _flash_tween and _flash_tween.is_valid():
 		_flash_tween.kill()
-	mat.emission_enabled = true
-	mat.emission = Color.WHITE
-	mat.albedo_color = Color(1.5, 1.5, 1.5, 1.0)
 	_flash_tween = create_tween()
-	_flash_tween.tween_interval(0.08)
-	_flash_tween.tween_property(mat, "albedo_color", _base_albedo, 0.05)
-	_flash_tween.parallel().tween_property(mat, "emission", Color.BLACK, 0.05)
+	for i in mesh_inst.mesh.get_surface_count():
+		var mat = mesh_inst.get_surface_override_material(i) as StandardMaterial3D
+		if not mat:
+			continue
+		var base: Color = _base_albedos[i] if i < _base_albedos.size() else mat.albedo_color
+		mat.emission_enabled = true
+		mat.emission = Color.WHITE
+		mat.albedo_color = Color(1.5, 1.5, 1.5, 1.0)
+		_flash_tween.parallel().tween_property(mat, "albedo_color", base, 0.05).set_delay(0.08)
+		_flash_tween.parallel().tween_property(mat, "emission", Color.BLACK, 0.05).set_delay(0.08)
 	_flash_tween.tween_callback(func():
-		if mat:
-			mat.emission_enabled = false
-			mat.albedo_color = _base_albedo
+		for i in mesh_inst.mesh.get_surface_count():
+			var mat = mesh_inst.get_surface_override_material(i) as StandardMaterial3D
+			if mat:
+				mat.emission_enabled = false
+				mat.albedo_color = _base_albedos[i] if i < _base_albedos.size() else mat.albedo_color
 	)
 
 func _get_audio():

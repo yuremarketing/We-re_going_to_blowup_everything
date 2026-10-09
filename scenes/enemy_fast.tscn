@@ -14,6 +14,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 script = ExtResource("1_script")
 speed = 6.0
 hp = 1
+model_path = "res://assets/models/characters/enemy_fast.glb"
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("CapsuleMesh_enemy_fast")

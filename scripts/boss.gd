@@ -5,31 +5,51 @@ extends CharacterBody3D
 @export var contact_damage: int = 2
 
 var _base_albedo: Color = Color(0.5, 0, 0.5, 1)
+var _base_albedos: Array[Color] = []
 var _flash_tween: Tween
 static var _cached_mesh: BoxMesh = null
 
 func _ready() -> void:
 	add_to_group("enemies")
 	add_to_group("boss")
+	_load_character_model("res://assets/models/characters/boss.glb")
 	_setup_material()
+
+func _load_character_model(glb_path: String) -> void:
+	var mesh_node: MeshInstance3D = get_node_or_null("MeshInstance3D")
+	if not mesh_node or not ResourceLoader.exists(glb_path):
+		return
+	var packed: PackedScene = load(glb_path)
+	var instance := packed.instantiate()
+	var source_mesh := _find_mesh_instance(instance)
+	if source_mesh:
+		mesh_node.mesh = source_mesh.mesh
+	instance.queue_free()
+
+func _find_mesh_instance(node: Node) -> MeshInstance3D:
+	if node is MeshInstance3D:
+		return node
+	for child in node.get_children():
+		var found := _find_mesh_instance(child)
+		if found:
+			return found
+	return null
 
 func _setup_material() -> void:
 	var mesh_inst = get_node_or_null("MeshInstance3D")
-	if not mesh_inst:
+	if not mesh_inst or not mesh_inst.mesh:
 		return
-	var mat = mesh_inst.get_surface_override_material(0)
-	if mat is StandardMaterial3D:
-		var dup = mat.duplicate() as StandardMaterial3D
-		mesh_inst.set_surface_override_material(0, dup)
-		_base_albedo = dup.albedo_color
-	elif mesh_inst.material_override is StandardMaterial3D:
-		var dup = mesh_inst.material_override.duplicate() as StandardMaterial3D
-		mesh_inst.material_override = dup
-		_base_albedo = dup.albedo_color
-	elif mesh_inst.mesh and mesh_inst.mesh.material is StandardMaterial3D:
-		var dup = mesh_inst.mesh.material.duplicate() as StandardMaterial3D
-		mesh_inst.set_surface_override_material(0, dup)
-		_base_albedo = dup.albedo_color
+	_base_albedos.clear()
+	for i in mesh_inst.mesh.get_surface_count():
+		var mat = mesh_inst.get_surface_override_material(i)
+		if not mat is StandardMaterial3D:
+			mat = mesh_inst.mesh.surface_get_material(i) as StandardMaterial3D
+		if mat:
+			var dup = mat.duplicate() as StandardMaterial3D
+			mesh_inst.set_surface_override_material(i, dup)
+			_base_albedos.append(dup.albedo_color)
+	if not _base_albedos.is_empty():
+		_base_albedo = _base_albedos[0]
 
 var _attack_cooldown_timer: float = 0.0
 const ATTACK_INTERVAL: float = 1.0
@@ -70,26 +90,27 @@ func play_hit_flash() -> void:
 	if not is_inside_tree():
 		return
 	var mesh_inst = get_node_or_null("MeshInstance3D")
-	if not mesh_inst:
-		return
-	var mat = mesh_inst.get_surface_override_material(0) as StandardMaterial3D
-	if not mat:
-		mat = mesh_inst.material_override as StandardMaterial3D
-	if not mat:
+	if not mesh_inst or not mesh_inst.mesh:
 		return
 	if _flash_tween and _flash_tween.is_valid():
 		_flash_tween.kill()
-	mat.emission_enabled = true
-	mat.emission = Color.WHITE
-	mat.albedo_color = Color(1.5, 1.5, 1.5, 1.0)
 	_flash_tween = create_tween()
-	_flash_tween.tween_interval(0.08)
-	_flash_tween.tween_property(mat, "albedo_color", _base_albedo, 0.05)
-	_flash_tween.parallel().tween_property(mat, "emission", Color.BLACK, 0.05)
+	for i in mesh_inst.mesh.get_surface_count():
+		var mat = mesh_inst.get_surface_override_material(i) as StandardMaterial3D
+		if not mat:
+			continue
+		var base: Color = _base_albedos[i] if i < _base_albedos.size() else mat.albedo_color
+		mat.emission_enabled = true
+		mat.emission = Color.WHITE
+		mat.albedo_color = Color(1.5, 1.5, 1.5, 1.0)
+		_flash_tween.parallel().tween_property(mat, "albedo_color", base, 0.05).set_delay(0.08)
+		_flash_tween.parallel().tween_property(mat, "emission", Color.BLACK, 0.05).set_delay(0.08)
 	_flash_tween.tween_callback(func():
-		if mat:
-			mat.emission_enabled = false
-			mat.albedo_color = _base_albedo
+		for i in mesh_inst.mesh.get_surface_count():
+			var mat = mesh_inst.get_surface_override_material(i) as StandardMaterial3D
+			if mat:
+				mat.emission_enabled = false
+				mat.albedo_color = _base_albedos[i] if i < _base_albedos.size() else mat.albedo_color
 	)
 
 func _get_audio():

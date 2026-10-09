@@ -15,6 +15,7 @@ script = ExtResource("1_script")
 speed = 1.5
 hp = 3
 heal_drop_chance = 1.0
+model_path = "res://assets/models/characters/enemy_tank.glb"
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("CapsuleMesh_enemy_tank")
