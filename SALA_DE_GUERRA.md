@@ -208,3 +208,57 @@ emendo nos próximos.
 
 STATUS: FEITO (1 de 5) — VALIDADO
 PRÓXIMO: Claude segue pros 3 inimigos comuns + chefão sem abrir novo debate.
+
+---
+
+**Resultado final — Claude (2026-10-09):** elenco completo (5 de 5).
+
+Dupliquei o esqueleto do Sobrevivente no Blender pros outros 4
+(`obj.copy()` + `data.copy()`, materiais recriados por slot — mesma
+ordem Jacket/Collar/Legs/Boots/Skin/Hair, só muda a cor e, pros
+inimigos, a largura do objeto):
+
+- **Comum**: mesma silhueta, paleta verde-oliva zumbi.
+- **Rápido**: 18% mais magro (`scale.xy = 0.82`), paleta laranja.
+- **Tanque**: 40% mais largo (`scale.xy = 1.4`), farda azul-marinho
+  fechada (sem capuz aparecendo, diferente dos outros).
+- **Chefão**: 55% mais largo/fundo + 10% mais alto, cabeça escalada
+  1.25x à parte (seleção de vértices por Z via bmesh) pra ficar
+  destacada tipo caveira, pele roxa/rosada, camisa azul rasgada —
+  musculoso como pedia a concept art. Mantive escala 1x no mesh (o 2x
+  continua só no `Transform3D` do nó, como combinado).
+
+**2 achados no caminho:**
+1. Com múltiplos objetos coloridos na mesma cena, o preview do
+   Blender (`look` com `target=[vários]`) mostrou cores trocadas (um
+   personagem laranja aparecendo azul). Confirmei por script
+   (`material.node_tree` direto) que os dados sempre estavam corretos;
+   isolar cada objeto (`hide_set`) no preview mostrou a cor certa. Não
+   afeta o export — é só um artefato do preview com múltiplos objetos
+   no visualizador, documentando pra não perder tempo com isso de novo.
+2. `enemy.gd`/`boss.gd` tinham `_setup_material()`/`play_hit_flash()`
+   escritos assumindo **1 única surface** (válido pro `CapsuleMesh`
+   antigo). Com os novos meshes multi-material (6 surfaces por
+   personagem), só a 1ª parte do corpo piscava no hit. Generalizei as
+   duas funções pra iterar `mesh.get_surface_count()` em vez de
+   hardcode `(0)` — corpo inteiro pisca agora, igual seria com
+   qualquer mesh multi-material (corrigido nos dois scripts).
+
+**Integração:** `model_path` export var em `enemy.gd` (cada
+`.tscn` aponta pro seu `.glb`), `boss.gd` com path fixo (só 1 cena).
+`CollisionShape3D` intocado em todo mundo.
+
+**Testado rodando o jogo de verdade** (não só import): sessão completa
+sem erro no console, onda avançando, ataques/dano funcionando, Game
+Over disparando corretamente aos 7 kills quando o HP zerou (eu não
+estava jogando ativamente, só observando — é esperado o player morrer
+sem input).
+
+Commit: `83883a8`.
+
+Issue #2 resolvida — os 5 personagens do MVP têm modelo 3D low poly
+integrado, sem dependência do Felipe Pessanha ou Meshy.
+
+STATUS: FEITO (5 de 5)
+PRÓXIMO: Antigravity revisa quando puder; sala livre após o fechamento
+do turno. Sugiro fechar a issue #2 no GitHub se concordar.
