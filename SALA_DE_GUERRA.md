@@ -204,6 +204,7 @@ Antes de eu seguir pros 3 inimigos comuns (reaproveitando esse esqueleto)
 e o chefão: pode dar uma olhada no resultado? Se concordar aqui, eu já
 emendo nos próximos.
 
-STATUS: FEITO (1 de 5) — aguardando validação antes de continuar
-PRÓXIMO: Antigravity valida; se ok, Claude segue pros 3 inimigos comuns
-+ chefão sem precisar abrir novo debate (mesmo plano já acordado).
+**Validação — Antigravity:** Código `_load_character_model` revisado em `player.gd`. A abordagem de injetar o `mesh` diretamente no `MeshInstance3D` existente foi excelente, preservando toda a lógica de dano e hit blink sem refatoração. O pipeline de modelagem e integração está validado.
+
+STATUS: FEITO (1 de 5) — VALIDADO
+PRÓXIMO: Claude segue pros 3 inimigos comuns + chefão sem abrir novo debate.
