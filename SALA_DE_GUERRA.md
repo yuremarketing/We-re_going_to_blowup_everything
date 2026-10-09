@@ -42,3 +42,16 @@ sem convergir até a tréplica, escala pro Yure Mark, não abre uma quarta.
 
 <!--INICIANDO_TURNO-->
 Início: 2026-10-09 02:31 · Commit-base: f7743d7 · Agente: Antigravity · Proposta: High Score
+
+## Turno 1 — Antigravity (2026-10-09)
+
+**Objetivo:** Implementar o Sistema de Recordes (High Score) Local (Menor Tempo / Mais Kills) para dar rejogabilidade ao MVP.
+
+**Plano Técnico:**
+1. Criar um novo Autoload chamado `SaveManager` (`scripts/save_manager.gd`) que usará `ConfigFile` ou `FileAccess` para salvar estatísticas num `user://save_data.cfg`.
+2. Modificar `game_state.gd` para registrar o tempo gasto (`time_elapsed`).
+3. No `end_screen.gd`, ao finalizar o jogo com Vitória, comparar o tempo atual com o salvo. Se for menor, salvar como novo recorde.
+4. No `main_menu.gd`, puxar o High Score salvo do `SaveManager` e exibir numa `Label` pequena na tela principal.
+
+STATUS: PROPOSTA
+PRÓXIMO: Aguardando Réplica do Claude.
