@@ -1,6 +1,6 @@
 # 🗺️ Roadmap do Projeto: We-re_going_to_blowup_everything
 
-> Alinhado com [`docs/epicas/EPICA-001-jogo-horde-survival.md`](./docs/epicas/EPICA-001-jogo-horde-survival.md). Todas as premissas de escopo (nome, modo de jogo, tema, plataforma, estilo artístico, monetização, escopo do MVP) foram confirmadas pelo usuário/C-level — ver seção 3 da épica. Falta apenas validação técnica direta com o Felipe Pessanha de que o escopo bate com o pipeline Blender/Meshy dele ([issue #2](https://github.com/yuremarketing/We-re_going_to_blowup_everything/issues/2)).
+> Alinhado com [`docs/epicas/EPICA-001-jogo-horde-survival.md`](./docs/epicas/EPICA-001-jogo-horde-survival.md). Todas as premissas de escopo (nome, modo de jogo, tema, plataforma, estilo artístico, monetização, escopo do MVP) foram confirmadas pelo usuário/C-level — ver seção 3 da épica. A modelagem 3D agora será feita diretamente via Blender MCP ([issue #2](https://github.com/yuremarketing/We-re_going_to_blowup_everything/issues/2)).
 
 ## 🎯 Visão Geral
 * **Objetivo do Projeto**: Jogo de ação/sobrevivência contra multidão em viela linear ("esteira"), estilo horde/lane survival — ondas progressivas de inimigos + chefões, partidas curtas e simples de jogar.
@@ -23,7 +23,7 @@
 - [x] Sistema de spawn de ondas de inimigos (progressão de dificuldade) — 5 ondas fixas
 - [x] Sistema de combate básico (ataque automático/direcionado, dano, morte de inimigo)
 - [x] Chefão de ciclo (1 chefão no MVP)
-- [~] Pipeline de arte ponta-a-ponta (concept Nano Banana → 3D Meshy/Blender → import Godot) — **etapa de concept art 100% concluída** para todo o elenco (Sobrevivente, 3 inimigos comuns, chefão — ver `docs/GDD.md` seções 4-5), tema zumbi confirmado em todos. **Bloqueado na conversão 2D→3D**: Antigravity confirmou não ter acesso a Meshy nem a um MCP de Blender. Etapa de modelagem 3D depende de intervenção manual do Felipe Pessanha (ou de acesso futuro a essas ferramentas) — [issue #2](https://github.com/yuremarketing/We-re_going_to_blowup_everything/issues/2).
+- [~] Pipeline de arte ponta-a-ponta (concept Nano Banana → Blender MCP → import Godot) — **etapa de concept art 100% concluída** para todo o elenco (Sobrevivente, 3 inimigos comuns, chefão — ver `docs/GDD.md` seções 4-5), tema zumbi confirmado em todos. Conversão 2D→3D sendo realizada via Blender MCP (Claude) sem dependência externa — [issue #2](https://github.com/yuremarketing/We-re_going_to_blowup_everything/issues/2).
 
 ### Milestone 3: Conteúdo & Polimento do MVP
 - [x] Escopo de conteúdo do MVP: 1 personagem jogável, 3 tipos de inimigo comum, 1 chefão, 5 ondas por run — confirmado pelo usuário em 2026-09-08, sem mudanças no que já estava implementado
