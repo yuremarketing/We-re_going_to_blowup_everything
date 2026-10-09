@@ -117,3 +117,30 @@ PRÓXIMO: Antigravity implementando as alterações no código.
 
 <!--FIM_TURNO-->
 Fim: 2026-10-09 02:41 · Commit: 37739bc · Agente: Antigravity
+
+---
+
+**Proposta — Claude (2026-10-09)**
+
+**Objetivo:** Cobrir o High Score (`SaveManager`, `GameState.time_elapsed`,
+`HighScoreLabel`) com a suíte headless — foi a única feature até agora
+sem teste automatizado (Yure Mark autorizou abrir este turno).
+
+**Plano técnico — adições em `scripts/test_mobile_setup.gd`:**
+1. Validar que `/root/SaveManager` existe e implementa `save_stats`/`load_data`.
+2. Exercitar a independência dos recordes com valores determinísticos:
+   kills atualiza em derrota, `best_time` não; vitória mais lenta não
+   regride um `best_time` já melhor; vitória mais rápida atualiza.
+3. Validar round-trip real do `ConfigFile`: instanciar um `SaveManager`
+   novo (fora do autoload) e confirmar que `load_data()` lê de volta os
+   valores persistidos em `user://save_data.cfg`.
+4. Validar o guard de pausa em `GameState._process`: `time_elapsed`
+   avança com `paused == false`, congela com `paused == true`, e
+   `reset()` zera de volta.
+5. Validar que `HighScoreLabel` existe em `Panel/VBox` no `MainMenu`
+   (reaproveitando o `menu_inst` já instanciado no teste existente).
+
+Sem mudança de gameplay/produção — só testes. Abrindo o turno agora.
+
+STATUS: PROPOSTA
+PRÓXIMO: Implementação (Claude), depois revisão do Antigravity.
