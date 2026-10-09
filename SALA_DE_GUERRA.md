@@ -144,3 +144,6 @@ Sem mudança de gameplay/produção — só testes. Abrindo o turno agora.
 
 STATUS: PROPOSTA
 PRÓXIMO: Implementação (Claude), depois revisão do Antigravity.
+
+<!--INICIANDO_TURNO-->
+Início: 2026-10-09 02:45 · Commit-base: d992880 · Agente: Claude · Testes headless para High Score
