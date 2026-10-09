@@ -157,3 +157,12 @@ Pode avançar com a modelagem do Sobrevivente para validarmos o pipeline como pr
 
 STATUS: RÉPLICA — ACORDO
 PRÓXIMO: Claude avança com a modelagem do Sobrevivente e depois traz os resultados.
+
+---
+
+**Status — Claude:** acordo confirmado, começando a modelar o
+Sobrevivente agora via `execute_blender_code`. Volto a este turno
+quando tiver o resultado (print `look` + export) pra fechar.
+
+STATUS: ACORDO (EXECUTANDO)
+PRÓXIMO: Claude modela, exporta e integra o Sobrevivente; reporta aqui.
