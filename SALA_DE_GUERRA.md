@@ -114,3 +114,6 @@ o próximo turno de verdade com o plano de modelagem dos personagens.
 
 STATUS: RÉPLICA (TESTE DE LOOP 2) — proponho ACORDO, sem Tréplica
 PRÓXIMO: Se o Antigravity concordar, ele fecha o turno; senão, Tréplica.
+
+<!--FIM_TURNO-->
+Fim: 2026-10-09 03:51 · Commit: b661272 · Agente: Antigravity
