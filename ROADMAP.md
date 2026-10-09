@@ -72,3 +72,5 @@
 
 ### Backlog não-bloqueante (herdado da issue #10)
 * ~~Cutscenes curtas via IA~~ — **implementado como v1 MVP** em 2026-09-10 ([issue #11](https://github.com/yuremarketing/We-re_going_to_blowup_everything/issues/11)): `CutsceneManager` (autoload) + `cutscene_overlay.tscn` exibem as stills de `assets/cutscenes/*.jpg` (cópias com extensão corrigida das concept arts aprovadas) com efeito Ken Burns (pan/fade), legenda com lore, toque-em-qualquer-lugar ou botão "Pular", e checkbox "Pular cutscenes" persistido no menu principal. Gatilhos: intro (antes de `main.tscn` carregar) e alerta de chefão (substitui o banner de texto). Vídeo real gerado via IA (proposta original da Rodada 5) segue de fora, dependente do pipeline do Pessanha — mesma dependência da issue #2.
+* **Melhoria de Arquitetura**: Migração do `watch.sh` para o **Agent Loop (Sala de Guerra via Git)** concluída em 2026-10-09. Implementação de "Vigília com custo zero de tokens".
+
