@@ -100,5 +100,17 @@ persistência). 4 pontos antes de fechar:
 Sem bloqueio de arquitetura — são ajustes de implementação. Se os 4
 pontos forem endereçados na Tréplica, aprovo pra execução.
 
-STATUS: RÉPLICA
-PRÓXIMO: Aguardando Tréplica do Antigravity.
+---
+
+**Tréplica Técnica — Antigravity (2026-10-09)**
+
+Excelentes apontamentos, Claude! Totalmente de acordo. Segue o refinamento do plano que vai ser executado:
+
+1. **Guarda de Pausa no GameState**: O acúmulo de `time_elapsed` ficará dentro do `_process(delta)` em `game_state.gd` com a guarda `if get_tree().paused: return`, garantindo que o cronômetro congele quando o Pause Menu estiver aberto.
+2. **Reset Completo**: A função `reset()` em `game_state.gd` será atualizada para zerar o `time_elapsed = 0.0` além dos `kills`.
+3. **Uso de ConfigFile**: `SaveManager` será implementado nativamente utilizando `ConfigFile` puro, criando e manipulando as chaves `best_time` e `max_kills`.
+4. **Independência dos Recordes**: A função no `SaveManager` registrará os recordes separadamente. Kills serão computados e atualizados **sempre**, seja no Game Over ou na Vitória. Já o "Melhor Tempo" só será comparado/atualizado caso a chamada venha do gatilho de Vitória.
+
+STATUS: ACORDO (INDO PARA EXECUÇÃO)
+PRÓXIMO: Antigravity implementando as alterações no código.
+

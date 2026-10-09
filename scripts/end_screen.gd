@@ -20,10 +20,18 @@ func show_result(text: String, kills: int = 0) -> void:
 	if kills_summary_label:
 		kills_summary_label.text = "Inimigos abatidos: %d" % kills
 	visible = true
+	var is_victory = ("VITÓRIA" in text.to_upper() or "PARABÉNS" in text.to_upper() or "VITORIA" in text.to_upper())
+	
+	var state = get_node_or_null("/root/GameState")
+	if state:
+		var save_mgr = get_node_or_null("/root/SaveManager")
+		if save_mgr:
+			save_mgr.save_stats(state.time_elapsed, state.kills, is_victory)
+	
 	var audio = get_node_or_null("/root/AudioManager") if is_inside_tree() else null
 	if audio:
 		audio.stop_music(0.3)
-		if "VITÓRIA" in text.to_upper() or "PARABÉNS" in text.to_upper() or "VITORIA" in text.to_upper():
+		if is_victory:
 			audio.play_sfx("victory")
 		else:
 			audio.play_sfx("game_over")

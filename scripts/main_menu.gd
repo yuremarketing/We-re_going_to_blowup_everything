@@ -6,12 +6,22 @@ extends CanvasLayer
 @onready var sfx_slider: HSlider = get_node_or_null("Panel/VBox/SFXBox/SFXSlider")
 @onready var sfx_label: Label = get_node_or_null("Panel/VBox/SFXBox/SFXLabel")
 @onready var skip_cutscenes_check: CheckBox = get_node_or_null("Panel/VBox/SkipCutscenesCheck")
+@onready var high_score_label: Label = get_node_or_null("Panel/VBox/HighScoreLabel")
 
 func _ready() -> void:
 	if not play_button:
 		play_button = get_node_or_null("PlayButton")
 	if play_button:
 		play_button.pressed.connect(_on_play_pressed)
+		
+	var save_mgr = get_node_or_null("/root/SaveManager")
+	if save_mgr and high_score_label:
+		var text = "Recordes:\nKills: %d" % save_mgr.max_kills
+		if save_mgr.best_time > 0:
+			var mins = int(save_mgr.best_time) / 60
+			var secs = int(save_mgr.best_time) % 60
+			text += " | Tempo: %02d:%02d" % [mins, secs]
+		high_score_label.text = text
 
 	var music_val = _get_audio_volume("Music")
 	if music_slider:

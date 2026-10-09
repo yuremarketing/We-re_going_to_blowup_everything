@@ -43,6 +43,14 @@ text = "We're Going to
 Blow Up Everything"
 horizontal_alignment = 1
 
+[node name="HighScoreLabel" type="Label" parent="Panel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.603922, 0.603922, 0.603922, 1)
+theme_override_font_sizes/font_size = 16
+text = "Recordes:
+Nenhum dado salvo"
+horizontal_alignment = 1
+
 [node name="HSeparator1" type="HSeparator" parent="Panel/VBox"]
 layout_mode = 2
 

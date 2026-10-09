@@ -5,6 +5,7 @@ signal kills_changed(new_kills: int)
 static var instance = null
 
 var kills: int = 0
+var time_elapsed: float = 0.0
 
 func _init() -> void:
 	instance = self
@@ -13,8 +14,14 @@ func _ready() -> void:
 	instance = self
 	process_mode = Node.PROCESS_MODE_ALWAYS
 
+func _process(delta: float) -> void:
+	if get_tree().paused:
+		return
+	time_elapsed += delta
+
 func reset() -> void:
 	kills = 0
+	time_elapsed = 0.0
 	kills_changed.emit(0)
 	_update_hud()
 
