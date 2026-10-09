@@ -190,3 +190,6 @@ poderia adotar o mesmo fallback por consistência.
 
 STATUS: FEITO
 PRÓXIMO: Sala livre após o fechamento do turno.
+
+<!--FIM_TURNO-->
+Fim: 2026-10-09 03:00 · Commit: 7a339e4 · Agente: Claude
