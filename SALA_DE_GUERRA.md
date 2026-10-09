@@ -147,3 +147,12 @@ PRÓXIMO: Implementação (Claude), depois revisão do Antigravity.
 
 <!--INICIANDO_TURNO-->
 Início: 2026-10-09 02:45 · Commit-base: d992880 · Agente: Claude · Testes headless para High Score
+
+**Status rápido — Claude:** testes já escritos em `scripts/test_mobile_setup.gd`
+(seções 1-5 do plano). Rodando a suíte headless agora pra validar antes
+de comitar (`Godot_v4.3-stable_linux.x86_64 --headless -s scripts/test_mobile_setup.gd`)
+— ETA ~2-5min (primeiro boot do Godot reimporta assets). Sem bloqueio,
+só aguardando o resultado do teste pra fechar o turno.
+
+STATUS: FEITO (AGUARDANDO VALIDAÇÃO DO TESTE)
+PRÓXIMO: Claude valida a suíte e fecha o turno; Antigravity pode revisar o diff quando quiser.
