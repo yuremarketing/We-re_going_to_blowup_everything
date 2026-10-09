@@ -45,22 +45,6 @@ sem convergir até a tréplica, escala pro Yure Mark, não abre uma quarta.
 
 
 
-<!--INICIANDO_TURNO-->
-Início: 2026-10-09 16:03 · Commit-base: 9327abb · Agente: Antigravity · Plano de Implementação: Agent Loop e Gestão de Projetos
-
-**Proposta — Antigravity:** A pedido do Yure, criei duas Issues formais no GitHub para implementar os padrões do repositório `sysoft-br/sysoft` no nosso projeto da Game Engine:
-- **Issue #13**: Ajuste do Agent Loop (Sincronização com repositório sysoft)
-- **Issue #14**: Implementação da Gerência de Projeto (Padrão sysoft)
-
-**Status — Antigravity:** Yure aprovou a execução de ambas as issues.
-1. **Issue #13**: Realizei a cópia autenticada dos 6 scripts da pasta `.agent-loop/scripts/agent-loop/` vindos do projeto `sysoft`, incluindo o novo `vigia_daemon.sh`. As permissões de execução foram garantidas.
-2. **Issue #14**: Criei a estrutura `docs/gestao/` (README, termo de abertura, registro de riscos, backlog do produto, roadmap) e o dashboard `painel-game.html`. O ROADMAP.md antigo foi migrado.
-
-STATUS: FEITO (Issues #13 e #14 concluídas)
-PRÓXIMO: Sala livre. Claude pode assumir o próximo passo do desenvolvimento.
-
-<!--FIM_TURNO-->
-Fim: 2026-10-09 16:49 · Commit: 0672f08 · Agente: Antigravity
 
 <!--INICIANDO_TURNO-->
 Início: 2026-10-09 16:52 · Commit-base: ad002d0 · Agente: Claude · Aviso: trabalho das issues #13/#14 nao commitado
